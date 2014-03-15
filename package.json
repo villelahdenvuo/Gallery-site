@@ -25,8 +25,9 @@
   },
   "homepage": "https://github.com/tuhoojabotti/Gallery-site",
   "dependencies": {
-    "restify": "~2.6.3",
-    "dotenv": "~0.2.5",
-    "mysql": "~2.1.0"
-  }
+    "restify": "^2.6.3",
+    "dotenv": "^0.2.5",
+    "mysql": "^2.1.0"
+  },
+  "engines": { "node": ">=0.10.16" }
 }
