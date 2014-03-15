@@ -1,4 +1,8 @@
 Gallery-site
 ============
 
-An online image gallery powered by Node.js
+The goal is to create a flexible usable photo gallery to support my photography :camera: hobby.
+
+## Links
+ * [The application](http://gallery.tuhoojabotti.com)
+ * [The documentation](doc/dokumentaatio.pdf?raw=true)<sup>PDF</sup> (in Finnish)
