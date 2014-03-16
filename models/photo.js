@@ -1,9 +1,12 @@
 
-module.exports = {
+var photo = {
 	table: 'photo',
-	schema: {
-		name: 'string',
-		path: 'string',
-		folder_id: 'ref:folder'
-	}
+	belongs_to: ['folder'],
+	//has_many: ['tags']
 };
+
+photo.toString = function () {
+	return this.name + ' (' + this.path + ')';
+};
+
+module.exports = photo;
