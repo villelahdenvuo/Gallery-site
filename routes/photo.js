@@ -14,7 +14,11 @@ module.exports = function (restify, Photo) {
 		// TODO: validate id as Number.
 		Photo.findOne({id: req.params.id}, function (err, photo) {
 			if (!photo) { return next(new restify.NotFoundError('Requested photo not found.')); }
-			res.send(err || photo);
+			// Populate folder.
+			photo.getFolder(function (err, folder) {
+				photo.folder = folder;
+				res.send(photo);
+			});
 		});
 	}
 
