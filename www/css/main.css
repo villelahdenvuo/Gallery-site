@@ -306,15 +306,15 @@ textarea {
 /* Google Gallery */
 .folder {
     display: inline-block;
-    width: 180px;
-    height: 180px;
+    width: 120px;
+    height: 120px;
     background-image: url('../img/folder.png');
     background-size: cover;
     text-align: center;
 }
 .folder span {
     display: block;
-    margin-top: 80px;
+    margin-top: 50px;
     font-size: 1.5em;
 
 }
