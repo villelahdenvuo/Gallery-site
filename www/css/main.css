@@ -302,3 +302,28 @@ textarea {
         page-break-after: avoid;
     }
 }
+
+/* Google Gallery */
+.folder {
+    display: inline-block;
+    width: 180px;
+    height: 180px;
+    background-image: url('../img/folder.png');
+    background-size: cover;
+    text-align: center;
+}
+.folder span {
+    display: block;
+    margin-top: 80px;
+    font-size: 1.5em;
+
+}
+.photo-container img, .folder-container img { margin: 2px 3px 3px 2px; }
+.photo-container img {
+  outline: 1px solid rgba(0, 0, 0, 0.1);
+  outline-offset: -1px;
+}
+
+.login-form {
+    padding: 20px;
+}
