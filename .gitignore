@@ -16,3 +16,5 @@ node_modules
 
 .env
 log
+www/connectiontest.php
+www/php5.fcgi
