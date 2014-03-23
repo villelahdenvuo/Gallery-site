@@ -2,12 +2,12 @@ CREATE TABLE gal_folder(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(255) NOT NULL,
 	lft INT NOT NULL,
-	rgt INT NOT NULL
+	rgt INT NOT NULL,
 	password VARCHAR(255),
 	description VARCHAR(1000),
 	INDEX lft_index (lft),
 	INDEX rgt_index (rgt),
-	INDEX child_index (lft, rgt),
+	INDEX child_index (lft, rgt)
 ) ENGINE=INNODB;
 
 CREATE TABLE gal_photo(
