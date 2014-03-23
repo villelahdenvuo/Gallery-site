@@ -1,5 +1,6 @@
 DROP TABLE gal_rating IF EXISTS;
 DROP TABLE gal_user IF EXISTS;
+DROP TABLE gal_taglist IF EXISTS;
 DROP TABLE gal_tag IF EXISTS;
 DROP TABLE gal_photo IF EXISTS;
 DROP TABLE gal_folder IF EXISTS;

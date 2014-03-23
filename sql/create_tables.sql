@@ -28,6 +28,18 @@ CREATE TABLE gal_tag(
 	description VARCHAR(1000)
 ) ENGINE=INNODB;
 
+CREATE TABLE gal_taglist(
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	tag_id INT NOT NULL,
+	INDEX tag_index (tag_id),
+	FOREIGN KEY (tag_id)
+		REFERENCES gal_tag(id),
+	photo_id INT NOT NULL,
+	INDEX photo_index (photo_id),
+	FOREIGN KEY (photo_id)
+		REFERENCES gal_photo(id)
+) ENGINE=INNODB;
+
 CREATE TABLE gal_user(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(120)
@@ -40,5 +52,10 @@ CREATE TABLE gal_rating(
 	INDEX user_index (user_id),
 	FOREIGN KEY (user_id)
 		REFERENCES gal_user(id)
-		ON DELETE CASCADE -- Delete photo if folder is deleted.
+		ON DELETE CASCADE, -- Delete rating if user is deleted.
+	photo_id INT NOT NULL,
+	INDEX photo_index (photo_id),
+	FOREIGN KEY (photo_id)
+		REFERENCES gal_photo(id)
+		ON DELETE CASCADE -- Delete rating if photo is deleted.
 ) ENGINE=INNODB;
