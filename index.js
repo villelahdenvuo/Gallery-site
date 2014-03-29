@@ -1,20 +1,21 @@
 var restify = require('restify')
 	, ormify = require('./lib/ormify');
 
+// Load environment variables.
+require('dotenv').load();
+
 // Load models.
 var Photo = ormify.bind(require('./models/photo'));
 
-// Load routes.
-var photos = require('./routes/photo')(restify, Photo);
-
-// Load environment variables.
-require('dotenv').load();
+// Load controllers.
+var controllers = {};
+controllers.photos = require('./controllers/photo')(restify, Photo);
 
 var server = restify.createServer();
 server.use(restify.gzipResponse());
 
-server.get('/photos',    photos.index);
-server.get('/photo/:id', photos.show);
+// Activate routes.
+require('./routes')(server, controllers);
 
 server.listen(process.env.PORT, function() {
 	console.log('Server started.');
