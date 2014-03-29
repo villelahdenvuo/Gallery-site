@@ -1,4 +1,3 @@
-// Practising dependency injection.
 module.exports = function (restify, Photo) {
 	var routes = {};
 

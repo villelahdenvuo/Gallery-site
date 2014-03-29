@@ -1,4 +1,3 @@
-
 module.exports = function (server, routes) {
 	function get(route, controller) {
 		var parts = controller.split('#');
@@ -6,5 +5,5 @@ module.exports = function (server, routes) {
 	}
 
 	get('/photos', 'photos#index');
-	get('/photos/:id', 'photos#show');
+	get('/photo/:id', 'photos#show');
 };
