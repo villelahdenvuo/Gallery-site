@@ -11,24 +11,39 @@
 		<!-- <link rel="stylesheet" href="css/normalize.css"> -->
 		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.4.2/pure-min.css">
 		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+		<script src="//connect.facebook.net/en_US/all.js"></script>
 		<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+		<script src="js/vendor/angular.min.js"></script>
+		<script src="js/vendor/http-auth-interceptor.js"></script>
+		<script src="js/vendor/bootstrap.min.js"></script>
 		<script src="js/main.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/rating.js"></script>
 	</head>
-	<body>
+	<body ng-app="gallery" class="gallery-application waiting-for-angular">
 		<!--[if lt IE 9]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
 
-		<div class="pure-menu pure-menu-open pure-menu-horizontal">
+<div id="login" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" ng-controller="LoginController">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+    	<fb:login-button show-faces="false" width="300" max-rows="1"></fb:login-button>
+    </div>
+  </div>
+</div>
+
+		<div class="pure-menu pure-menu-open pure-menu-horizontal" ng-controller="RatingController">
 			<a href="https://tuhoojabotti.com" class="pure-menu-heading">My Portfolio</a>
 
 			<ul>
 				<li class="pure-menu-selected"><a href="/">Pictures</a></li>
 				<li><a href="#">Tags</a></li>
 				<li><a href="#">Search</a></li>
-				<li><a href="/login.html">Sign in</a></li>
-				<li><a href="/register.html">Sign up</a></li>
+				<li><a ng-click="rate()">{{name}}</a></li>
 			</ul>
 		</div>
 
