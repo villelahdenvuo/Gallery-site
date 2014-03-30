@@ -74,13 +74,17 @@ $(function () { run(250); });
       link: function(scope, elem, attrs) {
         elem.removeClass('waiting-for-angular');
 
-        scope.name = "Sign in";
+        scope.logged = false;
+        scope.name = '';
 
         scope.$on('event:auth-loginRequired', function() {
+          scope.logged = false;
           console.log('logging in!');
           $('#login').modal('show');
         });
+
         scope.$on('event:auth-loginConfirmed', function() {
+          scope.logged = true;
           console.log('logged in!');
           $('#login').modal('hide');
           FB.api('/me', function(response) {
@@ -88,7 +92,13 @@ $(function () { run(250); });
             scope.$digest();
           });
         });
+        scope.$on('event:auth-loginCancelled', function() {
+          scope.logged = false;
+          console.log('logged out!');
+          scope.name = '';
+          scope.$digest();
+        });
       }
-    }
+    };
   });
 })();
