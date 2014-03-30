@@ -15,6 +15,8 @@ CREATE TABLE gal_photo(
 	name VARCHAR(255),
 	path VARCHAR(255),
 	description VARCHAR(1000),
+	width INT NOT NULL,
+	height INT NOT NULL,
 	folder_id INT NOT NULL,
 	INDEX folder_index (folder_id),
 	FOREIGN KEY (folder_id)

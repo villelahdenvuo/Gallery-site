@@ -4,18 +4,112 @@ INSERT INTO gal_folder (name, lft, rgt, password, description) VALUES
 	('Nature', '3', '6', NULL, 'Nature pictures'),
 	('Views', '4', '5', NULL, 'Beautiful views');
 
-INSERT INTO gal_photo (name, path, description, folder_id) VALUES
-	('Funny picture 1', 'http://community.giffgaff.com/t5/image/serverpage/image-id/38906iC12B6E7DDEBCED42/image-size/original', 'Customer support', 1);
+INSERT INTO gal_photo (name, path, width, height, description, folder_id) VALUES
+('A picture', 'https://lh4.googleusercontent.com/-FQNMV5kNh48/T5r2k7e2KvI/AAAAAAAALWc/9AfwLKOa_SE/w394-h214-n-k/NewsThatBarcelonaArentInTheFinalsReachesMadrid.gif', '394', '214', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-0IYWwoU404o/T5hFqf8Fd7I/AAAAAAAALV4/ZWtvualW-gs/w302-h214-n-k/SirFrancisBacon.jpg', '302', '214', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-MpTZPLZI3-E/T5eMgJVx2JI/AAAAAAAALVE/VMzdGSUkYmE/w379-h214-n-k/winners_losers.jpg', '379', '214', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-DjiYXWoFDkU/T5eEoZ9w6nI/AAAAAAAALUk/7kDnKp66zgM/w453-h272-n-k/vintcerf.jpg', '453', '272', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-GOiSlIr0JQc/T5Yrpil6MII/AAAAAAAALTY/IeVknUkvKoQ/w210-h272-n-k/SmileBestMakeUp.jpg', '210', '272', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-5B9kjDPgIGo/T5BydZ6yROI/AAAAAAAALRo/pyXBrGkGwl4/w412-h272-n-k/babyimagedrawing.jpg', '412', '272', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-JfMhSzmXbCI/T5BI9pyK67I/AAAAAAAALQ0/nbTo6U7V8xU/w262-h261-n-k/CloudHeart_crop.png', '262', '261', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-jLD2DhgVGJM/T5A8cIfVtaI/AAAAAAAALQE/P1_nVvA5C5g/w350-h261-n-k/BatmanBike.png', '350', '261', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-Ryh7FRiC2OA/T4sECH3OVSI/AAAAAAAALN0/WAuVjPybP5Y/w463-h261-n-k/AshleyYoung.gif', '463', '261', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-cTCu7LRr1pI/T4iYovlrbXI/AAAAAAAALL0/-ndB-ytwp9o/w329-h183-n-k/GolfBubbaWatsonAerialView.jpg', '329', '183', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-JzzEr9Eile8/T4iWULtQixI/AAAAAAAALLM/BWpJrLLzrT8/w189-h183-n-k/OpticalIllusion_SteppingFeet.gif', '189', '183', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-qnSnRchY5uk/T4iUVyAxV-I/AAAAAAAALKs/3RKBW2Cuv2E/w100-h183-n-k/FBWhatPeopleLikeE.jpg', '100', '183', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-gM1yPNcJYpk/T4hpHVU5ZrI/AAAAAAAALJ4/dLBHh0yFrv0/w451-h183-n-k/SteveJobsRobertWayneSteveWozniak.jpg', '451', '183', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-WKtkHaFHcwk/T4b5ZFFziAI/AAAAAAAALIo/JORDPygkAqI/w338-h258-n-k/Marriage65Years.jpg', '338', '258', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-Salllksew9U/T4XEz_cQPDI/AAAAAAAALHU/cC8kANn0l3g/w180-h258-n-k/lowbattery.png', '180', '258', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-st2Q8b3WKg8/T4W-gjpoH1I/AAAAAAAALG0/Tow-8P_VN6E/w557-h258-n-k/LionelMessi_LikesFull.bmp', '557', '258', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-I81J7Pn4ps4/T4WoZpwUciI/AAAAAAAALGE/KSGWpR9OJCI/w265-h264-n-k/InstaBucksE.jpg', '265', '264', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-MwXd7jRENfs/T4T-fuTXdyI/AAAAAAAALFI/HtmkMB5ORNw/w155-h264-n-k/TitanicWasRealE.png', '155', '264', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-ynLCvAZYwG0/T4T1pVcBm_I/AAAAAAAALEA/8y2qutiFHNQ/w398-h264-n-k/CatBread.jpg', '398', '264', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-L0EdoXE_UKc/T4T1Dx85QPI/AAAAAAAALDY/yEswds7aY-8/w251-h264-n-k/CapsLockOnArgue.jpg', '251', '264', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-l0ePLtK_d-M/T4T04Aa0pHI/AAAAAAAALC0/QykLEhrc108/w290-h290-n-k/PegasusSign.jpeg', '290', '290', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-FRRW9aKxTmU/T4O5VI74XSI/AAAAAAAALBI/QCgBe6QmPmk/w464-h290-n-k/ReadYourBookCase.jpg', '464', '290', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-GFxCqQSuURE/T4NQt3qgmjI/AAAAAAAALAY/Sm6LCPjvU4Y/w157-h290-n-k/MotorcyleSportsCombinedE.jpg', '157', '290', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-brxB29kbLkY/T4NN6e3gWHI/AAAAAAAAK_8/4w1brNup3dg/w158-h290-n-k/AdSoonerTheBetter.jpg', '158', '290', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-uu23Kaj0SN8/T4L5QyAfxQI/AAAAAAAAK_Y/1J_QI9O8JLY/w287-h221-n-k/iPodIAmYourFather.jpg', '287', '221', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-YYl171WpzK8/T4JYpQwU6UI/AAAAAAAAK9s/dXIIpTf_QWg/w395-h221-n-k/GrowingOld.jpg', '395', '221', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-_cRvDY2-sxg/T3-NeUhCqxI/AAAAAAAAK78/_x1iV8YcsHI/w393-h221-n-k/KobeOpen.jpg', '393', '221', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-OSyjVI3relQ/T39YPrQfThI/AAAAAAAAK7M/IMjL1TW9Mt0/w192-h269-n-k/WeRideWhosWithMe.jpg', '192', '269', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-mACbSbC9T1w/T33ts1P8c9I/AAAAAAAAK5w/mY86aHWk29o/w289-h269-n-k/JustDoItEvenIfYouSuck.jpg', '289', '269', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-ss0LykUVO4M/T33toj2YOZI/AAAAAAAAK5Y/L_S4YzwnIQg/w202-h269-n-k/escalator.jpg', '202', '269', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-lp5JgGh4rd8/T33tbrrUsdI/AAAAAAAAK44/J9URwdZSwg4/w386-h269-n-k/MiniumumWage.png', '386', '269', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-l3ngN6aSGxA/T3za5haej2I/AAAAAAAAK2o/k6tpZAGvrS0/w337-h253-n-k/rethinkyourdrink.jpg', '337', '253', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-NdEuuAT2D8M/T3zaesRr6UI/AAAAAAAAK2I/NcRyRPakf4Y/w169-h253-n-k/NewMember.jpg', '169', '253', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-kTN4Fme-0aI/T3yikYQ03bI/AAAAAAAAK1k/1oBK-SfoEoE/w199-h253-n-k/UnitedGoalFLowChart_E.jpg', '199', '253', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-kWFDIqA_Y4U/T3ydRlz-NRI/AAAAAAAAK08/WjyL8aR7rFw/w364-h253-n-k/MLK_Love2.png', '364', '253', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-QABL2t_dUOE/T3u13TOh6BI/AAAAAAAAK0A/Rulli3En4hc/w139-h258-n-k/InstaGramForAndroid.jpg', '139', '258', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-WlsVoW01dHU/T3oo4wCeMbI/AAAAAAAAKyw/U6ZEGaRo3xo/w413-h258-n-k/MovieTheaterForCuddlingOMGPerfect.jpg', '413', '258', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-noTe4Fr_ir0/T3ooTLcqqCI/AAAAAAAAKyM/fiBIBo9yDi0/w258-h258-n-k/IKEAProductRecall.jpg', '258', '258', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-uTkF5Jr4h50/T3nmHiDkm4I/AAAAAAAAKxU/sNGpW_d2XTw/w259-h258-n-k/KobeSees.jpg', '259', '258', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-lzPhu37xaNE/T3nl3iJgUqI/AAAAAAAAKw0/9pGpACCThKg/w247-h246-n-k/TimTebowSale.jpg', '247', '246', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-QVJDT8Cn_Tg/T3kvqvtj7LI/AAAAAAAAKv4/6lAgu6ZOvUs/w341-h246-n-k/What%2BHappens%2Bin%2Ban%2BInternet%2BMinute%2BIntel.jpg', '341', '246', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-rmONl-y1x2w/T3ksdMJXj0I/AAAAAAAAKvU/BGI3_HKfouY/w487-h246-n-k/JimRohn.jpg', '487', '246', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-bsKnko1g_tc/T3km-IhOWBI/AAAAAAAAKuo/vpI1fN_h8UM/w374-h252-n-k/BBCAprilFools.jpg', '374', '252', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-zP1mixlxZgU/T2qf8O83PuI/AAAAAAAAKsU/XyPnspC2xd8/w448-h252-n-k/PErsonYOuAreThinkingOf.jpg', '448', '252', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-DPgMc83xBkk/T2lD9q1IpfI/AAAAAAAAKrk/Tyy70-TX5kM/w253-h252-n-k/PangeaOlympicLogo.png', '253', '252', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-OymA1oWdL_M/T2ZmcEuTmUI/AAAAAAAAKqI/MYVBSG5a3h0/w484-h306-n-k/airplaneQRCode.jpg', '484', '306', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-uEKZ0FNoObE/T2OBep-zjAI/AAAAAAAAKok/tkkKksBJGC8/w169-h306-n-k/AOL_DudeWhatsYourScreenName.gif', '169', '306', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-yUN0-OuUO70/T2JNYsFHrQI/AAAAAAAAKn0/-d0AArSMh3A/w422-h306-n-k/AgeTest2.jpg', '422', '306', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-ci3ozFE0ezk/T1_VB1ZROlI/AAAAAAAAKnI/A0PyhtHiLrg/w222-h190-n-k/ButterFly.png', '222', '190', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-DX3u8BcIDAI/T1pNw0uGgRI/AAAAAAAAKmc/u8JfWWj5-wE/w239-h190-n-k/FacebookOnlySeeThisE.jpg', '239', '190', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-B82IjEH0B_8/T1UdqQyPW4I/AAAAAAAAKk8/5jRI7lDyGXc/w614-h190-n-k/mayan-doomsday-calenderE.jpg', '614', '190', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-9Bx2e9PRyJ8/T1Ju_E_fBYI/AAAAAAAAKjw/9f-_Mw8nbag/w296-h295-n-k/ObiWanKenobi2012E2.jpg', '296', '295', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-HFaShKgZ_jE/T1JuLneXfgI/AAAAAAAAKik/W1UcalKMLzM/w296-h295-n-k/NewHeadset.jpg', '296', '295', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-0k00RY9ZWDA/T1GPSK1ZXAI/AAAAAAAAKhQ/7hW5xcDT9u4/w483-h295-n-k/LifeInstructions.png', '483', '295', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-7XOMYBvmWm4/T1EXLgaqOBI/AAAAAAAAKgQ/IWhBj6zBJ8Q/w249-h167-n-k/YouerThanYouInstaGram_E.jpg', '249', '167', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-LCuubYCbBbI/T1AQ8STMOrI/AAAAAAAAKfM/7dWBApF1kZE/w91-h167-n-k/MusicStarsThenAndNowE.png', '91', '167', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-_tr7oaDMFuo/T0_LvYluc1I/AAAAAAAAKeo/BByUP1cm2gg/w143-h167-n-k/AndrewBreitbart.jpg', '143', '167', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-zuoJab-IHyk/T0HjOBfWpKI/AAAAAAAAKak/Vkn-d-8hci4/w586-h167-n-k/AppleVSMicrosoftSummedUp.png', '586', '167', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-C-hIrBcX-wI/Tz8F87tOGRI/AAAAAAAAKX4/cRMoK_mnYg8/w300-h224-n-k/GooglePlusTShirt.jpg', '300', '224', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-gWRGV6lgKnM/Tz1AjN-7ucI/AAAAAAAAKWQ/rdb3WcHFvfo/w297-h224-n-k/JeremyLinJordanE.jpg', '297', '224', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-0KPrqpqVUGI/TzxV2yvmhzI/AAAAAAAAJ-k/hkquh1_wnOc/w172-h224-n-k/KFC_Guy.jpg', '172', '224', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-VYJd2ue-yUM/TzrW3oIjGxI/AAAAAAAAJ9k/oCrrmkhAqH8/w300-h224-n-k/ILoveYouTearSheet_Large.jpg', '300', '224', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-yxUW7Rvs0Z0/TzrVQ__g5aI/AAAAAAAAJ9Y/xWL6ofTi1w0/w145-h268-n-k/HowToMakeMoneyInternetInfoGraphic_Amway.jpg', '145', '268', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-o-2SUsiSEIc/TzlRq6MzYdI/AAAAAAAAJ7g/BJuaW42vQaM/w268-h268-n-k/ValentinesGuyE.png', '268', '268', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-c4o46Ae8NkU/TzFmd-COJtI/AAAAAAAAJ6E/dT5-fR9M70o/w177-h268-n-k/RomneyBoth.png', '177', '268', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-zUXodhdZboE/TzFTfuxg0-I/AAAAAAAAJ5c/FvaCAtF3eGA/w268-h268-n-k/FreeWiFiSLCAirport.jpg', '268', '268', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-ScYdSp9XByA/TzBAgCL-wSI/AAAAAAAAJ30/bYf_uUbvDZc/w205-h268-n-k/MM8_DreamStruggleVictory_MasterindEventdotCom_1500.jpg', '205', '268', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-M2rzR7Yg458/Ty72IIXhfsI/AAAAAAAAJ2g/4xCP57aoQtw/w239-h242-n-k/SocialMediaExplained.jpg', '239', '242', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-kBnNKmOvI-0/Ty7lKNZqVgI/AAAAAAAAJ18/vsZ1nvDGvQY/w182-h242-n-k/SuperBowlEventParking.jpg', '182', '242', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-DV-IiidgAYg/Ty39yRO0oXI/AAAAAAAAJ1M/esQQHtaODhk/w324-h242-n-k/AtAtInSnow.jpeg', '324', '242', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-oh_GM0XilLo/TyyliqwmhLI/AAAAAAAAJ0A/2cxFaPtE2cU/w324-h242-n-k/YodaOptionsE.jpg', '324', '242', 'Very picture, such wow', 1),
+('A picture', 'https://lh5.googleusercontent.com/-1UytjOaKTuA/TywGVEj81MI/AAAAAAAAJzI/iG3l76My5YU/w473-h191-n-k/iPhoneBeforeAndAfter.png', '473', '191', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-Wbfaz4i7H_U/Tyb9aQbQgwI/AAAAAAAAJyA/DqC8Iw3lIvg/w143-h191-n-k/75MPH_TX.png', '143', '191', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-F9mpBYPgDcQ/TyY_b8sa73I/AAAAAAAAJw8/YXSF5WaHKPk/w459-h191-n-k/LionnelMessi.png', '459', '191', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-ddKPPNwfDbc/TyF0dbABs0I/AAAAAAAAJvc/RZzoNlHxbTY/w113-h208-n-k/AwkwardVH_KoolAndTheGang.gif', '113', '208', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-DTwTYrX-RyU/TyEGFerN-4I/AAAAAAAAJt8/VfDVTeVDmvA/w278-h208-n-k/WhatDoesThisSignMean.jpg', '278', '208', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-2LyYoKD3eyY/TyED0uP4GyI/AAAAAAAAJtU/cyb5SuctXO4/w278-h208-n-k/BMW_CheckMate.jpg', '278', '208', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-pWbktjqbuJM/Txr5cD9o09I/AAAAAAAAJpw/dfv8RIXBPIE/w400-h208-n-k/AppleLaptop_WhatADiff13YearsMakes_E.jpg', '400', '208', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-0Mt0PwN_c_k/Txr5SCTUsGI/AAAAAAAAJpQ/OjztR_uIQ4Y/w448-h268-n-k/LegoSimpsons.jpg', '448', '268', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-LX_TkvssaUc/Txm9HXRw1fI/AAAAAAAAJm8/tIQp4NHuT58/w357-h268-n-k/JapaneseFlyingDwarfSquirrel.jpg', '357', '268', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-g5i2fJZYKYU/Txdn9UwFMSI/AAAAAAAAJkk/5UP3JmZ5Ayg/w270-h268-n-k/CandidatesBeforeAndAfterElections.jpg', '270', '268', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/--HgCN8dfE04/TxcK-4urazI/AAAAAAAAJjQ/o6QNpB8Ngtw/w283-h261-n-k/CostaConcordia_SatelliteE.jpg', '283', '261', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-Ft23PqAZVTg/TxXrBer5ioI/AAAAAAAAJiE/_oChsNDYVCE/w262-h261-n-k/ItsPossible6E2.jpg', '262', '261', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-oLJS3uWFuHE/TxTTD5FHH3I/AAAAAAAAJhA/Yh7YN1znUn8/w262-h261-n-k/MLK.jpg', '262', '261', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-OFysBHRfIsY/Tw9eGpwSKbI/AAAAAAAAJek/EWjSmx4wo5s/w262-h261-n-k/SOPA_Violation.jpg', '262', '261', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-HQAJOqzpqfs/Tw8c0qa1wxI/AAAAAAAAJdQ/pS9T1o_EFLg/w371-h280-n-k/BaggyPantsXrayDrawing.png', '371', '280', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-g7N8Zdjx9jI/Tw4lsW5UetI/AAAAAAAAJcE/1wWhgYYxSvo/w283-h280-n-k/BlowingOutFire.jpg', '283', '280', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-WzIdxtUI24c/TwtWYwKj-xI/AAAAAAAAJYg/XQFiZavGhYY/w421-h280-n-k/MotherBaby_Hedgehog.jpg', '421', '280', 'Very picture, such wow', 1),
+('A picture', 'https://lh3.googleusercontent.com/-ppnsd6PYjes/TwdqGHPnVTI/AAAAAAAAJV0/qIFv9XhR290/w365-h271-n-k/AudiR8GTAd_E.jpg', '365', '271', 'Very picture, such wow', 1),
+('A picture', 'https://lh6.googleusercontent.com/-VlphuOtI96c/TwXZ-ouWapI/AAAAAAAAJSY/HY-xOJGlWQk/w198-h271-n-k/DogLickingIcecream.jpg', '198', '271', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-s18PcsHK3J0/TwTgCcFePiI/AAAAAAAAJPg/MoJWtkdGw0g/w313-h271-n-k/MayanCalendar5105.png', '313', '271', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-5HIOLicWtko/TwS4QZC-t5I/AAAAAAAAJOs/SE6rTkjKHsA/w193-h271-n-k/HowILookInPHotosIAmTaggedIn.jpg', '193', '271', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-nH9pZ41FMi8/TwSalr95UNI/AAAAAAAAJNw/WaGnLoansU4/w160-h226-n-k/RockConertAudienceEvolution_Final.png', '160', '226', 'Very picture, such wow', 1),
+('A picture', 'https://lh4.googleusercontent.com/-fIpeFCqP700/TwJ7gO8ZheI/AAAAAAAAIRw/ftGGQLXWOh4/w211-h226-n-k/NewYearsResolutionsForE.jpg', '211', '226', 'Very picture, such wow', 1);
+
 
 INSERT INTO gal_tag (name, description) VALUES
 	('funny', 'the picture brings happyness (yes happyness) to the world.'),
 	('doge', 'Wow, such photon, so light.');
 
-INSERT INTO gal_taglist (tag_id, photo_id) VALUES
-	(1, 7);
+/*INSERT INTO gal_taglist (tag_id, photo_id) VALUES
+	(1, 7);*/
 
 INSERT INTO gal_user (id, name, admin) VALUES
-	('1247782261', 'Ville Lahdenvuo', 1);
+	('1247782261', 'Ville Lahdenvuo', 1),;
 
-INSERT INTO gal_rating (score, user_id, photo_id) VALUES
-	(5, '1247782261', 7);
+/*INSERT INTO gal_rating (score, user_id, photo_id) VALUES
+	(5, '1247782261', 7);*/
