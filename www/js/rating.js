@@ -1,16 +1,15 @@
 (function() {
   'use strict';
 
-  var api = 'https://secure.tuhoojabotti.com/gallery/login'
+  var api = 'https://secure.tuhoojabotti.com/gallery/user/verify'
 
   angular.module('rating', [])
 
   .controller('RatingController', function ($scope, $http) {
 
     $scope.rate = function() {
-      console.log('rating!');
       $http.post(api).success(function(response) {
-        // lol
+        console.log('verified!');
       });
     }
 

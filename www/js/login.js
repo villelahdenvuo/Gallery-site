@@ -15,7 +15,7 @@
 		  // Here we specify what we do with the response anytime this event occurs.
 		  if (res.status === 'connected') {
 		  	console.log('fb logged');
-				$http.defaults.headers.common['X-AccessToken'] = res.authResponse.accessToken;
+				$http.defaults.headers.common['Authorization'] = res.authResponse.accessToken;
 		  	authService.loginConfirmed();
 		  }
 		});

@@ -14,37 +14,33 @@ module.exports = function (restify, request, mysql) {
 
 	// Load models.
 	var Photo = require('./models/photo')(db);
+	var User  = require('./models/user')(db);
 
 	// Load controllers.
 	var controllers = {};
 	controllers.photos = require('./controllers/photo')(restify, Photo);
+	controllers.users  = require('./controllers/user')(restify, request, User);
 
 	// Start server.
-	restify.CORS.ALLOW_HEADERS.push('x-accesstoken');
+	restify.CORS.ALLOW_HEADERS.push('authorization');
 	var server = restify.createServer();
 	server.use(restify.gzipResponse());
 	server.use(restify.bodyParser());
 	server.use(restify.CORS());
 	server.use(restify.fullResponse());
 
+	// Authentivation middleware.
+	var verify = require('./lib/accesstoken')(restify, request, User);
+
 	// Activate routes.
-	require('./routes')(server, controllers);
+	require('./routes')(server, controllers, verify);
 
-	function validateToken(req, res, next) {
-		if (!req.headers['x-accesstoken']) {
-			return next(new restify.UnauthorizedError("Invalid Access Token"));
-		}
-		request('https://graph.facebook.com/me?access_token=' + req.headers['x-accesstoken'],
-		function (err, res, body) {
-		  if (err) { return next(err); }
-		  console.log('USER:', JSON.parse(body));
-		  next();
-		})
-	}
-
-	server.post('/login', validateToken, function (req, res) {
+	// LOGIN TEST
+	/*var handleAccessToken = require('./lib/accesstoken')(restify, request, User);
+	server.post('/login', handleAccessToken, function (req, res) {
+		console.log('logged', req.user);
 		res.send(200);
-	});
+	});*/
 
 	server.listen(process.env.PORT, function() {
 		console.log('Server started.');

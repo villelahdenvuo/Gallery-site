@@ -28,7 +28,8 @@
     "restify": "^2.6.3",
     "dotenv": "^0.2.5",
     "mysql": "^2.1.0",
-    "request": "^2.34.0"
+    "request": "^2.34.0",
+    "string": "^1.8.0"
   },
   "engines": {
     "node": ">=0.10.16"
