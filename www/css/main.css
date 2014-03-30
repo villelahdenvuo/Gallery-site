@@ -322,12 +322,35 @@ textarea {
     font-size: 1.5em;
 
 }
+.photo-container {
+    text-align: center;
+}
 .photo-container img, .folder-container img { margin: 2px 3px 3px 2px; }
 .photo-container img {
   outline: 1px solid rgba(0, 0, 0, 0.1);
   outline-offset: -1px;
 }
 
-.login-form {
-    padding: 20px;
+#login.modal {
+    overflow-y: hidden;
+}
+
+#login .modal-content {
+    text-align: center;
+}
+
+#login .modal-header {
+    padding: 0;
+}
+
+#login .modal-body {
+    padding: 0 20px;
+}
+
+#login .fb-login-button {
+    display: inline;
+}
+
+body.modal-open {
+    margin-right:15px;
 }

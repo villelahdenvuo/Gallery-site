@@ -63,42 +63,32 @@ $(function () { run(250); });
     'rating'
   ])
 
-  /**
-   * This directive will find itself inside HTML as a class,
-   * and will remove that class, so CSS will remove loading image and show app content.
-   * It is also responsible for showing/hiding login form.
-   */
-  .directive('galleryApplication', function() {
-    return {
-      restrict: 'C',
-      link: function(scope, elem, attrs) {
-        elem.removeClass('waiting-for-angular');
+  .controller('GalleryController', function ($scope) {
+    $scope.logged = false;
+    $scope.name = '';
 
-        scope.logged = false;
-        scope.name = '';
+    $scope.$on('event:auth-loginRequired', function() {
+      $scope.logged = false;
+      console.log('show modal');
+      $('#login').modal('show');
+    });
 
-        scope.$on('event:auth-loginRequired', function() {
-          scope.logged = false;
-          console.log('logging in!');
-          $('#login').modal('show');
-        });
+    $scope.$on('event:auth-loginConfirmed', function() {
+      $scope.logged = true;
+      console.log('logged in!');
+      $('#login').modal('hide');
+      FB.api('/me', function(response) {
+        $scope.name = response.name;
+        $scope.$digest();
+      });
+    });
 
-        scope.$on('event:auth-loginConfirmed', function() {
-          scope.logged = true;
-          console.log('logged in!');
-          $('#login').modal('hide');
-          FB.api('/me', function(response) {
-            scope.name = response.name;
-            scope.$digest();
-          });
-        });
-        scope.$on('event:auth-loginCancelled', function() {
-          scope.logged = false;
-          console.log('logged out!');
-          scope.name = '';
-          scope.$digest();
-        });
-      }
-    };
+    $scope.$on('event:auth-loginCancelled', function() {
+      $scope.logged = false;
+      console.log('login cancelled!');
+      $scope.name = '';
+      $scope.$digest();
+    });
   });
+
 })();

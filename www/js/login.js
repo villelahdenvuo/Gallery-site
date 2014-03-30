@@ -3,12 +3,12 @@
 
   var api = 'https://secure.tuhoojabotti.com/gallery/';
 
-	FB.init({
+/*	FB.init({
 		appId:  '1416953981896946',
 		status: true, // check login status
 		cookie: true, // enable cookies to allow the server to access the session
-		xfbml:  true  // parse XFBML
-	});
+		xfbml:  false  // parse XFBML
+	});*/
 
   angular.module('login', ['http-auth-interceptor'])
 
@@ -16,7 +16,7 @@
 
 		FB.Event.subscribe('auth.authResponseChange', function(res) {
 		  if (res.status === 'connected') {
-		  	console.log('fb login');
+		  	console.log('fb logged in!');
 				$http.defaults.headers.common['Authorization'] = res.authResponse.accessToken;
 		  	authService.loginConfirmed();
 		  }
@@ -36,6 +36,10 @@
 				authService.loginCancelled();
 			});
     };
+
+    $('#login .cancel').click(function () {
+      authService.loginCancelled();
+    });
 	});
 
 })();
