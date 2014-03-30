@@ -35,13 +35,6 @@ module.exports = function (restify, request, mysql) {
 	// Activate routes.
 	require('./routes')(server, controllers, verify);
 
-	// LOGIN TEST
-	/*var handleAccessToken = require('./lib/accesstoken')(restify, request, User);
-	server.post('/login', handleAccessToken, function (req, res) {
-		console.log('logged', req.user);
-		res.send(200);
-	});*/
-
 	server.listen(process.env.PORT, function() {
 		console.log('Server started.');
 	});
