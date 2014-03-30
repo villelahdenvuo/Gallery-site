@@ -19,7 +19,7 @@ module.exports = function (restify, request, User) {
 
 	routes.log = function (req, res, next) {
 		console.log('logged', req.user);
-		res.send(200);
+		res.send(200, req.user);
 	};
 
 	return routes;
