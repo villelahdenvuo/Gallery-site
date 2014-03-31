@@ -11,21 +11,9 @@
 		<link rel="stylesheet" href="css/pure-min.css">
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/main.css">
-		<script src="//connect.facebook.net/en_US/all.js#xfbml=1&appId=1416953981896946"></script>
-		<script src="js/vendor/modernizr-2.6.2.min.js"></script>
-
-		<script src="js/vendor/angular.min.js"></script>
-		<script src="js/vendor/angular-animate.min.js"></script>
-		<script src="js/vendor/angular-resource.min.js"></script>
-		<script src="js/vendor/http-auth-interceptor.js"></script>
-		<script src="js/vendor/ui-bootstrap-custom-tpls-0.10.0.min.js"></script>
-
-		<script src="js/main.js"></script>
-		<script src="js/login.js"></script>
-		<script src="js/photo.js"></script>
-		<script src="js/rating.js"></script>
 	</head>
 	<body ng-app="gallery" ng-controller="GalleryController">
+		<div id="fb-root"></div>
 		<!--[if lt IE 9]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
@@ -85,6 +73,19 @@
 					<img class="fb-login" src="img/fb-login.png" ng-click="login()" />
 			</div>
     </script>
+
+		<script src="//connect.facebook.net/en_US/all.js#xfbml=1&appId=1416953981896946"></script>
+		<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+		<script src="js/vendor/angular.min.js"></script>
+		<script src="js/vendor/angular-animate.min.js"></script>
+		<script src="js/vendor/angular-resource.min.js"></script>
+		<script src="js/vendor/http-auth-interceptor.js"></script>
+		<script src="js/vendor/ui-bootstrap-custom-tpls-0.10.0.min.js"></script>
+
+		<script src="js/main.js"></script>
+		<script src="js/login.js"></script>
+		<script src="js/photo.js"></script>
+		<script src="js/rating.js"></script>
 
 		<script>
 /*		not yet	(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
