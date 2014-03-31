@@ -18,16 +18,16 @@
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
 
-		<div class="pure-menu pure-menu-open pure-menu-horizontal" ng-controller="LoginController">
+		<div class="pure-menu pure-menu-open pure-menu-horizontal">
 			<a href="https://tuhoojabotti.com" class="pure-menu-heading">My Portfolio</a>
 
-			<ul>
+			<ul ng-controller="LoginController">
 				<li class="pure-menu-selected"><a href="/">Pictures</a></li>
 				<li><a href="#">Tags</a></li>
 				<li><a href="#">Search</a></li>
-				<li ng-if="!logged"><a ng-click="login()">Log in</a></li>
+				<li ng-if="!logged"><a ng-click="verify()">Log in</a></li>
 				<li ng-if="logged"><a ng-click="logout()">Log out</a></li>
-				<li ng-cloak ng-if="name">Hello {{name}}!</li>
+				<li ng-cloak ng-if="name" ng-click="verify()">Hello {{name}}!</li>
 			</ul>
 		</div>
 
@@ -85,7 +85,6 @@
 		<script src="js/main.js"></script>
 		<script src="js/login.js"></script>
 		<script src="js/photo.js"></script>
-		<script src="js/rating.js"></script>
 
 		<script>
 /*		not yet	(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

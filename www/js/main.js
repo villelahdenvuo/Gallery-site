@@ -1,46 +1,36 @@
 (function() {
   'use strict';
 
-  angular.module('gallery', [
+  var gallery = angular.module('gallery', [
     'http-auth-interceptor',
-    'ui.bootstrap',
     'login',
-    'rating',
     'photo'
-  ])
+  ]);
 
   // The URL of the REST API.
-  .constant('apiUrl', 'https://secure.tuhoojabotti.com/gallery/')
+  gallery.constant('apiUrl', 'https://secure.tuhoojabotti.com/gallery/');
 
-  .controller('GalleryController', function ($scope, $modal, authService) {
+  gallery.controller('GalleryController',
+  function ($log, $scope, loginModal, authService) {
+
     $scope.logged = false;
     $scope.name = '';
 
-    $scope.$on('event:auth-loginRequired', function() {
+    $scope.$on('event:auth-loginRequired', function () {
       $scope.logged = false;
-      console.log('show modal');
+    	$scope.modal = loginModal();
 
-      $scope.modalInstance = $modal.open({
-        templateUrl: 'facebookLogin.html',
-        backdrop: 'static',
-        keyboard: false,
-        controller: function ($scope) {
-          $scope.login = FB.login.bind(FB);
-        }
-      })
-
-      $scope.modalInstance.result.catch(function () {
+      $scope.modal.result.catch(function () {
         authService.loginCancelled();
       });
     });
 
-    $scope.$on('event:auth-loginConfirmed', function() {
+    $scope.$on('event:auth-loginConfirmed', function () {
+      $log.debug('login confirmed!');
       $scope.logged = true;
-      console.log('login confirmed!');
 
-      // If we logged via the modal, close it.
-      if ($scope.modalInstance) {
-        $scope.modalInstance.close();
+      if ($scope.modal) {
+        $scope.modal.close();
       }
 
       FB.api('/me', function(response) {
@@ -49,8 +39,8 @@
       });
     });
 
-    $scope.$on('event:auth-loginCancelled', function() {
-      console.log('login cancelled!');
+    $scope.$on('event:auth-loginCancelled', function () {
+      $log.debug('login cancelled!');
       $scope.logged = false;
       $scope.name = '';
     });

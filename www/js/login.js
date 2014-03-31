@@ -1,5 +1,5 @@
 (function() {
-  'use strict';
+	'use strict';
 
 /*	FB.init({
 		appId:  '1416953981896946',
@@ -8,35 +8,54 @@
 		xfbml:  false  // parse XFBML
 	});*/
 
-  angular.module('login', ['http-auth-interceptor'])
+	var login = angular.module('login', [
+		'http-auth-interceptor',
+		'ui.bootstrap'
+	]);
 
-  .controller('LoginController', function (apiUrl, $scope, $http, authService) {
+	login.factory('loginModal', function ($log, $modal) {
+		function ctrl($scope) {
+			$scope.login = FB.login;
+		}
+		return function loginModal() {
+			$log.debug('showing modal');
+			return $modal.open({
+				templateUrl: 'facebookLogin.html',
+				backdrop: 'static',
+				keyboard: false,
+				controller: ctrl
+			});
+		};
+	});
+
+	login.controller('LoginController',
+	function ($log, apiUrl, $scope, $http, authService) {
 
 		FB.Event.subscribe('auth.authResponseChange', function(res) {
-		  if (res.status === 'connected') {
-		  	console.log('fb logged in!');
+			if (res.status === 'connected') {
+				$log.debug('fb logged in!');
 				$http.defaults.headers.common['Authorization'] = res.authResponse.accessToken;
-		  	authService.loginConfirmed();
-		  }
+				authService.loginConfirmed();
+			}
 		});
 
 		// for testing only
-    $scope.login = function() {
-      $http.post(apiUrl + 'user/verify').success(function(res) {
-        console.log('api verified!', res);
-      });
-    };
+		$scope.verify = function() {
+			$http.post(apiUrl + 'user/verify').success(function(res) {
+				$log.debug('api verified!', res);
+			});
+		};
 
-    $scope.logout = function() {
-    	// Remove access token.
-    	delete $http.defaults.headers.common['Authorization'];
-    	// Log out from Facebook.
+		$scope.logout = function() {
+			// Remove access token.
+			delete $http.defaults.headers.common['Authorization'];
+			// Log out from Facebook.
 			FB.logout(function(response) {
-				console.log('fb logout');
+				$log.debug('fb logout');
 				authService.loginCancelled();
 				$scope.$digest(); // Tell Angular to update.
 			});
-    };
+		};
 	});
 
 })();
