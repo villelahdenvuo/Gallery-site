@@ -3,11 +3,14 @@
 
   angular.module('gallery', [
     'http-auth-interceptor',
+    'ui.bootstrap',
     'login',
     'rating',
-    'photo',
-    'ui.bootstrap'
+    'photo'
   ])
+
+  // The URL of the REST API.
+  .constant('apiUrl', 'https://secure.tuhoojabotti.com/gallery/')
 
   .controller('GalleryController', function ($scope, $modal, authService) {
     $scope.logged = false;
