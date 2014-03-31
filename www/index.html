@@ -8,18 +8,18 @@
 		<title>Gallery</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.4.2/pure-min.css">
-		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="css/pure-min.css">
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/main.css">
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 		<script src="//connect.facebook.net/en_US/all.js#xfbml=1&appId=1416953981896946"></script>
 		<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+
 		<script src="js/vendor/angular.min.js"></script>
 		<script src="js/vendor/angular-animate.min.js"></script>
 		<script src="js/vendor/angular-resource.min.js"></script>
 		<script src="js/vendor/http-auth-interceptor.js"></script>
-		<script src="js/vendor/bootstrap.min.js"></script>
+		<script src="js/vendor/ui-bootstrap-custom-tpls-0.10.0.min.js"></script>
+
 		<script src="js/main.js"></script>
 		<script src="js/login.js"></script>
 		<script src="js/photo.js"></script>
@@ -39,7 +39,7 @@
 				<li><a href="#">Search</a></li>
 				<li ng-if="!logged"><a ng-click="login()">Log in</a></li>
 				<li ng-if="logged"><a ng-click="logout()">Log out</a></li>
-				<li ng-if="name">Hello {{name}}!</li>
+				<li ng-cloak ng-if="name">Hello {{name}}!</li>
 			</ul>
 		</div>
 
@@ -73,22 +73,18 @@
 			</div>
 		</div>
 
-		<div id="login" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
-			<div class="modal-dialog modal-sm">
-				<div class="modal-content">
-					<header class="modal-header"><h1>Log in first!</h1></header>
-					<div class="modal-body">
-						<p>You have to log in to rate, no personal information will be saved.</p>
-						<p><strong>Bonus:</strong> your access to protected folders will be remembered.</p>
-					</div>
-					<div class="modal-footer">
-						<button class="cancel pure-button" data-dismiss="modal">Not now</button>
-						<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false"></div>
-					</div>
+    <script type="text/ng-template" id="facebookLogin.html">
+			<div class="modal-content">
+				<header class="modal-header"><h1>Log in first!</h1></header>
+				<div class="modal-body">
+					<p>You have to log in to rate, no personal information will be saved.</p>
+					<p><strong>Bonus:</strong> your access to protected folders will be remembered.</p>
 				</div>
+				<div class="modal-footer">
+					<button class="cancel pure-button" ng-click="$dismiss()">Not now</button>
+					<img class="fb-login" src="img/fb-login.png" ng-click="login()" />
 			</div>
-		</div>
-
+    </script>
 
 		<script>
 /*		not yet	(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

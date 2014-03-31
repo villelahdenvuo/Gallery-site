@@ -22,7 +22,7 @@
 		  }
 		});
 
-		// for testing
+		// for testing only
     $scope.login = function() {
       $http.post(api + 'user/verify').success(function(res) {
         console.log('api verified!', res);
@@ -30,16 +30,15 @@
     };
 
     $scope.logout = function() {
+    	// Remove access token.
+    	delete $http.defaults.headers.common['Authorization'];
+    	// Log out from Facebook.
 			FB.logout(function(response) {
 				console.log('fb logout');
-				delete $http.defaults.headers.common['Authorization'];
 				authService.loginCancelled();
+				$scope.$digest(); // Tell Angular to update.
 			});
     };
-
-    $('#login .cancel').click(function () {
-      authService.loginCancelled();
-    });
 	});
 
 })();

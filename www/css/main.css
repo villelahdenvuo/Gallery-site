@@ -331,24 +331,28 @@ textarea {
   outline-offset: -1px;
 }
 
-#login.modal {
+.modal {
     overflow-y: hidden;
 }
 
-#login .modal-content {
+.modal-dialog {
+    width: 500px;
+}
+
+.modal-content {
     text-align: center;
 }
 
-#login .modal-header {
+.modal-header {
     padding: 0;
 }
 
-#login .modal-body {
+.modal-body {
     padding: 0 20px;
 }
 
-#login .fb-login-button {
-    display: inline;
+.fb-login {
+    cursor: pointer;
 }
 
 body.modal-open {
@@ -356,7 +360,7 @@ body.modal-open {
 }
 
 .animate-repeat.ng-enter-stagger {
-  transition-delay: 0.05s;
+  transition-delay: 0.07s;
   transition-duration: 0s;
 }
 
