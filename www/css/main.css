@@ -252,6 +252,22 @@ textarea {
   outline-offset: -1px;
 }
 
+.photo-container .thumb {
+  display: inline-block;
+  position: relative;
+}
+
+.thumb span {
+  position: absolute;
+  top: 0;
+  cursor: pointer;
+  color: white;
+}
+
+.thumb img {
+  transition: width 0.3s, height 0.5s;
+}
+
 /* Login modal */
 .modal {
     overflow-y: hidden;
@@ -293,7 +309,7 @@ body.modal-open {
 .animate-repeat.ng-move,
 .animate-repeat.ng-enter,
 .animate-repeat.ng-leave {
-  transition:all linear 0.5s;
+  transition:all linear 0.3s;
 }
 
 .animate-repeat.ng-leave.ng-leave-active,

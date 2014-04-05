@@ -2,9 +2,10 @@ module.exports = function (server, routes, verify) {
 
 	get('/photos', 'photos#index');
 	get('/photo/:id', 'photos#show');
+	del('/photo/:id', verify({ admin: true }), 'photos#destroy');
 
 	get('/users', 'users#index');
-	post('/user/verify', verify, 'users#log');
+	post('/user/verify', verify(), 'users#log');
 	get('/user/:id', 'users#show');
 
 
@@ -18,9 +19,10 @@ module.exports = function (server, routes, verify) {
 			return c;
 		});
 		params.unshift(route);
-		console.log('Routing', route, '->', controllers);
+		console.log('Routing', method.toUpperCase(), route, '->', controllers);
 		server[method].apply(server, params);
 	}
-	function get(route) { use.call(null, 'get', route, [].slice.call(arguments).slice(1)); }
-	function post(route) { use.call(null, 'post', route, [].slice.call(arguments).slice(1)); }
+	function get(route) { use.call(null, 'get', route, [].slice.call(arguments, 1)); }
+	function post(route) { use.call(null, 'post', route, [].slice.call(arguments, 1)); }
+	function del(route) { use.call(null, 'del', route, [].slice.call(arguments, 1)); }
 };

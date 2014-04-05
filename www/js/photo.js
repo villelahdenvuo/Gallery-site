@@ -3,23 +3,34 @@
 
   var api = 'https://secure.tuhoojabotti.com/gallery/';
 
-  angular.module('photo', ['ngResource', 'ngAnimate'])
+  var photo = angular.module('photo', ['ngResource', 'ngAnimate']);
 
-  .controller('PhotoController', function ($scope, $resource) {
-    var Photo = $resource(api + 'photo/:photoId', {photoId:'@id'},
+  photo.controller('PhotoController', function ($timeout, $log, $scope, $resource) {
+    var Photo = $resource(api + 'photo/:photoId', { photoId:'@id' },
       {
-        'get':  { method: 'GET' },
-        'save': { method: 'POST' },
-        'all':  { method: 'GET', isArray: true, url: api + 'photos' }
+        'get':    { method: 'GET' },
+        'save':   { method: 'POST' },
+        'all':    { method: 'GET', isArray: true, url: api + 'photos' },
+        'delete': { method: 'DELETE' }
       });
 
     $scope.photos = Photo.all();
 
-  })
+    $scope.destroy = function (photo) {
+      photo.$delete(function () {
+        $log.info('deleted photo', photo, $scope.photos.indexOf(photo));
+        $scope.photos.splice($scope.photos.indexOf(photo), 1);
+        $timeout(layout.bind(null, 250), 400);
+      }, function (err) {
+        $log.error('failed to delete photo', photo, err);
+      });
+    };
 
-  .directive('runLayout', function ($timeout) {
+  });
+
+  photo.directive('runLayout', function ($timeout) {
     return function(scope, element, attrs) {
-      if (scope.$last){
+      if (scope.$last) {
         // Do after rendering.
         $timeout(function () {
           layout(250);

@@ -61,8 +61,23 @@ function create(isNew, data) {
 
 	// Persist method.
 	props.save = { value: persist.bind(self, data, isNew) };
+	if (!isNew) {
+		props.destroy = { value: destroy.bind(self, data) };
+	} else {
+		props.destroy = { value: noop };
+	}
+
 
 	return Object.defineProperties(data, props);
+}
+
+function noop(cb) { cb(null); }
+
+function destroy(data, cb) {
+	this.db.query('DELETE FROM ?? WHERE ? LIMIT 1', [this.model.table, { id: data.id }], function (err, rows, fields) {
+		console.log(arguments);
+		cb(err);
+	});
 }
 
 function persist(data, isNew, cb) {

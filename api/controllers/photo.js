@@ -19,6 +19,15 @@ module.exports = function (restify, Photo) {
 				res.send(photo);
 			});
 		});
+	};
+
+	routes.destroy = function (req, res, next) {
+		Photo.findOne({id: req.params.id}, function (err, photo) {
+			if (!photo) { return next(new restify.NotFoundError('Requested photo not found.')); }
+			photo.destroy(function (err) {
+				res.send(err || 204);
+			});
+		});
 	}
 
 	return routes;

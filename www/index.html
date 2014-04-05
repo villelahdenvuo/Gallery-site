@@ -57,7 +57,12 @@
 				</div>
 			</div>
 			<div class="photo-container pure-u-1" ng-controller="PhotoController">
-				<img class="animate-repeat" ng-repeat="photo in photos" ng-src="{{photo.path}}" data-width="{{photo.width}}" data-height="{{photo.height}}" run-layout/>
+				<div class="animate-repeat thumb" ng-repeat="photo in photos" run-layout>
+						<img ng-src="{{photo.path}}"
+							data-width="{{photo.width}}"
+							data-height="{{photo.height}}"/>
+						<span ng-click="destroy(photo)">x</span>
+				</div>
 			</div>
 		</div>
 
