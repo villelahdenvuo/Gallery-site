@@ -16,13 +16,12 @@
 
     $scope.photos = Photo.all();
 
-    $scope.destroy = function (photo) {
-      photo.$delete(function () {
+    $scope.destroy = function ($event, photo) {
+      angular.element($event.target).parent().addClass('delete');
+      photo.$delete(function (value, responseHeaders) {
         $log.info('deleted photo', photo, $scope.photos.indexOf(photo));
         $scope.photos.splice($scope.photos.indexOf(photo), 1);
         $timeout(layout.bind(null, 250), 400);
-      }, function (err) {
-        $log.error('failed to delete photo', photo, err);
       });
     };
 

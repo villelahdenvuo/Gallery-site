@@ -43,6 +43,8 @@
       $log.debug('login cancelled!');
       $scope.logged = false;
       $scope.name = '';
+      // If we were deleting a node, reset it.
+      angular.element(document.querySelector('.thumb.delete')).removeClass('delete');
     });
   });
 

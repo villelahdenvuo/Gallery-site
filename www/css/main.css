@@ -265,7 +265,12 @@ textarea {
 }
 
 .thumb img {
-  transition: width 0.3s, height 0.5s;
+  transition: width 0.3s, height 0.5s, border 0.3s;
+  box-sizing: border-box;
+}
+
+.thumb.delete img {
+  border: 5px solid red;
 }
 
 /* Login modal */
@@ -322,4 +327,8 @@ body.modal-open {
 .animate-repeat.ng-move.ng-move-active,
 .animate-repeat.ng-enter.ng-enter-active {
   opacity:1;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
 }

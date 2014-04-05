@@ -25,8 +25,8 @@
 				<li class="pure-menu-selected"><a href="/">Pictures</a></li>
 				<li><a href="#">Tags</a></li>
 				<li><a href="#">Search</a></li>
-				<li ng-if="!logged"><a ng-click="verify()">Log in</a></li>
-				<li ng-if="logged"><a ng-click="logout()">Log out</a></li>
+				<!-- <li ng-cloak ng-if="!logged"><a ng-click="verify()">Log in</a></li> -->
+				<li ng-cloak ng-if="logged"><a ng-click="logout()">Log out</a></li>
 				<li ng-cloak ng-if="name" ng-click="verify()">Hello {{name}}!</li>
 			</ul>
 		</div>
@@ -61,7 +61,7 @@
 						<img ng-src="{{photo.path}}"
 							data-width="{{photo.width}}"
 							data-height="{{photo.height}}"/>
-						<span ng-click="destroy(photo)">x</span>
+						<span ng-click="destroy($event, photo)">x</span>
 				</div>
 			</div>
 		</div>
