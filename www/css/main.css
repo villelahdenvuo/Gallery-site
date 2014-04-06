@@ -254,35 +254,14 @@ textarea {
 
 .photo-container .thumb {
   display: inline-block;
-  position: relative;
-}
-
-.thumb i {
-  text-shadow: 0 0 3px black;
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  cursor: pointer;
-  color: white;
-  opacity: 0;
-  font-size: 18px;
-}
-
-.thumb:hover i {
-  opacity: 1;
 }
 
 .thumb img {
-  transition: width 0.3s, height 0.5s, border 0.3s;
-  box-sizing: border-box;
+  transition: width 0.3s, height 0.5s;
 }
 
 .thumb.delete img {
   border: 5px solid red;
-}
-
-.modal {
-    overflow-y: hidden;
 }
 
 body.modal-open {
@@ -290,6 +269,10 @@ body.modal-open {
 }
 
 /* Login modal */
+.modal.login {
+    overflow-y: hidden;
+}
+
 .modal.login .modal-dialog {
     width: 500px;
 }
@@ -311,7 +294,7 @@ body.modal-open {
 }
 
 .modal.photo .modal-dialog {
-  width: 50%;
+  width: 70%;
 }
 
 .modal.photo .modal-body img {
@@ -320,6 +303,15 @@ body.modal-open {
 
 [contenteditable] {
   border: 1px dashed transparent;
+}
+
+[contenteditable=true]:empty {
+  width: 13px;
+  padding: 0 3px;
+}
+
+[contenteditable=true]:empty:after {
+  content: '...';
 }
 
 [contenteditable=true] {
@@ -358,9 +350,31 @@ body.modal-open {
   display: none !important;
 }
 
+.button-success,
+.button-error,
+.button-warning,
 .button-secondary {
-  background: rgb(66, 184, 221);
   color: white;
   border-radius: 4px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.button-success {
+  background: rgb(28, 184, 65); /* this is a green */
+}
+
+.button-error {
+  background: rgb(202, 60, 60); /* this is a maroon */
+}
+
+.button-warning {
+  background: rgb(223, 117, 20); /* this is an orange */
+}
+
+.button-secondary {
+  background: rgb(66, 184, 221); /* this is a light blue */
+}
+
+i.fa {
+  width: 13px;
 }

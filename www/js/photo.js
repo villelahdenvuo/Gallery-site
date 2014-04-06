@@ -25,6 +25,7 @@
           templateUrl: 'photo.html',
           windowClass: 'photo',
           controller: ['$stateParams', '$scope', 'Photo', function ($stateParams, $scope, Photo) {
+            $scope.photo = Photo.get({ id: $stateParams.id });
             $scope.editing = 'fa-edit';
 
             $scope.edit = function () {
@@ -47,10 +48,16 @@
               $scope.editing = 'fa-edit';
             };
 
-            $scope.photo = Photo.get({ id: $stateParams.id });
+            $scope.destroy = function () {
+              $scope.photo.$delete(function () {
+                $log.info('deleted photo', $scope.photo);
+                $scope.$close();
+                $state.go('home', {}, { reload: true });
+              });
+            };
           }]
         }).result.catch(function () {
-          $log.debug('login modal dissmissed');
+          $log.debug('photo dismissed');
           $state.go('home');
         });
       }
@@ -69,13 +76,12 @@
             $scope.submit = function () {
               Photo.create($scope.photo, function () {
                 $scope.$close();
-                //$state.go('home');
                 $state.go('home', {}, { reload: true });
               });
             }
           }]
         }).result.catch(function () {
-          $log.debug('login modal dissmissed');
+          $log.debug('new photo modal dismissed');
           $state.go('home');
         });
       }
@@ -84,20 +90,6 @@
 
   photo.controller('PhotoController', function (apiUrl, $timeout, $log, $scope, Photo) {
     $scope.photos = Photo.all();
-
-    $scope.destroy = function ($event, photo) {
-      angular.element($event.target).parent().addClass('delete');
-      photo.$delete(function (value, responseHeaders) {
-        $log.info('deleted photo', photo, $scope.photos.indexOf(photo));
-        $scope.photos.splice($scope.photos.indexOf(photo), 1);
-        $timeout(layout.bind(null, MAX_HEIGHT), 350);
-      });
-    };
-
-    $scope.$on('event:auth-loginCancelled', function () {
-      angular.element(document.querySelector('.thumb.delete')).removeClass('delete');
-    });
-
   });
 
   photo.directive('runLayout', function ($timeout) {
@@ -130,7 +122,8 @@
       img.style.width = height * img.dataset.width / img.dataset.height + 'px';
       img.style.height = height + 'px';
       // Load smaller image.
-      //$(images[i]).attr('src', $(images[i]).attr('src').replace(/w[0-9]+-h[0-9]+/, 'w' + $(images[i]).width() + '-h' + $(images[i]).height()));
+      //$(images[i]).attr('src', $(images[i]).attr('src')
+      //.replace(/w[0-9]+-h[0-9]+/, 'w' + $(images[i]).width() + '-h' + $(images[i]).height()));
     }
   }
 

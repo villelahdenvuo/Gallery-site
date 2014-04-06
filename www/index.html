@@ -28,7 +28,6 @@
 <!-- 				<li><a href="#">Tags</a></li>
 				<li><a href="#">Search</a></li> -->
 				<li><a href="/photo/new">Add photo</a></li>
-				<!-- <li ng-cloak ng-if="!logged"><a ng-click="verify()">Log in</a></li> -->
 				<li ng-cloak ng-if="logged"><a ng-click="logout()">Log out</a></li>
 				<li ng-cloak ng-if="name" ng-click="verify()">Hello {{name}}!</li>
 			</ul>
@@ -71,7 +70,6 @@
 								data-width="{{photo.width}}"
 								data-height="{{photo.height}}"/>
 						</a>
-						<i ng-click="destroy($event, photo)" class="fa fa-trash-o"></i>
 				</div>
 			</div>
 		</script>
@@ -80,8 +78,8 @@
 			<div class="modal-content">
 				<header class="modal-header"><h1>Log in first!</h1></header>
 				<div class="modal-body">
-					<p>You have to log in to rate, no personal information will be saved.</p>
-					<p><strong>Bonus:</strong> your access to protected folders will be remembered.</p>
+					<p>You have to log in to do that, no personal information will be saved.</p>
+					<!--<p><strong>Bonus:</strong> your access to protected folders will be remembered.</p>-->
 				</div>
 				<div class="modal-footer">
 					<button class="pure-button" ng-click="$dismiss()">Not now</button>
@@ -99,13 +97,17 @@
 	      </header>
 				<div class="modal-body"><img ng-src="{{photo.path}}"/></div>
 				<div class="modal-footer">
-	  			<span class="description"
+	  			<p class="description"
+	  			  style="float:left"
 	  				contenteditable="{{editing === 'fa-save'}}"
 		        ng-model="photo.description"
 		        strip-br="true"
-		        ng-keydown="keydown($event)"></span>
+		        ng-keydown="keydown($event)"></p>
 					<button class="pure-button button-secondary" ng-click="edit()">
 						<i class="fa" ng-class="editing"></i>
+					</button>
+					<button class="pure-button button-warning" ng-click="destroy($event, photo)">
+						<i class="fa fa-trash-o"></i>
 					</button>
 					<button class="pure-button" ng-click="$dismiss()">Close</button>
 			</div>

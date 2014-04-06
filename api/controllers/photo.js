@@ -4,6 +4,7 @@ module.exports = function (restify, Photo) {
 	// List all photos.
 	routes.index = function (req, res) {
 		Photo.all(function (err, photos) {
+			photos.reverse();
 			res.send(err || photos);
 		});
 	};
