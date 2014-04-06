@@ -310,6 +310,10 @@ body.modal-open {
     cursor: pointer;
 }
 
+.modal.photo .modal-dialog {
+  width: 50%;
+}
+
 .modal.photo .modal-body img {
   width: 100%;
 }

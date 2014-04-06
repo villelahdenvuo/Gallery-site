@@ -25,8 +25,8 @@
 
 			<ul ng-controller="LoginController">
 				<li class="pure-menu-selected"><a href="/">Pictures</a></li>
-				<li><a href="#">Tags</a></li>
-				<li><a href="#">Search</a></li>
+<!-- 				<li><a href="#">Tags</a></li>
+				<li><a href="#">Search</a></li> -->
 				<li><a href="/photo/new">Add photo</a></li>
 				<!-- <li ng-cloak ng-if="!logged"><a ng-click="verify()">Log in</a></li> -->
 				<li ng-cloak ng-if="logged"><a ng-click="logout()">Log out</a></li>
@@ -35,13 +35,13 @@
 		</div>
 
 		<div class="pure-g">
-			<div class="folder-container pure-u-1">
+<!-- 			<div class="folder-container pure-u-1">
 				<div class="folder"><span>Funny</span></div>
 				<div class="folder"><span>Nature</span></div>
 				<div class="folder"><span>Secret</span></div>
 				<div class="folder"><span>Portraits</span></div>
-			</div>
-			<div class="toolbar pure-u-1-2">
+			</div> -->
+<!-- 			<div class="toolbar pure-u-1-2">
 				<div class="pure-menu pure-menu-open pure-menu-horizontal">
 					<span class="pure-menu-heading">Navigation</span>
 					<ul>
@@ -58,7 +58,7 @@
 						<li><a href="#">View tags</a></li>
 					</ul>
 				</div>
-			</div>
+			</div> -->
 
 			<section ui-view></section>
 		</div>
