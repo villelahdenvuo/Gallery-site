@@ -1,9 +1,15 @@
 # Apache Server Configs v1.1.0 | MIT License
 # https://github.com/h5bp/server-configs-apache
 
-# (!) Using `.htaccess` files slows down Apache, therefore, if you have access
-# to the main server config file (usually called `httpd.conf`), you should add
-# this logic there: http://httpd.apache.org/docs/current/howto/htaccess.html.
+RewriteEngine on
+
+# Don't rewrite files or directories
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Rewrite everything else to index.html to allow html5 state links
+RewriteRule ^ index.html [L]
 
 # ##############################################################################
 # # CROSS-ORIGIN RESOURCE SHARING (CORS)                                       #
@@ -34,25 +40,11 @@
 # http://httpd.apache.org/docs/current/content-negotiation.html#multiviews
 # http://www.webmasterworld.com/apache/3808792.htm
 
-Options -MultiViews
-
-# ------------------------------------------------------------------------------
-# | Custom error messages / pages                                              |
-# ------------------------------------------------------------------------------
-
-# You can customize what Apache returns to the client in case of an error (see
-# http://httpd.apache.org/docs/current/mod/core.html#errordocument), e.g.:
-
-ErrorDocument 404 /404.html
-
+# Options -MultiViews
 
 # ##############################################################################
 # # INTERNET EXPLORER                                                          #
 # ##############################################################################
-
-# ------------------------------------------------------------------------------
-# | Better website experience                                                  |
-# ------------------------------------------------------------------------------
 
 # Force IE to render pages in the highest available mode in the various
 # cases when it may not: http://hsivonen.iki.fi/doctype/ie-mode.pdf.
@@ -65,29 +57,6 @@ ErrorDocument 404 /404.html
         Header unset X-UA-Compatible
     </FilesMatch>
 </IfModule>
-
-# ------------------------------------------------------------------------------
-# | Cookie setting from iframes                                                |
-# ------------------------------------------------------------------------------
-
-# Allow cookies to be set from iframes in IE.
-
-# <IfModule mod_headers.c>
-#   Header set P3P "policyref=\"/w3c/p3p.xml\", CP=\"IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT\""
-# </IfModule>
-
-# ------------------------------------------------------------------------------
-# | Screen flicker                                                             |
-# ------------------------------------------------------------------------------
-
-# Stop screen flicker in IE on CSS rollovers (this only works in
-# combination with the `ExpiresByType` directives for images from below).
-
-# BrowserMatch "MSIE" brokenvary=1
-# BrowserMatch "Mozilla/4.[0-9]{2}" brokenvary=1
-# BrowserMatch "Opera" !brokenvary
-# SetEnvIf brokenvary 1 force-no-vary
-
 
 # ##############################################################################
 # # MIME TYPES AND ENCODING                                                    #

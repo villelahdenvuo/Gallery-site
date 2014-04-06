@@ -4,6 +4,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 	<head>
+		<base href="http://gallery.tuhoojabotti.com/">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>Gallery</title>
 		<meta name="description" content="">
@@ -11,6 +12,7 @@
 		<link rel="stylesheet" href="css/pure-min.css">
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/main.css">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	</head>
 	<body ng-app="gallery" ng-controller="GalleryController">
 		<div id="fb-root"></div>
@@ -56,17 +58,24 @@
 					</ul>
 				</div>
 			</div>
-			<div class="photo-container pure-u-1" ng-controller="PhotoController">
-				<div class="animate-repeat thumb" ng-repeat="photo in photos" run-layout>
-						<img ng-src="{{photo.path}}"
-							data-width="{{photo.width}}"
-							data-height="{{photo.height}}"/>
-						<span ng-click="destroy($event, photo)">x</span>
-				</div>
-			</div>
+
+			<section ui-view></section>
 		</div>
 
-    <script type="text/ng-template" id="facebookLogin.html">
+		<script type="text/ng-template" id="index.html">
+			<div class="photo-container pure-u-1" ng-controller="PhotoController">
+				<div class="animate-repeat thumb" ng-repeat="photo in photos" run-layout>
+						<a ng-href="/photo/{{photo.id}}">
+							<img ng-src="{{photo.path}}"
+								data-width="{{photo.width}}"
+								data-height="{{photo.height}}"/>
+						</a>
+						<i ng-click="destroy($event, photo)" class="fa fa-trash-o"></i>
+				</div>
+			</div>
+		</script>
+
+		<script type="text/ng-template" id="login.html">
 			<div class="modal-content">
 				<header class="modal-header"><h1>Log in first!</h1></header>
 				<div class="modal-body">
@@ -74,18 +83,44 @@
 					<p><strong>Bonus:</strong> your access to protected folders will be remembered.</p>
 				</div>
 				<div class="modal-footer">
-					<button class="cancel pure-button" ng-click="$dismiss()">Not now</button>
+					<button class="pure-button" ng-click="$dismiss()">Not now</button>
 					<img class="fb-login" src="img/fb-login.png" ng-click="login()" />
 			</div>
-    </script>
+		</script>
 
-		<script src="//connect.facebook.net/en_US/all.js#xfbml=1&appId=1416953981896946"></script>
+		<script type="text/ng-template" id="photo.html">
+			<div class="modal-content">
+				<header class="modal-header">
+					<h1 contenteditable="{{editing === 'fa-save'}}"
+		        ng-model="photo.name"
+		        strip-br="true"
+		        ng-keydown="keydown($event)"></h1>
+	      </header>
+				<div class="modal-body">
+					{{params}}
+					<img ng-src="{{photo.path}}"/>
+				</div>
+				<div class="modal-footer">
+	  			<span contenteditable="{{editing === 'fa-save'}}"
+		        ng-model="photo.description"
+		        strip-br="true"
+		        ng-keydown="keydown($event)"></span>
+					<button class="pure-button button-secondary" ng-click="edit()">
+						<i class="fa" ng-class="editing"></i>
+					</button>
+					<button class="pure-button" ng-click="$dismiss()">Close</button>
+			</div>
+		</script>
+
 		<script src="js/vendor/modernizr-2.6.2.min.js"></script>
 		<script src="js/vendor/angular.min.js"></script>
+		<script src="js/vendor/angular-ui-router.min.js"></script>
 		<script src="js/vendor/angular-animate.min.js"></script>
 		<script src="js/vendor/angular-resource.min.js"></script>
 		<script src="js/vendor/http-auth-interceptor.js"></script>
 		<script src="js/vendor/ui-bootstrap-custom-tpls-0.10.0.min.js"></script>
+		<script src="js/vendor/angular-contenteditable.js"></script>
+		<script src="js/vendor/string.js"></script>
 
 		<script src="js/main.js"></script>
 		<script src="js/login.js"></script>

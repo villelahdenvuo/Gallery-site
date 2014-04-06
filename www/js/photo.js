@@ -1,19 +1,62 @@
 (function() {
   'use strict';
 
-  var api = 'https://secure.tuhoojabotti.com/gallery/';
+  var MAX_HEIGHT = 350;
 
-  var photo = angular.module('photo', ['ngResource', 'ngAnimate']);
+  var photo = angular.module('photo', ['ngResource', 'ngAnimate', 'contenteditable']);
 
-  photo.controller('PhotoController', function ($timeout, $log, $scope, $resource) {
-    var Photo = $resource(api + 'photo/:photoId', { photoId:'@id' },
+  photo.factory('Photo', ['$resource', 'apiUrl', function ($resource, apiUrl) {
+    return $resource(apiUrl + 'photo/:id', { id:'@id' },
       {
         'get':    { method: 'GET' },
         'save':   { method: 'POST' },
-        'all':    { method: 'GET', isArray: true, url: api + 'photos' },
+        'all':    { method: 'GET', isArray: true, url: apiUrl + 'photos' },
         'delete': { method: 'DELETE' }
       });
+  }])
 
+  photo.config(function ($stateProvider) {
+    $stateProvider.state('home.photo', {
+      url: 'photo/{id:[0-9]{1,10}}',
+      onEnter: function($log, $state, $modal) {
+        $log.debug('showing photo modal');
+        $modal.open({
+          templateUrl: 'photo.html',
+          windowClass: 'photo',
+          controller: ['$stateParams', '$scope', 'Photo', function ($stateParams, $scope, Photo) {
+            $scope.editing = 'fa-edit';
+
+            $scope.edit = function () {
+              if ($scope.editing === 'fa-edit') {
+                $scope.editing = 'fa-save';
+              } else {
+                $scope.photo.description = cleanString($scope.photo.description);
+                $scope.photo.name = cleanString($scope.photo.name);
+                $scope.photo.$save(function () {
+                  $log.debug('changes saved');
+                  $scope.editing = 'fa-edit';
+                });
+              }
+            };
+
+            $scope.keydown = function ($event) {
+              if ($event.which !== 13) { return; }
+              // On enter, save changes.
+              $scope.edit();
+              $scope.editing = 'fa-edit';
+            };
+
+            $scope.photo = Photo.get({ id: $stateParams.id });
+          }]
+        }).result.catch(function () {
+          $log.debug('login modal dissmissed');
+          $state.go('home');
+        });
+      }
+    });
+  });
+
+  photo.controller('PhotoController', function (apiUrl, $timeout, $log, $scope, Photo) {
     $scope.photos = Photo.all();
 
     $scope.destroy = function ($event, photo) {
@@ -21,9 +64,17 @@
       photo.$delete(function (value, responseHeaders) {
         $log.info('deleted photo', photo, $scope.photos.indexOf(photo));
         $scope.photos.splice($scope.photos.indexOf(photo), 1);
-        $timeout(layout.bind(null, 250), 400);
+        $timeout(layout.bind(null, MAX_HEIGHT), 350);
       });
     };
+
+    $scope.show = function (photo) {
+
+    };
+
+    $scope.$on('event:auth-loginCancelled', function () {
+      angular.element(document.querySelector('.thumb.delete')).removeClass('delete');
+    });
 
   });
 
@@ -32,11 +83,15 @@
       if (scope.$last) {
         // Do after rendering.
         $timeout(function () {
-          layout(250);
+          layout(MAX_HEIGHT);
         });
       }
     }
   });
+
+  function cleanString(str) {
+    return S(str).stripTags().decodeHTMLEntities().collapseWhitespace().s;
+  }
 
   function getheight(images, width) {
     width -= images.length * 5;
@@ -82,5 +137,5 @@
     }
   }
 
-  window.addEventListener('resize', function () { layout(250); });
+  window.addEventListener('resize', function () { layout(MAX_HEIGHT); });
 })();

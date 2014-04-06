@@ -84,13 +84,15 @@ function persist(data, isNew, cb) {
 	var self = this, clone = Object.create(data);
 	if (isNew) {
 		self.db.query('INSERT INTO ?? SET ?', [self.model.table, data], function (err, rows, fields) {
-			console.log(arguments);
+			//console.log(arguments);
+			cb(err);
 		});
 	} else {
 		var id = clone.id;
 		delete clone.id;
 		self.db.query('UPDATE ?? SET ? WHERE id = ?', [self.model.table, clone, id], function (err, rows, fields) {
-			console.log(arguments);
+			//console.log(arguments);
+			cb(err);
 		});
 	}
 }

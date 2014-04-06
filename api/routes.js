@@ -3,6 +3,7 @@ module.exports = function (server, routes, verify) {
 	get('/photos', 'photos#index');
 	get('/photo/:id', 'photos#show');
 	del('/photo/:id', verify({ admin: true }), 'photos#destroy');
+	post('/photo/:id', verify({ admin: true }), 'photos#save');
 
 	get('/users', 'users#index');
 	post('/user/verify', verify(), 'users#log');

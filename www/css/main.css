@@ -257,11 +257,19 @@ textarea {
   position: relative;
 }
 
-.thumb span {
+.thumb i {
+  text-shadow: 0 0 3px black;
   position: absolute;
-  top: 0;
+  top: 6px;
+  left: 6px;
   cursor: pointer;
   color: white;
+  opacity: 0;
+  font-size: 18px;
+}
+
+.thumb:hover i {
+  opacity: 1;
 }
 
 .thumb img {
@@ -273,33 +281,33 @@ textarea {
   border: 5px solid red;
 }
 
-/* Login modal */
 .modal {
     overflow-y: hidden;
 }
 
-.modal-dialog {
+body.modal-open {
+    margin-right: 15px;
+}
+
+/* Login modal */
+.modal.login .modal-dialog {
     width: 500px;
 }
 
-.modal-content {
+.modal.login .modal-content {
     text-align: center;
 }
 
-.modal-header {
+.modal.login .modal-header {
     padding: 0;
 }
 
-.modal-body {
+.modal.login .modal-body {
     padding: 0 20px;
 }
 
 .fb-login {
     cursor: pointer;
-}
-
-body.modal-open {
-    margin-right: 15px;
 }
 
 .animate-repeat.ng-enter-stagger {
@@ -331,4 +339,11 @@ body.modal-open {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
+}
+
+.button-secondary {
+  background: rgb(66, 184, 221);
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
