@@ -22,18 +22,17 @@
   });
 
   gallery.controller('GalleryController',
-  function ($log, $scope, $state, authService) {
+  function ($log, $scope, $state, authService, loginModal) {
 
     $scope.logged = false;
     $scope.name = '';
 
     $scope.$on('event:auth-loginRequired', function () {
       $scope.logged = false;
-      $state.go('home.login');
+      loginModal();
     });
 
     $scope.$on('event:auth-loginConfirmed', function () {
-      $state.go('home');
       $log.debug('login confirmed!');
       $scope.logged = true;
 

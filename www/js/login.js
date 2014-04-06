@@ -6,34 +6,29 @@
 		'ui.bootstrap'
 	]);
 
-	login.config(function ($stateProvider) {
-		$stateProvider.state('home.login', {
-			url: 'login',
-			onEnter: function($log, $state, $modal, $http, authService) {
-				$log.debug('showing login modal');
-				$modal.open({
-					templateUrl: 'login.html',
-					backdrop: 'static',
-					keyboard: false,
-					windowClass: 'login',
-					controller: ['$scope', function ($scope) {
-						$scope.login = FB.login;
+	login.factory('loginModal', function ($http, $log, $modal, authService) {
+		return function () {
+			$modal.open({
+				templateUrl: 'login.html',
+				backdrop: 'static',
+				keyboard: false,
+				windowClass: 'login',
+				controller: ['$scope', function ($scope) {
+					$scope.login = FB.login;
 
-						FB.Event.subscribe('auth.login', function (res) {
-							if (res.status !== 'connected') { return; }
-							$log.debug('fb logged in!');
-							$http.defaults.headers.common['Authorization'] = res.authResponse.accessToken;
-							$scope.$close();
-							authService.loginConfirmed();
-						});
-					}]
-				}).result.catch(function () {
-					$log.debug('login modal dissmissed');
-					authService.loginCancelled();
-					$state.go('home');
-				});
-			}
-		});
+					FB.Event.subscribe('auth.login', function (res) {
+						if (res.status !== 'connected') { return; }
+						$log.debug('fb logged in!');
+						$http.defaults.headers.common['Authorization'] = res.authResponse.accessToken;
+						$scope.$close();
+						authService.loginConfirmed();
+					});
+				}]
+			}).result.catch(function () {
+				$log.debug('login modal dissmissed');
+				authService.loginCancelled();
+			});
+		};
 	});
 
 	login.controller('LoginController',

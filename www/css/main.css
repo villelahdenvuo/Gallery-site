@@ -310,6 +310,10 @@ body.modal-open {
     cursor: pointer;
 }
 
+.modal.photo .modal-body img {
+  width: 100%;
+}
+
 .animate-repeat.ng-enter-stagger {
   transition-delay: 0.07s;
   transition-duration: 0s;

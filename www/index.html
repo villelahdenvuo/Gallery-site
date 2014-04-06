@@ -101,7 +101,8 @@
 					<img ng-src="{{photo.path}}"/>
 				</div>
 				<div class="modal-footer">
-	  			<span contenteditable="{{editing === 'fa-save'}}"
+	  			<span class="description"
+	  				contenteditable="{{editing === 'fa-save'}}"
 		        ng-model="photo.description"
 		        strip-br="true"
 		        ng-keydown="keydown($event)"></span>
