@@ -318,6 +318,15 @@ body.modal-open {
   width: 100%;
 }
 
+[contenteditable] {
+  border: 1px dashed transparent;
+}
+
+[contenteditable=true] {
+  border: 1px dashed #66f;
+  border-radius: 4px;
+}
+
 .animate-repeat.ng-enter-stagger {
   transition-delay: 0.07s;
   transition-duration: 0s;

@@ -69,7 +69,8 @@
             $scope.submit = function () {
               Photo.create($scope.photo, function () {
                 $scope.$close();
-                $state.go('home');
+                //$state.go('home');
+                $state.go('home', {}, { reload: true });
               });
             }
           }]
@@ -91,10 +92,6 @@
         $scope.photos.splice($scope.photos.indexOf(photo), 1);
         $timeout(layout.bind(null, MAX_HEIGHT), 350);
       });
-    };
-
-    $scope.show = function (photo) {
-
     };
 
     $scope.$on('event:auth-loginCancelled', function () {
