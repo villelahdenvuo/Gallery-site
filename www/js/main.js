@@ -18,7 +18,7 @@
       templateUrl: "index.html"
     });
     // Rewrite all non-existent routes to index.
-    //$urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/');
   });
 
   gallery.controller('GalleryController',

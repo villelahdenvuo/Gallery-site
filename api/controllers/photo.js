@@ -30,6 +30,22 @@ module.exports = function (restify, Photo) {
 		});
 	}
 
+	routes.create = function (req, res, next) {
+		var data = {
+			path: req.params.url,
+			name: req.params.name,
+			description: req.params.description,
+			width: req.params.width,
+			height: req.params.height,
+			folder_id: 1
+		};
+
+		photo = Photo.create(data);
+		photo.save(function (err) {
+			res.send(err || 204);
+		});
+	}
+
 	routes.save = function (req, res, next) {
 		Photo.findOne({id: req.params.id}, function (err, photo) {
 			if (!photo) { return next(new restify.NotFoundError('Requested photo not found.')); }

@@ -27,6 +27,7 @@
 				<li class="pure-menu-selected"><a href="/">Pictures</a></li>
 				<li><a href="#">Tags</a></li>
 				<li><a href="#">Search</a></li>
+				<li><a href="/photo/new">Add photo</a></li>
 				<!-- <li ng-cloak ng-if="!logged"><a ng-click="verify()">Log in</a></li> -->
 				<li ng-cloak ng-if="logged"><a ng-click="logout()">Log out</a></li>
 				<li ng-cloak ng-if="name" ng-click="verify()">Hello {{name}}!</li>
@@ -96,10 +97,7 @@
 		        strip-br="true"
 		        ng-keydown="keydown($event)"></h1>
 	      </header>
-				<div class="modal-body">
-					{{params}}
-					<img ng-src="{{photo.path}}"/>
-				</div>
+				<div class="modal-body"><img ng-src="{{photo.path}}"/></div>
 				<div class="modal-footer">
 	  			<span class="description"
 	  				contenteditable="{{editing === 'fa-save'}}"
@@ -110,6 +108,47 @@
 						<i class="fa" ng-class="editing"></i>
 					</button>
 					<button class="pure-button" ng-click="$dismiss()">Close</button>
+			</div>
+		</script>
+
+		<script type="text/ng-template" id="new-photo.html">
+			<div class="modal-content">
+				<header class="modal-header"><h1>New photo</h1></header>
+				<div class="modal-body">
+
+					<form class="pure-form pure-form-aligned" ng-submit="submit()">
+					    <fieldset>
+					        <div class="pure-control-group">
+					            <label for="url">Url</label>
+					            <input id="url" type="text" placeholder="http://..."  ng-model="photo.url">
+					        </div>
+
+					        <div class="pure-control-group">
+					            <label for="name">Name</label>
+					            <input id="name" placeholder="Special Name For You" ng-model="photo.name">
+					        </div>
+
+					        <div class="pure-control-group">
+					            <label for="description">Description</label>
+					            <input id="description" placeholder="This photo is ..." ng-model="photo.description">
+					        </div>
+
+					        <div class="pure-control-group">
+					            <label for="width">Width</label>
+					            <input id="width" placeholder="x px" ng-model="photo.width">
+					        </div>
+
+					        <div class="pure-control-group">
+					            <label for="height">Height</label>
+					            <input id="height" placeholder="x px" ng-model="photo.height">
+					        </div>
+					    </fieldset>
+					</form>
+
+				</div>
+				<div class="modal-footer">
+					<button class="pure-button" ng-click="$dismiss()">Close</button>
+					<button class="pure-button pure-button-primary" ng-click="submit()">Create</button>
 			</div>
 		</script>
 

@@ -11,7 +11,8 @@
         'get':    { method: 'GET' },
         'save':   { method: 'POST' },
         'all':    { method: 'GET', isArray: true, url: apiUrl + 'photos' },
-        'delete': { method: 'DELETE' }
+        'delete': { method: 'DELETE' },
+        'create': { method: 'PUT' }
       });
   }])
 
@@ -47,6 +48,30 @@
             };
 
             $scope.photo = Photo.get({ id: $stateParams.id });
+          }]
+        }).result.catch(function () {
+          $log.debug('login modal dissmissed');
+          $state.go('home');
+        });
+      }
+    });
+
+    $stateProvider.state('home.new', {
+      url: 'photo/new',
+      onEnter: function($log, $state, $modal) {
+        $log.debug('showing new photo modal');
+        $modal.open({
+          templateUrl: 'new-photo.html',
+          windowClass: 'photo',
+          controller: ['$stateParams', '$scope', 'Photo', function ($stateParams, $scope, Photo) {
+            $scope.photo = {};
+
+            $scope.submit = function () {
+              Photo.create($scope.photo, function () {
+                $scope.$close();
+                $state.go('home');
+              });
+            }
           }]
         }).result.catch(function () {
           $log.debug('login modal dissmissed');
