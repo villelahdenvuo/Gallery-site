@@ -2,7 +2,7 @@ module.exports = function (restify, Photo) {
 	var routes = {};
 
 	// List all photos.
-	routes.index = function (req, res) {
+	routes.index = function index(req, res) {
 		Photo.all(function (err, photos) {
 			photos.reverse();
 			res.send(err || photos);
@@ -10,7 +10,7 @@ module.exports = function (restify, Photo) {
 	};
 
 	// Get a single image by id.
-	routes.show = function (req, res, next) {
+	routes.show = function show(req, res, next) {
 		// TODO: validate id as Number.
 		Photo.findOne({id: req.params.id}, function (err, photo) {
 			if (!photo) { return next(new restify.NotFoundError('Requested photo not found.')); }
@@ -22,7 +22,7 @@ module.exports = function (restify, Photo) {
 		});
 	};
 
-	routes.destroy = function (req, res, next) {
+	routes.destroy = function destroy(req, res, next) {
 		Photo.findOne({id: req.params.id}, function (err, photo) {
 			if (!photo) { return next(new restify.NotFoundError('Requested photo not found.')); }
 			photo.destroy(function (err) {
@@ -31,7 +31,7 @@ module.exports = function (restify, Photo) {
 		});
 	}
 
-	routes.create = function (req, res, next) {
+	routes.create = function create(req, res, next) {
 		var data = {
 			path: req.params.url,
 			name: req.params.name,
@@ -47,7 +47,7 @@ module.exports = function (restify, Photo) {
 		});
 	}
 
-	routes.save = function (req, res, next) {
+	routes.save = function save(req, res, next) {
 		Photo.findOne({id: req.params.id}, function (err, photo) {
 			if (!photo) { return next(new restify.NotFoundError('Requested photo not found.')); }
 			console.log(photo, req.params);
