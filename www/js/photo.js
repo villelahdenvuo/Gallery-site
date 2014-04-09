@@ -5,6 +5,11 @@
 
   var photo = angular.module('photo', ['ngResource', 'ngAnimate', 'contenteditable']);
 
+  photo.run(function  ($templateCache, $http) {
+    // Preload show template.
+    $http.get('views/photo/show.html', { cache: $templateCache });
+  });
+
   photo.factory('Photo', ['$resource', 'apiUrl', function ($resource, apiUrl) {
     return $resource(apiUrl + 'photo/:id', { id:'@id' },
       {
@@ -17,12 +22,38 @@
   }])
 
   photo.config(function ($stateProvider) {
-    $stateProvider.state('home.photo', {
+    function handleScroll(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    function stopScroll() {
+      angular.element(document.body).on('mousewheel', handleScroll);
+    }
+
+    function startScroll() {
+      angular.element(document.body).off('mousewheel', handleScroll);
+    }
+
+
+    $stateProvider.state("photos", {
+      url: '/',
+      templateUrl: "views/photo/index.html",
+      controller: 'PhotosController'
+      //controllerAs: 'PhotosController'
+    });
+
+    $stateProvider.state('photos.photo', {
       url: 'photo/{id:[0-9]{1,10}}',
-      onEnter: function($log, $state, $modal) {
+      views: {
+        "photo": { templateUrl: 'views/photo/show.html', controller: 'PhotoController' }
+      },
+      onEnter: stopScroll,
+      onExit: startScroll
+      /*onEnter: function($log, $state, $modal) {
         $log.debug('showing photo modal');
         $modal.open({
-          templateUrl: 'photo.html',
+          templateUrl: 'views/photo/show.html',
           windowClass: 'photo',
           controller: ['$stateParams', '$scope', 'Photo', function ($stateParams, $scope, Photo) {
             $scope.photo = Photo.get({ id: $stateParams.id });
@@ -60,7 +91,7 @@
           $log.debug('photo dismissed');
           $state.go('home');
         });
-      }
+      }*/
     });
 
     $stateProvider.state('home.new', {
@@ -68,8 +99,8 @@
       onEnter: function($log, $state, $modal) {
         $log.debug('showing new photo modal');
         $modal.open({
-          templateUrl: 'new-photo.html',
-          windowClass: 'photo',
+          templateUrl: 'views/photo/new.html',
+          windowClass: 'new-photo',
           controller: ['$stateParams', '$scope', 'Photo', function ($stateParams, $scope, Photo) {
             $scope.photo = {};
 
@@ -88,12 +119,50 @@
     });
   });
 
-  photo.controller('PhotoController', function (apiUrl, $timeout, $log, $scope, Photo) {
+  photo.controller('PhotosController', function ($scope, Photo) {
     $scope.photos = Photo.all();
+  });
+
+  photo.controller('PhotoController', function ($log, $stateParams, $scope, Photo) {
+    $scope.photo = Photo.get({ id: $stateParams.id });
+    $scope.editing = 'fa-edit';
+
+    $scope.edit = function () {
+      if ($scope.editing === 'fa-edit') {
+        $scope.editing = 'fa-save';
+      } else {
+        $scope.photo.description = cleanString($scope.photo.description);
+        $scope.photo.name = cleanString($scope.photo.name);
+        $scope.photo.$save(function () {
+          $log.debug('changes saved');
+          $scope.editing = 'fa-edit';
+        });
+      }
+    };
+
+    $scope.keydown = function ($event) {
+      if ($event.which !== 13) { return; }
+      // On enter, save changes.
+      $scope.edit();
+      $scope.editing = 'fa-edit';
+    };
+
+    $scope.destroy = function () {
+      $scope.photo.$delete(function () {
+        $log.info('deleted photo', $scope.photo);
+        $scope.$close();
+        $state.go('home', {}, { reload: true });
+      });
+    };
   });
 
   photo.directive('runLayout', function ($timeout) {
     return function(scope, element, attrs) {
+      element.find('img').on('load', function () {
+        //console.log(this);
+        angular.element(this).removeClass('hidden');
+      });
+
       if (scope.$last) {
         // Do after rendering.
         $timeout(function () {
@@ -127,14 +196,14 @@
     }
   }
 
-  function resize(images, width) {
+/*  function resize(images, width) {
     setheight(images, getheight(images, width));
-  }
+  }*/
 
   function layout(max_height) {
-    var size = window.innerWidth - 10;
+    var size = window.innerWidth - 15;
     var n = 0;
-    var images = [].slice.call(document.querySelectorAll('.photo-container img'));
+    var images = [].slice.call(document.querySelectorAll('.photos-container img'));
     w: while (images.length > 0) {
       for (var i = 1; i < images.length + 1; ++i) {
         var slice = images.slice(0, i);

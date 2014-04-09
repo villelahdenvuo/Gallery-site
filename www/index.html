@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html>
 	<head>
 		<base href="http://gallery.tuhoojabotti.com/">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,70 +7,30 @@
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="css/pure-min.css">
-		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css"><!-- Just for modal -->
 		<link rel="stylesheet" href="css/main.css">
 		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	</head>
 	<body ng-app="gallery" ng-controller="GalleryController">
 		<div id="fb-root"></div>
-		<!--[if lt IE 9]>
-			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-		<![endif]-->
+		<!--[if lt IE 9]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
 
-		<div class="pure-menu pure-menu-open pure-menu-horizontal">
-			<a href="https://tuhoojabotti.com" class="pure-menu-heading">My Portfolio</a>
+		<nav class="pure-menu pure-menu-open pure-menu-horizontal">
+			<a href="https://tuhoojabotti.com" class="pure-menu-heading">My Portfolio site</a>
 
 			<ul ng-controller="LoginController">
 				<li class="pure-menu-selected"><a href="/">Pictures</a></li>
-<!-- 				<li><a href="#">Tags</a></li>
-				<li><a href="#">Search</a></li> -->
 				<li><a href="/photo/new">Add photo</a></li>
 				<li ng-cloak ng-if="logged"><a ng-click="logout()">Log out</a></li>
-				<li ng-cloak ng-if="name" ng-click="verify()">Hello {{name}}!</li>
+				<li ng-cloak ng-if="name">Hello {{name}}!</li>
 			</ul>
+		</nav>
+
+		<div class="content pure-g">
+			<div ui-view></div>
 		</div>
 
-		<div class="pure-g">
-<!-- 			<div class="folder-container pure-u-1">
-				<div class="folder"><span>Funny</span></div>
-				<div class="folder"><span>Nature</span></div>
-				<div class="folder"><span>Secret</span></div>
-				<div class="folder"><span>Portraits</span></div>
-			</div> -->
-<!-- 			<div class="toolbar pure-u-1-2">
-				<div class="pure-menu pure-menu-open pure-menu-horizontal">
-					<span class="pure-menu-heading">Navigation</span>
-					<ul>
-						<li><a href="#">Root</a></li> /
-						<li><a href="#">You are here</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="toolbar pure-u-1-2">
-				<div class="pure-menu pure-menu-open pure-menu-horizontal">
-					<span class="pure-menu-heading">Tools</span>
-					<ul>
-						<li><a href="#">Download as ZIP</a></li>
-						<li><a href="#">View tags</a></li>
-					</ul>
-				</div>
-			</div> -->
-
-			<section ui-view></section>
-		</div>
-
-		<script type="text/ng-template" id="index.html">
-			<div class="photo-container pure-u-1" ng-controller="PhotoController">
-				<div class="animate-repeat thumb" ng-repeat="photo in photos" run-layout>
-						<a ng-href="/photo/{{photo.id}}">
-							<img ng-src="{{photo.path}}"
-								data-width="{{photo.width}}"
-								data-height="{{photo.height}}"/>
-						</a>
-				</div>
-			</div>
-		</script>
-
+		<!-- Login modal -->
 		<script type="text/ng-template" id="login.html">
 			<div class="modal-content">
 				<header class="modal-header"><h1>Log in first!</h1></header>
@@ -84,72 +41,6 @@
 				<div class="modal-footer">
 					<button class="pure-button" ng-click="$dismiss()">Not now</button>
 					<img class="fb-login" src="img/fb-login.png" ng-click="login()" />
-			</div>
-		</script>
-
-		<script type="text/ng-template" id="photo.html">
-			<div class="modal-content">
-				<header class="modal-header">
-					<h1 contenteditable="{{editing === 'fa-save'}}"
-		        ng-model="photo.name"
-		        strip-br="true"
-		        ng-keydown="keydown($event)"></h1>
-	      </header>
-				<div class="modal-body"><img class="absoluteCenter" ng-src="{{photo.path}}"/></div>
-				<div class="modal-footer">
-	  			<p class="description"
-	  			  style="float:left"
-	  				contenteditable="{{editing === 'fa-save'}}"
-		        ng-model="photo.description"
-		        strip-br="true"
-		        ng-keydown="keydown($event)"></p>
-					<button class="pure-button button-secondary" ng-click="edit()">
-						<i class="fa" ng-class="editing"></i>
-					</button>
-					<button class="pure-button button-warning" ng-click="destroy($event, photo)">
-						<i class="fa fa-trash-o"></i>
-					</button>
-					<button class="pure-button" ng-click="$dismiss()">Close</button>
-			</div>
-		</script>
-
-		<script type="text/ng-template" id="new-photo.html">
-			<div class="modal-content">
-				<form class="pure-form pure-form-aligned" ng-submit="submit()">
-					<header class="modal-header"><h1>New photo</h1></header>
-					<div class="modal-body">
-				    <fieldset>
-				        <div class="pure-control-group">
-				            <label for="url">Url</label>
-				            <input id="url" type="url" placeholder="http://..."  ng-model="photo.url" required>
-				        </div>
-
-				        <div class="pure-control-group">
-				            <label for="name">Name</label>
-				            <input id="name" placeholder="Special Name For You" ng-model="photo.name" required>
-				        </div>
-
-				        <div class="pure-control-group">
-				            <label for="description">Description</label>
-				            <input id="description" placeholder="This photo is ..." ng-model="photo.description">
-				        </div>
-
-				        <div class="pure-control-group">
-				            <label for="width">Width</label>
-				            <input id="width" type="number" placeholder="x px" ng-model="photo.width" required>
-				        </div>
-
-				        <div class="pure-control-group">
-				            <label for="height">Height</label>
-				            <input id="height" type="number" placeholder="x px" ng-model="photo.height" required>
-				        </div>
-				    </fieldset>
-					</div>
-					<div class="modal-footer">
-						<a class="pure-button" ng-click="$dismiss()">Close</a>
-						<button class="pure-button pure-button-primary">Create</button>
-					</div>
-					</form>
 			</div>
 		</script>
 

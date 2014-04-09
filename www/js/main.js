@@ -13,10 +13,6 @@
 
   gallery.config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
     $locationProvider.html5Mode(true);
-    $stateProvider.state("home", {
-      url: '/',
-      templateUrl: "index.html"
-    });
     // Rewrite all non-existent routes to index.
     $urlRouterProvider.otherwise('/');
   });

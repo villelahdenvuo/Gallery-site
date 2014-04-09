@@ -1,0 +1,25 @@
+<article class="photo">
+	<header>
+		<a class="back" href="/"><i class="fa fa-angle-double-left"></i></a>
+		<h1 contenteditable="{{editing === 'fa-save'}}"
+			ng-model="photo.name"
+			strip-br="true"
+			ng-keydown="keydown($event)"></h1>
+		<span class="buttons">
+			<a class="pure-button button-secondary" ng-click="edit()">
+				<i class="fa" ng-class="editing"></i>
+			</a>
+			<a class="pure-button button-warning" ng-click="destroy($event, photo)">
+				<i class="fa fa-trash-o"></i>
+			</a>
+		</span>
+	</header>
+	<div class="photo-wrapper"><img class="absoluteCenter" ng-src="{{photo.path}}"/></div>
+	<footer>
+		<span class="description"
+			contenteditable="{{editing === 'fa-save'}}"
+			ng-model="photo.description"
+			strip-br="true"
+			ng-keydown="keydown($event)"></span>
+	</footer>
+</article>
