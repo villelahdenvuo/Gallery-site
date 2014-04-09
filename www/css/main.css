@@ -293,12 +293,58 @@ body.modal-open {
     cursor: pointer;
 }
 
-.modal.photo .modal-dialog {
-  width: 70%;
+.modal.photo * {
+  box-sizing: border-box;
 }
 
-.modal.photo .modal-body img {
-  width: 100%;
+.modal.photo .modal-dialog {
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 30px 0;
+}
+
+.modal.photo .modal-content {
+  height: 100%;
+}
+
+.modal.photo .modal-header, .modal.photo .modal-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.modal.photo .modal-header {
+  top: 0;
+}
+
+.modal.photo .modal-footer {
+  bottom: 0;
+}
+
+.modal.photo .modal-body {
+  height: 100%;
+  text-align: center;
+}
+
+.absoluteCenter {
+   margin: auto;
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+}
+
+/* Sizing */
+img.absoluteCenter {
+   max-width: 100%;
+   max-height: 70%;
+}
+
+/* Adding some styles to make it more visible */
+img.absoluteCenter {
+ background:#3c6a9d;
 }
 
 [contenteditable] {
