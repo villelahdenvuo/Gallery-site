@@ -126,7 +126,7 @@ body.modal-open {
   position: relative;
 }
 
-.photo h1 {
+.photo header h1 {
   display: inline;
 }
 
@@ -151,9 +151,15 @@ body.modal-open {
   bottom: 0;
 }
 
-.photo .modal-body {
-  height: 100%;
+.photo .error {
   text-align: center;
+  margin-top: 200px;
+}
+
+.photo .error h1 {
+  font-size: 8em;
+  text-shadow: 3px 2px 10px #666;
+  margin: 0.3em 0;
 }
 
 .absoluteCenter {

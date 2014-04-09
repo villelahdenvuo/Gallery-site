@@ -32,6 +32,7 @@
       url: 'photo/{id:[0-9]{1,10}}',
       templateUrl: 'views/photo/show.html',
       controller: 'PhotoController',
+      controllerAs: 'Photo',
       onEnter: stopScroll,
       onExit: startScroll
     });
@@ -65,9 +66,16 @@
     $scope.photos = Photo.all();
   });
 
-  photo.controller('PhotoController', function ($log, $stateParams, $scope, Photo) {
-    $scope.photo = Photo.get({ id: $stateParams.id });
+  photo.controller('PhotoController', function ($log, $state, $stateParams, $scope, Photo) {
     $scope.editing = 'fa-edit';
+    $scope.error = false;
+
+    $scope.photo = Photo.get({ id: $stateParams.id }, angular.noop, function (res) {
+      $scope.error = res.data;
+      $scope.error.status = res.status;
+      $scope.photo.name = res.data.code;
+      $scope.photo.description = res.data.message;
+    });
 
     $scope.edit = function () {
       if ($scope.editing === 'fa-edit') {
@@ -92,7 +100,7 @@
     $scope.destroy = function () {
       $scope.photo.$delete(function () {
         $log.info('deleted photo', $scope.photo);
-        $state.go('home', {}, { reload: true });
+        $state.go('photos', {}, { reload: true });
       });
     };
   });

@@ -5,7 +5,7 @@
 			ng-model="photo.name"
 			strip-br="true"
 			ng-keydown="keydown($event)"></h1>
-		<span class="buttons">
+		<span class="buttons" ng-hide="error">
 			<a class="pure-button button-secondary" ng-click="edit()">
 				<i class="fa" ng-class="editing"></i>
 			</a>
@@ -14,7 +14,14 @@
 			</a>
 		</span>
 	</header>
-	<div class="photo-wrapper"><img class="absoluteCenter" ng-src="{{photo.path}}"/></div>
+	<div class="photo-wrapper">
+		<img class="absoluteCenter" ng-src="{{photo.path}}"/>
+		<div class="error" ng-show="error">
+			<h1>{{error.status}}</h1>
+			<h2>{{error.code}}</h2>
+			<i>{{error.message}}</i>
+		</div>
+	</div>
 	<footer>
 		<span class="description"
 			contenteditable="{{editing === 'fa-save'}}"
