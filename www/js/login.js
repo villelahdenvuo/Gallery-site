@@ -11,7 +11,6 @@
 			$modal.open({
 				templateUrl: 'login.html',
 				backdrop: 'static',
-				keyboard: false,
 				windowClass: 'login',
 				controller: ['$scope', function ($scope) {
 					$scope.login = FB.login;

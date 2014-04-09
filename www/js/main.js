@@ -20,6 +20,11 @@
   gallery.controller('GalleryController',
   function ($log, $scope, $state, authService, loginModal) {
 
+    // Esc to go home.
+    angular.element(document.body).on('keyup', function (e) {
+      if (e.keyCode === 27) { $state.go('photos'); }
+    });
+
     $scope.logged = false;
     $scope.name = '';
 
