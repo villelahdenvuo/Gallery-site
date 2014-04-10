@@ -13,13 +13,15 @@ module.exports = function (restify, request, mysql) {
 	db.TABLE_PREFIX = process.env.MYSQL_TABLE_PREFIX;
 
 	// Load models.
-	var Photo = require('./models/photo')(db);
-	var User  = require('./models/user')(db);
+	var Photo  = require('./models/photo')(db);
+	var User   = require('./models/user')(db);
+	var Rating = require('./models/rating')(db);
 
 	// Load controllers.
 	var controllers = {};
-	controllers.photos = require('./controllers/photo')(restify, Photo);
-	controllers.users  = require('./controllers/user')(restify, request, User);
+	controllers.photos  = require('./controllers/photo')(restify, Photo);
+	controllers.users   = require('./controllers/user')(restify, request, User);
+	controllers.ratings = require('./controllers/rating')(restify, Rating);
 
 	// Start server.
 	restify.CORS.ALLOW_HEADERS.push('authorization');

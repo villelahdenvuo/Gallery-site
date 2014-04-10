@@ -23,6 +23,8 @@ module.exports = function (server, routes, verify) {
 	pst('/photo/:id', verify({ admin: true }), 'photos#save');
 	put('/photo',     verify({ admin: true }), 'photos#create');
 
+	put('/rating', verify(), 'ratings#create');
+
 	get('/users', 'users#index');
 	get('/user/:id', 'users#show');
 };

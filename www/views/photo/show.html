@@ -28,5 +28,10 @@
 			ng-model="photo.description"
 			strip-br="true"
 			ng-keydown="keydown($event)"></span>
+ 		<span class="rating">Rating:
+ 			<rating
+ 				value="photo.rating" max="5"
+ 				ng-click="rate()"></rating>
+ 		</span>
 	</footer>
 </article>

@@ -66,7 +66,7 @@
     $scope.photos = Photo.all();
   });
 
-  photo.controller('PhotoController', function ($log, $state, $stateParams, $scope, Photo) {
+  photo.controller('PhotoController', function ($http, apiUrl, $log, $state, $stateParams, $scope, Photo) {
     $scope.editing = 'fa-edit';
     $scope.error = false;
 
@@ -102,6 +102,16 @@
         $log.info('deleted photo', $scope.photo);
         $state.go('photos', {}, { reload: true });
       });
+    };
+
+    $scope.rate = function () {
+      $http.put(apiUrl + '/rating', { photo_id: $scope.photo.id, score: $scope.photo.rating }).
+        success(function(data, status, headers, config) {
+          $log.debug(data, status);
+        }).
+        error(function(data, status, headers, config) {
+          $log.debug(data, status);
+        });
     };
   });
 
