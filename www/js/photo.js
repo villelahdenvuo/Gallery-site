@@ -104,10 +104,14 @@
       });
     };
 
-    $scope.rate = function () {
+    $scope.rate = function ($event) {
+      var elem = angular.element($event.target).parent().parent();
+      console.log(elem);
+      elem.removeClass('saved');
       $http.put(apiUrl + '/rating', { photo_id: $scope.photo.id, score: $scope.photo.rating }).
         success(function(data, status, headers, config) {
           $log.debug(data, status);
+          elem.addClass('saved');
         }).
         error(function(data, status, headers, config) {
           $log.debug(data, status);

@@ -173,6 +173,10 @@ body.modal-open {
   font-size: 1.4em;
 }
 
+.photo .rating.saved i {
+	color: red;
+}
+
 .absoluteCenter {
   margin: auto;
   position: absolute;
