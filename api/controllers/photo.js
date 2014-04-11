@@ -1,11 +1,22 @@
 module.exports = function (restify, Photo) {
+	var async = require('async');
 	var routes = {};
 
 	// List all photos.
 	routes.index = function index(req, res) {
 		Photo.all(function (err, photos) {
-			photos.reverse();
-			res.send(err || photos);
+			//photos.reverse();
+			if (err) { return next(err); }
+			// Calculate rating for each photo.
+			async.map(photos, function (photo, done) {
+				photo.averageRating(function (err, rating) {
+					photo.rating = rating || 0;
+					done(err, photo);
+				});
+			}, function (err, result) {
+				res.send(err || result);
+			});
+			//res.send(err || photos);
 		});
 	};
 

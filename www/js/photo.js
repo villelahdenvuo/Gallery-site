@@ -181,12 +181,21 @@
     }
   }
 
+  function blockEvent(e) {
+    e.preventDefault();
+    e.stopPropagration();
+  }
+
   function stopScroll() {
-    angular.element(document.body).addClass('modal-open');
+    angular.element(document.body)
+      .addClass('modal-open')
+      .on('touchmove', blockEvent);
   }
 
   function startScroll() {
-    angular.element(document.body).removeClass('modal-open');
+    angular.element(document.body)
+      .removeClass('modal-open')
+      .off('touchmove', blockEvent);
   }
 
   window.addEventListener('resize', function () { layout(MAX_HEIGHT); });

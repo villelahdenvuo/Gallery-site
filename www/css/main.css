@@ -2,15 +2,19 @@ a { cursor: pointer; }
 
 * {
   box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 html, body, .content {
   height: 100%;
+  min-width: 700px;
 }
 
 html, button, input, select, textarea {
   color: #222;
 }
+
+[ng-cloak] { display: none !important; }
 
 ::-moz-selection {
   background: #b3d4fc;
@@ -39,6 +43,7 @@ audio, canvas, img, video {
 
 nav {
   position: fixed;
+  white-space: nowrap;
 }
 
 .content {
@@ -65,6 +70,8 @@ nav {
 }
 
 .thumb img {
+  -webkit-transform: perspective(500px);
+  transform: perspective(500px);
   transition: all 0.5s, width 0.2s;
 }
 
@@ -124,13 +131,20 @@ body.modal-open {
   top: 36px;
   padding: 10px 20px 10px 45px;
   position: relative;
+  height: 58px;
 }
 
 .photo header h1 {
-  display: inline;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 80%;
+  display: inline-block;
+  overflow: hidden;
+  margin: 0;
 }
 
 .photo .back {
+	color: #222;
   display: inline-block;
   background-color: #ddd;
   padding: 15px 10px;
@@ -168,29 +182,38 @@ body.modal-open {
 
 .photo .rating i {
   width: 22px;
-  color: yellow;
+  color: #000;
   text-shadow: 0 0 4px black;
   font-size: 1.4em;
+  cursor: pointer;
 }
 
 .photo .rating.saved i {
-	color: red;
+	color: yellow;
 }
 
-.absoluteCenter {
+.photo .rating i.fa-star-o {
+	color: #000;
+}
+
+.photo-wrapper, .photo-wrapper img {
   margin: auto;
   position: absolute;
-  top: 54px;
-  bottom: 0;
   left: 0;
   right: 0;
 }
 
-/* Sizing */
+.photo-wrapper {
+  top: 94px;
+  bottom: 44px;
+}
+
 img.absoluteCenter {
   max-width: 96%;
-  max-height: 80%;
+  max-height: 93%;
   box-shadow: 0px 0px 40px black;
+  top: 0;
+  bottom: 0;
 }
 
 [contenteditable] {
@@ -209,37 +232,6 @@ img.absoluteCenter {
 [contenteditable=true] {
   border: 1px dashed #66f;
   border-radius: 4px;
-}
-
-.animate-repeat.ng-enter-stagger {
-  transition-delay: 0.07s;
-  transition-duration: 0s;
-}
-
-.animate-repeat {
-  box-sizing:border-box;
-}
-
-.animate-repeat.ng-move,
-.animate-repeat.ng-enter,
-.animate-repeat.ng-leave {
-  transition:all linear 0.3s;
-}
-
-.animate-repeat.ng-leave.ng-leave-active,
-.animate-repeat.ng-move,
-.animate-repeat.ng-enter {
-  opacity:0;
-}
-
-.animate-repeat.ng-leave,
-.animate-repeat.ng-move.ng-move-active,
-.animate-repeat.ng-enter.ng-enter-active {
-  opacity:1;
-}
-
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
 }
 
 .button-success,
@@ -269,4 +261,12 @@ img.absoluteCenter {
 
 i.fa {
   width: 13px;
+}
+
+@media only screen and (max-width: 700px) {
+  nav { display: none; }
+  .content { padding-top: 0; }
+  .photo header { top: 0; }
+  .photo-wrapper { top: 58px; }
+  .photo .buttons { display: none; }
 }
