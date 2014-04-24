@@ -69,8 +69,13 @@ function create(isNew, data) {
 	// Has many.
 	if (Array.isArray(self.model.has_many)) {
 		self.model.has_many.forEach(function (ref) {
-			var name = S(ref).capitalize().s;
-			props['get' + name + 'List'] = { value: getForeignReference.bind(self, data, ref) };
+			if (typeof ref === 'string') {
+				var name = S(ref).capitalize().s;
+				props['get' + name + 'List'] = { value: getForeignReference.bind(self, data, ref) };
+			} else if (typeof ref === 'object') {
+				var name = S(ref.what).capitalize().s;
+				props['get' + name + 'List'] = { value: getForeignReferenceThrough.bind(self, data, ref) };
+			}
 		});
 	}
 
@@ -144,6 +149,26 @@ function getForeignReference(data, table, cb) {
 		throw new Error(self.model.table + ' does not have relation with ' + table);
 	}
 	self.db.query('SELECT * FROM ?? WHERE ?? = ?', [self.db.TABLE_PREFIX + '_' + table, self.model.name + '_id', data.id], function (err, rows, fields) {
+		if (err) { return cb(err); }
+		if (!rows.length) { return cb(null, null); }
+
+		objects = rows.map(function (data) {
+			return create.call(self, false, data);
+		});
+
+		cb(null, objects);
+	});
+}
+
+function getForeignReferenceThrough(data, ref, cb) {
+	var self = this, p = self.db.TABLE_PREFIX + '_';
+	if (!data.id) {
+		console.log(self.model, data, table);
+		throw new Error(self.model.table + ' does not have relation with ' + table);
+	}
+	self.db.query('SELECT * FROM ?? a WHERE a.id IN (SELECT ?? FROM ?? b WHERE ?? = ?)',
+		[p + ref.what, ref.what + '_id', p + ref.through, 'b.' + self.model.name + '_id', data.id],
+	function (err, rows, fields) {
 		if (err) { return cb(err); }
 		if (!rows.length) { return cb(null, null); }
 

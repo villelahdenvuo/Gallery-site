@@ -28,10 +28,13 @@
 			ng-model="photo.description"
 			strip-br="true"
 			ng-keydown="keydown($event)"></span>
- 		<span class="rating">Rating:
- 			<rating
- 				value="photo.rating" max="5"
- 				ng-click="rate($event)"></rating>
+		<tags-input ng-model="photo.tags" display-property="name">
+  		<auto-complete source="loadTags($query)" min-length="2"></auto-complete>
+		</tags-input>
+ 		<span class="rating">
+			<ng-pluralize count="photo.ratingCount"
+			  when="{'0': 'No ratings', 'one': 'One rating', 'other': '{} ratings'}"></ng-pluralize>:
+ 			<rating value="photo.rating" max="5" ng-click="rate($event)"></rating>
  		</span>
 	</footer>
 </article>

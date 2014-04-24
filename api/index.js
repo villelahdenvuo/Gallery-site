@@ -16,12 +16,14 @@ module.exports = function (restify, request, mysql) {
 	var Photo  = require('./models/photo')(db);
 	var User   = require('./models/user')(db);
 	var Rating = require('./models/rating')(db);
+	var Tag    = require('./models/tag')(db);
 
 	// Load controllers.
 	var controllers = {};
 	controllers.photos  = require('./controllers/photo')(restify, Photo);
 	controllers.users   = require('./controllers/user')(restify, request, User);
 	controllers.ratings = require('./controllers/rating')(restify, Rating);
+	controllers.tags    = require('./controllers/tag')(restify, Tag);
 
 	// Start server.
 	restify.CORS.ALLOW_HEADERS.push('authorization');

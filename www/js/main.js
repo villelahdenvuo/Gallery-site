@@ -4,6 +4,7 @@
   var gallery = angular.module('gallery', [
     'http-auth-interceptor',
     'ui.router',
+    'ngTagsInput',
     'login',
     'photo'
   ]);

@@ -19,7 +19,18 @@
         'delete': { method: 'DELETE' },
         'create': { method: 'PUT' }
       });
-  }])
+  }]);
+
+  photo.factory('Tag', ['$resource', 'apiUrl', function ($resource, apiUrl) {
+    return $resource(apiUrl + 'tag/:id', { id:'@id' },
+      {
+        'get':    { method: 'GET' },
+        'save':   { method: 'POST' },
+        'all':    { method: 'GET', isArray: true, url: apiUrl + 'tags' },
+        'delete': { method: 'DELETE' },
+        'create': { method: 'PUT' }
+      });
+  }]);
 
   photo.config(function ($stateProvider) {
     $stateProvider.state("photos", {
@@ -66,7 +77,7 @@
     $scope.photos = Photo.all();
   });
 
-  photo.controller('PhotoController', function ($http, apiUrl, $log, $state, $stateParams, $scope, Photo) {
+  photo.controller('PhotoController', function ($http, apiUrl, $log, $state, $stateParams, $scope, Photo, Tag) {
     $scope.editing = 'fa-edit';
     $scope.error = false;
 
@@ -117,12 +128,15 @@
           $log.debug(data, status);
         });
     };
+
+    $scope.loadTags = function (query) {
+      return Tag.all().$promise;
+    };
   });
 
   photo.directive('runLayout', function ($timeout) {
     return function(scope, element, attrs) {
       element.find('img').on('load', function () {
-        //console.log(this);
         angular.element(this).removeClass('hidden');
       });
 

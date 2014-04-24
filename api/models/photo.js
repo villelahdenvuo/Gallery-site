@@ -4,17 +4,21 @@ module.exports = function (db) {
 	var photo = {
 		table: 'photo',
 		belongs_to: ['folder'],
-		has_many: ['rating']
+		has_many: [
+			'rating',
+			{what: 'tag', through: 'taglist'}
+		]
 	};
 
 	var helpers = photo.helpers = {};
 
 	helpers.averageRating = function (cb) {
 		this.getRatingList(function (err, ratings) {
-			if (!ratings) { return cb(null, null); }
-			cb(err, ratings.reduce(function (prev, cur) {
+			if (!ratings) { return cb(null, { average: 0, count: 0 }); }
+			var avg = ratings.reduce(function (prev, cur) {
 				return prev + cur.score;
-			}, 0) / ratings.length);
+			}, 0) / ratings.length;
+			cb(err, { average: avg, count: ratings.length });
 		});
 	};
 

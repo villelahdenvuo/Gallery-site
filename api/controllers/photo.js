@@ -2,34 +2,44 @@ module.exports = function (restify, Photo) {
 	var async = require('async');
 	var routes = {};
 
+	function populateRating(photo, cb) {
+		photo.averageRating(function (err, rating) {
+			if (err) { return cb(err); }
+			if (!rating) { return cb(err, photo); }
+			photo.rating = rating.average;
+			photo.ratingCount = rating.count;
+			cb(err);
+		});
+	}
+
+	function populateTags(photo, cb) {
+		photo.getTagList(function (err, tags) {
+			if (err) { return cb(err); }
+			photo.tags = tags || [];
+			cb(err);
+		});
+	}
+
+	var populateFields = async.applyEach([populateRating, populateTags]);
+
 	// List all photos.
 	routes.index = function index(req, res) {
 		Photo.all(function (err, photos) {
-			//photos.reverse();
 			if (err) { return next(err); }
-			// Calculate rating for each photo.
-			async.map(photos, function (photo, done) {
-				photo.averageRating(function (err, rating) {
-					photo.rating = rating || 0;
-					done(err, photo);
-				});
-			}, function (err, result) {
-				res.send(err || result);
-			});
-			//res.send(err || photos);
+
+			async.map(photos, populateFields,
+				function (err) { res.send(err || photos); });
+
 		});
 	};
 
 	// Get a single image by id.
 	routes.show = function show(req, res, next) {
-		// TODO: validate id as Number.
 		Photo.findOne({id: req.params.id}, function (err, photo) {
 			if (!photo) { return next(new restify.NotFoundError('Requested photo not found.')); }
-			// Populate rating.
-			photo.averageRating(function (err, rating) {
-				photo.rating = rating;
-				res.send(photo);
-			});
+
+			populateFields(photo, function (err) { res.send(err || photo); });
+
 		});
 	};
 
