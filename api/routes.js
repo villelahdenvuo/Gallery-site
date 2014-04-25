@@ -25,7 +25,8 @@ module.exports = function (server, routes, verify) {
 
 	put('/rating', verify(), 'ratings#create');
 
-	get('/tags', 'tags#index');
+	get('/tags',    'tags#index');
+	get('/tag/:id', 'tags#show');
 
 	get('/users', 'users#index');
 	get('/user/:id', 'users#show');

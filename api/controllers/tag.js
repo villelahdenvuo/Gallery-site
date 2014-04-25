@@ -9,5 +9,15 @@ module.exports = function (restify, Tag) {
 		});
 	};
 
+	routes.show = function index(req, res) {
+		Tag.findOne({id: req.params.id}, function (err, tag) {
+			if (!tag) { return next(new restify.NotFoundError('Requested photo not found.')); }
+
+			tag.populatePhotos(function (err) {
+				res.send(err || tag);
+			});
+		});
+	};
+
 	return routes;
 };

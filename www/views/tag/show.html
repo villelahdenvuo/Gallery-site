@@ -1,0 +1,6 @@
+<div class="photos-container pure-u-1">
+	<h1>Pictures for "{{tag.name}}"</h1>
+	<div class="animate-repeat thumb" ng-repeat="photo in tag.photos | orderBy:'rating':true" run-layout>
+		<a ng-href="/photo/{{photo.id}}"><img class="hidden" ng-src="{{photo.path}}" data-width="{{photo.width}}" data-height="{{photo.height}}"/></a>
+	</div>
+</div>

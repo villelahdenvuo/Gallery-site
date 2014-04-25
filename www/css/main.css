@@ -5,7 +5,7 @@ a { cursor: pointer; }
   -moz-box-sizing: border-box;
 }
 
-html, body, .content {
+html, body, main {
   height: 100%;
   min-width: 700px;
 }
@@ -46,7 +46,7 @@ nav {
   white-space: nowrap;
 }
 
-.content {
+main {
   padding-top: 36px;
 }
 
@@ -178,7 +178,7 @@ body.modal-open {
 
 .photo .description {
   position: relative;
-  bottom: 9px;
+  bottom: 11px;
 }
 
 .photo .rating {
@@ -272,7 +272,7 @@ i.fa {
 
 @media only screen and (max-width: 700px) {
   nav { display: none; }
-  .content { padding-top: 0; }
+  main { padding-top: 0; }
   .photo header { top: 0; }
   .photo-wrapper { top: 58px; }
   .photo .buttons { display: none; }
@@ -317,4 +317,34 @@ tags-input .tags .tag-item button {
 tags-input .autocomplete .tag-item.selected {
     color: #262626;
     background-color: #e9e9e9;
+}
+
+.fade-anim.ng-hide-add, .fade-anim.ng-hide-remove {
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
+  display: inline-block !important;
+}
+
+.fade-anim.ng-hide-add.ng-hide-add-active,
+.fade-anim.ng-hide-remove {
+  opacity: 0;
+  -webkit-transform: translateY(-60px);
+}
+
+.fade-anim.ng-hide-add,
+.fade-anim.ng-hide-remove.ng-hide-remove-active {
+  opacity: 1;
+  -webkit-transform: translateX(0);
+}
+
+ui-view {
+  width: 100%;
+}
+
+#tagsContainer {
+  margin-top: 30px;
+  width: 100%;
+  text-align: center;
 }

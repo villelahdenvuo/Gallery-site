@@ -4,10 +4,12 @@
   var gallery = angular.module('gallery', [
     'http-auth-interceptor',
     'ui.router',
+    'facebook',
     'ngTagsInput',
     'api',
     'login',
-    'photo'
+    'photo',
+    'tag'
   ]);
 
   // The URL of the REST API.
@@ -20,7 +22,7 @@
   });
 
   gallery.controller('GalleryController',
-  function ($log, $scope, $state, authService, loginModal) {
+  function ($log, $scope, $state, $facebook, authService, loginModal) {
 
     // Esc to go home.
     angular.element(document.body).on('keyup', function (e) {
@@ -37,18 +39,16 @@
 
     $scope.$on('event:auth-loginConfirmed', function () {
       $log.debug('login confirmed!');
-      $scope.logged = true;
-
-      FB.api('/me', function(response) {
-        $scope.name = response.name;
-        $scope.$digest();
+      $facebook.api('/me').then(function (res) {
+        $scope.user = res;
+        $scope.logged = true;
       });
     });
 
     $scope.$on('event:auth-loginCancelled', function () {
       $log.debug('login cancelled!');
-      $scope.logged = false;
       $scope.name = '';
+      $scope.logged = false;
     });
   });
 
