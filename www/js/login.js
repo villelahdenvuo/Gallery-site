@@ -9,7 +9,7 @@
 	login.factory('loginModal', function ($http, $log, $modal, authService) {
 		return function () {
 			$modal.open({
-				templateUrl: 'login.html',
+				templateUrl: 'views/login.html',
 				backdrop: 'static',
 				windowClass: 'login',
 				controller: ['$scope', function ($scope) {

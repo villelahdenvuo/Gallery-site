@@ -4,13 +4,13 @@
 		<base href="http://gallery.tuhoojabotti.com/">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>Gallery</title>
-		<meta name="description" content="">
+		<meta name="description" content="My best photos.">
 		<meta name="viewport" content="width=700, initial-scale=1">
 		<link rel="stylesheet" href="css/pure-min.css">
-		<link rel="stylesheet" href="css/bootstrap.min.css"><!-- Just for modal -->
+		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/ng-tags-input.min.css">
 		<link rel="stylesheet" href="css/main.css">
-		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 	</head>
 	<body ng-app="gallery" ng-controller="GalleryController">
 		<div id="fb-root"></div>
@@ -30,20 +30,6 @@
 		<div class="content pure-g">
 			<div ui-view></div>
 		</div>
-
-		<!-- Login modal -->
-		<script type="text/ng-template" id="login.html">
-			<div class="modal-content">
-				<header class="modal-header"><h1>Log in first!</h1></header>
-				<div class="modal-body">
-					<p>You have to log in to do that, no personal information will be saved.</p>
-					<!--<p><strong>Bonus:</strong> your access to protected folders will be remembered.</p>-->
-				</div>
-				<div class="modal-footer">
-					<button class="pure-button" ng-click="$dismiss()">Not now</button>
-					<img class="fb-login" src="img/fb-login.png" ng-click="login()" />
-			</div>
-		</script>
 
 		<script src="js/vendor/modernizr-2.6.2.min.js"></script>
 		<script src="js/vendor/angular.min.js"></script>
