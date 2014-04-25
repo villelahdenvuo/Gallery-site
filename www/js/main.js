@@ -5,6 +5,7 @@
     'http-auth-interceptor',
     'ui.router',
     'ngTagsInput',
+    'api',
     'login',
     'photo'
   ]);

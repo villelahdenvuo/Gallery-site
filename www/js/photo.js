@@ -1,216 +1,190 @@
-(function() {
-  'use strict';
+(function() { 'use strict';
 
-  var MAX_HEIGHT = 350;
+	var MAX_HEIGHT = 350;
 
-  var photo = angular.module('photo', ['ngResource', 'ngAnimate', 'contenteditable']);
+	var photo = angular.module('photo', ['ngResource', 'ngAnimate', 'contenteditable']);
 
-  photo.run(function  ($templateCache, $http) {
-    // Preload show template.
-    $http.get('views/photo/show.html', { cache: $templateCache });
-  });
+	photo.run(function  ($templateCache, $http) {
+		// Preload show template.
+		$http.get('views/photo/show.html', { cache: $templateCache });
+	});
 
-  photo.factory('Photo', ['$resource', 'apiUrl', function ($resource, apiUrl) {
-    return $resource(apiUrl + 'photo/:id', { id:'@id' },
-      {
-        'get':    { method: 'GET' },
-        'save':   { method: 'POST' },
-        'all':    { method: 'GET', isArray: true, url: apiUrl + 'photos' },
-        'delete': { method: 'DELETE' },
-        'create': { method: 'PUT' }
-      });
-  }]);
+	photo.config(function ($stateProvider) {
+		$stateProvider.state("photos", {
+			url: '/',
+			templateUrl: "views/photo/index.html",
+			controller: 'PhotosController'
+		});
 
-  photo.factory('Tag', ['$resource', 'apiUrl', function ($resource, apiUrl) {
-    return $resource(apiUrl + 'tag/:id', { id:'@id' },
-      {
-        'get':    { method: 'GET' },
-        'save':   { method: 'POST' },
-        'all':    { method: 'GET', isArray: true, url: apiUrl + 'tags' },
-        'delete': { method: 'DELETE' },
-        'create': { method: 'PUT' }
-      });
-  }]);
+		$stateProvider.state('photos.photo', {
+			url: 'photo/{id:[0-9]{1,10}}',
+			templateUrl: 'views/photo/show.html',
+			controller: 'PhotoController',
+			controllerAs: 'Photo',
+			onEnter: stopScroll,
+			onExit: startScroll
+		});
 
-  photo.config(function ($stateProvider) {
-    $stateProvider.state("photos", {
-      url: '/',
-      templateUrl: "views/photo/index.html",
-      controller: 'PhotosController'
-    });
+		$stateProvider.state('photos.new', {
+			url: 'photo/new',
+			onEnter: function($log, $state, $modal) {
+				$log.debug('showing new photo modal');
+				$modal.open({
+					templateUrl: 'views/photo/new.html',
+					windowClass: 'new-photo',
+					controller: ['$scope', 'Photo', function ($scope, Photo) {
+						$scope.photo = {};
 
-    $stateProvider.state('photos.photo', {
-      url: 'photo/{id:[0-9]{1,10}}',
-      templateUrl: 'views/photo/show.html',
-      controller: 'PhotoController',
-      controllerAs: 'Photo',
-      onEnter: stopScroll,
-      onExit: startScroll
-    });
+						$scope.submit = function () {
+							Photo.create($scope.photo, function () {
+								$scope.$close();
+								$state.go('photos', {}, { reload: true });
+							});
+						}
+					}]
+				}).result.catch(function () {
+					$log.debug('new photo modal dismissed');
+					$state.go('photos');
+				});
+			}
+		});
+	});
 
-    $stateProvider.state('photos.new', {
-      url: 'photo/new',
-      onEnter: function($log, $state, $modal) {
-        $log.debug('showing new photo modal');
-        $modal.open({
-          templateUrl: 'views/photo/new.html',
-          windowClass: 'new-photo',
-          controller: ['$scope', 'Photo', function ($scope, Photo) {
-            $scope.photo = {};
+	photo.controller('PhotosController', function ($scope, Photo) {
+		$scope.photos = Photo.all();
+	});
 
-            $scope.submit = function () {
-              Photo.create($scope.photo, function () {
-                $scope.$close();
-                $state.go('photos', {}, { reload: true });
-              });
-            }
-          }]
-        }).result.catch(function () {
-          $log.debug('new photo modal dismissed');
-          $state.go('photos');
-        });
-      }
-    });
-  });
+	photo.controller('PhotoController', function ($http, apiUrl, $log, $state, $stateParams, $scope, Photo, Tag, $filter) {
+		$scope.editing = 'fa-edit';
+		$scope.error = false;
 
-  photo.controller('PhotosController', function ($scope, Photo) {
-    $scope.photos = Photo.all();
-  });
+		$scope.photo = Photo.get({ id: $stateParams.id }, angular.noop, function (res) {
+			$scope.error = res.data;
+			$scope.error.status = res.status;
+			$scope.photo.name = res.data.code;
+			$scope.photo.description = res.data.message;
+		});
 
-  photo.controller('PhotoController', function ($http, apiUrl, $log, $state, $stateParams, $scope, Photo, Tag) {
-    $scope.editing = 'fa-edit';
-    $scope.error = false;
+		$scope.edit = function () {
+			if ($scope.editing === 'fa-edit') {
+				$scope.editing = 'fa-save';
+			} else {
+				$scope.photo.description = cleanString($scope.photo.description);
+				$scope.photo.name = cleanString($scope.photo.name);
+				$scope.photo.$save(function () {
+					$log.debug('changes saved');
+					$scope.editing = 'fa-edit';
+				});
+			}
+		};
 
-    $scope.photo = Photo.get({ id: $stateParams.id }, angular.noop, function (res) {
-      $scope.error = res.data;
-      $scope.error.status = res.status;
-      $scope.photo.name = res.data.code;
-      $scope.photo.description = res.data.message;
-    });
+		$scope.keydown = function ($event) {
+			if ($event.which !== 13) { return; }
+			// On enter, save changes.
+			$scope.edit();
+			$scope.editing = 'fa-edit';
+		};
 
-    $scope.edit = function () {
-      if ($scope.editing === 'fa-edit') {
-        $scope.editing = 'fa-save';
-      } else {
-        $scope.photo.description = cleanString($scope.photo.description);
-        $scope.photo.name = cleanString($scope.photo.name);
-        $scope.photo.$save(function () {
-          $log.debug('changes saved');
-          $scope.editing = 'fa-edit';
-        });
-      }
-    };
+		$scope.destroy = function () {
+			$scope.photo.$delete(function () {
+				$log.info('deleted photo', $scope.photo);
+				$state.go('photos', {}, { reload: true });
+			});
+		};
 
-    $scope.keydown = function ($event) {
-      if ($event.which !== 13) { return; }
-      // On enter, save changes.
-      $scope.edit();
-      $scope.editing = 'fa-edit';
-    };
+		$scope.rate = function ($event) {
+			var elem = angular.element($event.target).parent().parent();
+			console.log(elem);
+			elem.removeClass('saved');
+			$http.put(apiUrl + '/rating', { photo_id: $scope.photo.id, score: $scope.photo.rating })
+				.success(elem.addClass.bind(elem, 'saved'))
+		};
 
-    $scope.destroy = function () {
-      $scope.photo.$delete(function () {
-        $log.info('deleted photo', $scope.photo);
-        $state.go('photos', {}, { reload: true });
-      });
-    };
+		// Load tags and filter them by query (for tag input).
+		$scope.loadTags = function (query) {
+			return Tag.all().$promise.then(function (tags) {
+				return $filter('filter')(tags, {name: query});
+			});
+		};
+	});
 
-    $scope.rate = function ($event) {
-      var elem = angular.element($event.target).parent().parent();
-      console.log(elem);
-      elem.removeClass('saved');
-      $http.put(apiUrl + '/rating', { photo_id: $scope.photo.id, score: $scope.photo.rating }).
-        success(function(data, status, headers, config) {
-          $log.debug(data, status);
-          elem.addClass('saved');
-        }).
-        error(function(data, status, headers, config) {
-          $log.debug(data, status);
-        });
-    };
+	photo.directive('runLayout', function ($timeout) {
+		return function(scope, element, attrs) {
+			element.find('img').on('load', function () {
+				angular.element(this).removeClass('hidden');
+			});
 
-    $scope.loadTags = function (query) {
-      return Tag.all().$promise;
-    };
-  });
+			if (scope.$last) {
+				// Do after rendering.
+				$timeout(function () {
+					layout(MAX_HEIGHT);
+				});
+			}
+		}
+	});
 
-  photo.directive('runLayout', function ($timeout) {
-    return function(scope, element, attrs) {
-      element.find('img').on('load', function () {
-        angular.element(this).removeClass('hidden');
-      });
+	function cleanString(str) {
+		if (!str) { return ''; }
+		return S(str).stripTags().decodeHTMLEntities().collapseWhitespace().s;
+	}
 
-      if (scope.$last) {
-        // Do after rendering.
-        $timeout(function () {
-          layout(MAX_HEIGHT);
-        });
-      }
-    }
-  });
+	function getheight(images, width) {
+		width -= images.length * 5;
+		var h = 0;
+		for (var i = 0; i < images.length; ++i) {
+			h += images[i].dataset.width / images[i].dataset.height;
+		}
+		return width / h;
+	}
 
-  function cleanString(str) {
-    if (!str) { return ''; }
-    return S(str).stripTags().decodeHTMLEntities().collapseWhitespace().s;
-  }
+	function setheight(images, height) {
+		for (var i = 0; i < images.length; ++i) {
+			var img = images[i];
+			img.style.width = height * img.dataset.width / img.dataset.height + 'px';
+			img.style.height = height + 'px';
+			// Load smaller image.
+			//$(images[i]).attr('src', $(images[i]).attr('src')
+			//.replace(/w[0-9]+-h[0-9]+/, 'w' + $(images[i]).width() + '-h' + $(images[i]).height()));
+		}
+	}
 
-  function getheight(images, width) {
-    width -= images.length * 5;
-    var h = 0;
-    for (var i = 0; i < images.length; ++i) {
-      h += images[i].dataset.width / images[i].dataset.height;
-    }
-    return width / h;
-  }
+	function layout(max_height) {
+		var size = window.innerWidth - 15;
+		var n = 0;
+		var images = [].slice.call(document.querySelectorAll('.photos-container img'));
+		w: while (images.length > 0) {
+			for (var i = 1; i < images.length + 1; ++i) {
+				var slice = images.slice(0, i);
+				var h = getheight(slice, size);
+				if (h < max_height) {
+					setheight(slice, h);
+					n++;
+					images = images.slice(i);
+					continue w;
+				}
+			}
+			setheight(slice, Math.min(max_height, h));
+			n++;
+			break;
+		}
+	}
 
-  function setheight(images, height) {
-    for (var i = 0; i < images.length; ++i) {
-      var img = images[i];
-      img.style.width = height * img.dataset.width / img.dataset.height + 'px';
-      img.style.height = height + 'px';
-      // Load smaller image.
-      //$(images[i]).attr('src', $(images[i]).attr('src')
-      //.replace(/w[0-9]+-h[0-9]+/, 'w' + $(images[i]).width() + '-h' + $(images[i]).height()));
-    }
-  }
+	function blockEvent(e) {
+		e.preventDefault();
+		e.stopPropagration();
+	}
 
-  function layout(max_height) {
-    var size = window.innerWidth - 15;
-    var n = 0;
-    var images = [].slice.call(document.querySelectorAll('.photos-container img'));
-    w: while (images.length > 0) {
-      for (var i = 1; i < images.length + 1; ++i) {
-        var slice = images.slice(0, i);
-        var h = getheight(slice, size);
-        if (h < max_height) {
-          setheight(slice, h);
-          n++;
-          images = images.slice(i);
-          continue w;
-        }
-      }
-      setheight(slice, Math.min(max_height, h));
-      n++;
-      break;
-    }
-  }
+	function stopScroll() {
+		angular.element(document.body)
+			.addClass('modal-open')
+			.on('touchmove', blockEvent);
+	}
 
-  function blockEvent(e) {
-    e.preventDefault();
-    e.stopPropagration();
-  }
+	function startScroll() {
+		angular.element(document.body)
+			.removeClass('modal-open')
+			.off('touchmove', blockEvent);
+	}
 
-  function stopScroll() {
-    angular.element(document.body)
-      .addClass('modal-open')
-      .on('touchmove', blockEvent);
-  }
-
-  function startScroll() {
-    angular.element(document.body)
-      .removeClass('modal-open')
-      .off('touchmove', blockEvent);
-  }
-
-  window.addEventListener('resize', function () { layout(MAX_HEIGHT); });
+	window.addEventListener('resize', function () { layout(MAX_HEIGHT); });
 })();
