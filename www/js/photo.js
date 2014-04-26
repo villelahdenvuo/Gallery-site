@@ -68,12 +68,26 @@
 			});
 		};
 
-		$scope.saveTag = function  ($tag) {
+		$scope.saveTag = function ($tag) {
 			console.log($tag);
+			Tag.create({id: $scope.photo.id}, {name: $tag.name}, function (res) {
+				console.log('tag saved', res);
+			});
 		};
 
 		$scope.removeTag = function ($tag) {
 			console.log($tag);
+
+/*			Tag.get({id: $tag.id}, function (tag) {
+				console.log(tag);
+				tag.$delete({id: $scope.photo.id, name: tag.name}, function (res) {
+					console.log('tag removed', res);
+				});
+			});*/
+
+			Tag.delete({id: $scope.photo.id, name: $tag.name}, function (res) {
+				console.log('tag removed', res);
+			});
 		};
 	});
 

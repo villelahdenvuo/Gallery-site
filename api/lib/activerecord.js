@@ -52,7 +52,7 @@ ActiveRecord.prototype.findOrCreate = function(attr, cb) {
 };
 
 ActiveRecord.prototype.create = function (data) {
-	return create.call(this, true, data);
+	return create.call(this, true, data || {});
 };
 
 function create(isNew, data) {
@@ -81,6 +81,7 @@ function create(isNew, data) {
 
 	// Persist method.
 	props.save = { value: persist.bind(self, data, isNew) };
+
 	if (!isNew) {
 		props.destroy = { value: destroy.bind(self, data) };
 	} else {
@@ -109,8 +110,9 @@ function persist(data, isNew, cb) {
 	var self = this, copy = clone(data);
 	if (isNew) {
 		self.db.query('INSERT INTO ?? SET ?', [self.model.table, data], function (err, result) {
+			if (err) { return cb(err); }
 			data.id = result.insertId;
-			cb(err);
+			cb(null);
 		});
 	} else {
 		var id = copy.id;
@@ -135,11 +137,11 @@ function getOwnReference(data, table, cb) {
 	});
 }
 
-function setOwnReference(table, ref) {
+function setOwnReference(data, table, ref) {
 	if (!ref.id) {
 		throw new Error('Unable to set reference to ' + JSON.stringify(ref) + ' no ID found!');
 	}
-	this.model[table + '_id'] = ref.id;
+	data[table + '_id'] = ref.id;
 }
 
 function getForeignReference(data, table, cb) {

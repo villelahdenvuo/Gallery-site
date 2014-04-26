@@ -17,19 +17,21 @@ module.exports = function (restify, request, mysql) {
 	var User   = require('./models/user')(db);
 	var Rating = require('./models/rating')(db);
 	var Tag    = require('./models/tag')(db);
+	var TagReference = require('./models/tag-reference')(db);
 
 	// Load controllers.
 	var controllers = {};
 	controllers.photos  = require('./controllers/photo')(restify, Photo);
 	controllers.users   = require('./controllers/user')(restify, request, User);
 	controllers.ratings = require('./controllers/rating')(restify, Rating);
-	controllers.tags    = require('./controllers/tag')(restify, Tag);
+	controllers.tags    = require('./controllers/tag')(restify, Tag, Photo, TagReference);
 
 	// Start server.
 	restify.CORS.ALLOW_HEADERS.push('authorization');
 	var server = restify.createServer();
 	server.use(restify.gzipResponse());
 	server.use(restify.bodyParser());
+	server.use(restify.queryParser());
 	server.use(restify.CORS());
 	server.use(restify.fullResponse());
 

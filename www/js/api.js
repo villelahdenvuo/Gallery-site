@@ -7,7 +7,7 @@
 
 	// Photo model.
 	api.factory('Photo', ['$resource', 'apiUrl', function ($resource, apiUrl) {
-		return $resource(apiUrl + 'photo/:id', { id:'@id' },
+		return $resource(apiUrl + 'photo/:id', { id: '@id' },
 			{
 				'get':    { method: 'GET' },
 				'save':   { method: 'POST' },
@@ -19,9 +19,9 @@
 
 	// Tag model.
 	api.factory('Tag', ['$resource', 'apiUrl', function ($resource, apiUrl) {
-		return $resource(apiUrl + 'tag/:id', { id:'@id' },
+		return $resource(apiUrl + 'photo/:id/tag', { id: '@id' },
 			{
-				'get':    { method: 'GET' },
+				'get':    { method: 'GET', url: apiUrl + 'tag/:id' },
 				'save':   { method: 'POST' },
 				'all':    { method: 'GET', isArray: true, url: apiUrl + 'tags' },
 				'delete': { method: 'DELETE' },

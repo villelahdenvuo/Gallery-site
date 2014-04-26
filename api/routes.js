@@ -27,6 +27,8 @@ module.exports = function (server, routes, verify) {
 
 	get('/tags',    'tags#index');
 	get('/tag/:id', 'tags#show');
+	put('/photo/:id/tag', verify(), 'tags#create');
+	del('/photo/:id/tag', verify(), 'tags#destroy');
 
 	get('/users', 'users#index');
 	get('/user/:id', 'users#show');
