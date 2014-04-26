@@ -1,26 +1,11 @@
 (function() { 'use strict';
 
-	var MAX_HEIGHT = 350;
-
 	var tag = angular.module('tag', ['ngResource']);
-
-	tag.config(function ($stateProvider) {
-		$stateProvider.state('tags', {
-			url: '/tags',
-			templateUrl: 'views/tag/index.html',
-			controller: 'TagsController'
-		});
-
-		$stateProvider.state('tag', {
-			url: '/tag/{id:[0-9]{1,10}}',
-			templateUrl: 'views/tag/show.html',
-			controller: 'TagController'
-		});
-	});
 
 	tag.controller('TagsController', function ($scope, $timeout, Tag) {
 		Tag.all(function (tags) {
 			$scope.tags = tags;
+			// After tags are rendered, start TagCanvas.
 			$timeout(function () {
 				try {
 					TagCanvas.Start('tagsCanvas', undefined, {

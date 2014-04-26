@@ -2,61 +2,25 @@
 
 	var MAX_HEIGHT = 350;
 
-	var photo = angular.module('photo', ['ngResource', 'ngAnimate', 'contenteditable']);
-
-	photo.run(function  ($templateCache, $http) {
-		// Preload show template.
-		$http.get('views/photo/show.html', { cache: $templateCache });
-	});
-
-	photo.config(function ($stateProvider) {
-		$stateProvider.state("photos", {
-			url: '/',
-			templateUrl: "views/photo/index.html",
-			controller: 'PhotosController'
-		});
-
-		$stateProvider.state('photos.photo', {
-			url: 'photo/{id:[0-9]{1,10}}',
-			templateUrl: 'views/photo/show.html',
-			controller: 'PhotoController',
-			controllerAs: 'Photo',
-			onEnter: stopScroll,
-			onExit: startScroll
-		});
-
-		$stateProvider.state('photos.new', {
-			url: 'photo/new',
-			onEnter: function($log, $state, $modal) {
-				$log.debug('showing new photo modal');
-				$modal.open({
-					templateUrl: 'views/photo/new.html',
-					windowClass: 'new-photo',
-					controller: ['$scope', 'Photo', function ($scope, Photo) {
-						$scope.photo = {};
-
-						$scope.submit = function () {
-							Photo.create($scope.photo, function () {
-								$scope.$close();
-								$state.go('photos', {}, { reload: true });
-							});
-						}
-					}]
-				}).result.catch(function () {
-					$log.debug('new photo modal dismissed');
-					$state.go('photos');
-				});
-			}
-		});
-	});
+	var photo = angular.module('photo', ['ngResource', 'contenteditable']);
 
 	photo.controller('PhotosController', function ($scope, Photo) {
 		$scope.photos = Photo.all();
 	});
 
-	photo.controller('PhotoController', function ($http, apiUrl, $log, $state, $stateParams, $scope, Photo, Tag, $filter) {
+	photo.controller('NewPhotoController', ['$scope', '$state', 'Photo',
+	function ($scope, $state, Photo) {
+		$scope.submit = function () {
+			Photo.create($scope.photo, function () {
+				$scope.$close();
+				$state.go('photos', {}, { reload: true });
+			});
+		}
+	}]);
+
+	photo.controller('PhotoController',
+	function ($http, apiUrl, $state, $stateParams, $scope, Photo, Tag, $filter) {
 		$scope.editing = 'fa-edit';
-		$scope.error = false;
 
 		$scope.photo = Photo.get({ id: $stateParams.id }, angular.noop, function (res) {
 			$scope.error = res.data;
@@ -72,7 +36,6 @@
 				$scope.photo.description = cleanString($scope.photo.description);
 				$scope.photo.name = cleanString($scope.photo.name);
 				$scope.photo.$save(function () {
-					$log.debug('changes saved');
 					$scope.editing = 'fa-edit';
 				});
 			}
@@ -85,19 +48,17 @@
 			$scope.editing = 'fa-edit';
 		};
 
-		$scope.destroy = function () {
-			$scope.photo.$delete(function () {
-				$log.info('deleted photo', $scope.photo);
-				$state.go('photos', {}, { reload: true });
-			});
-		};
+		// $scope.destroy binds directly to $scope.photo.delete.
+		$scope.destroy = $scope.photo.$delete.bind($scope.photo,
+			$state.go.bind($state, 'photos', {}, { reload: true }));
 
+		// Save the rating.
 		$scope.rate = function ($event) {
-			var elem = angular.element($event.target).parent().parent();
-			console.log(elem);
-			elem.removeClass('saved');
+			var elem = angular.element($event.target)
+				.parent().parent().removeClass('saved');
+
 			$http.put(apiUrl + '/rating', { photo_id: $scope.photo.id, score: $scope.photo.rating })
-				.success(elem.addClass.bind(elem, 'saved'))
+				.success(elem.addClass.bind(elem, 'saved'));
 		};
 
 		// Load tags and filter them by query (for tag input).
@@ -106,20 +67,23 @@
 				return $filter('filter')(tags, {name: query});
 			});
 		};
+
+		$scope.saveTag = function  ($tag) {
+			console.log($tag);
+		};
+
+		$scope.removeTag = function ($tag) {
+			console.log($tag);
+		};
 	});
 
 	photo.directive('runLayout', function ($timeout) {
-		return function(scope, element, attrs) {
+		return function($scope, element, attrs) {
 			element.find('img').on('load', function () {
 				angular.element(this).removeClass('hidden');
 			});
-
-			if (scope.$last) {
-				// Do after rendering.
-				$timeout(function () {
-					layout(MAX_HEIGHT);
-				});
-			}
+			// All images rendered, do layout.
+			if ($scope.$last) { $timeout(layout); }
 		}
 	});
 
@@ -148,43 +112,23 @@
 		}
 	}
 
-	function layout(max_height) {
+	function layout() {
 		var size = window.innerWidth - 15;
-		var n = 0;
 		var images = [].slice.call(document.querySelectorAll('.photos-container img'));
 		w: while (images.length > 0) {
 			for (var i = 1; i < images.length + 1; ++i) {
 				var slice = images.slice(0, i);
 				var h = getheight(slice, size);
-				if (h < max_height) {
+				if (h < MAX_HEIGHT) {
 					setheight(slice, h);
-					n++;
 					images = images.slice(i);
 					continue w;
 				}
 			}
-			setheight(slice, Math.min(max_height, h));
-			n++;
+			setheight(slice, Math.min(MAX_HEIGHT, h));
 			break;
 		}
 	}
 
-	function blockEvent(e) {
-		e.preventDefault();
-		e.stopPropagration();
-	}
-
-	function stopScroll() {
-		angular.element(document.body)
-			.addClass('modal-open')
-			.on('touchmove', blockEvent);
-	}
-
-	function startScroll() {
-		angular.element(document.body)
-			.removeClass('modal-open')
-			.off('touchmove', blockEvent);
-	}
-
-	window.addEventListener('resize', function () { layout(MAX_HEIGHT); });
+	window.addEventListener('resize', layout);
 })();

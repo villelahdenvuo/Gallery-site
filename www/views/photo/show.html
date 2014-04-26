@@ -28,7 +28,14 @@
 			ng-model="photo.description"
 			strip-br="true"
 			ng-keydown="keydown($event)"></span>
-		<tags-input ng-model="photo.tags" display-property="name">
+		<tags-input
+			ng-model="photo.tags"
+			display-property="name"
+			max-length="15"
+			max-tags="6"
+			on-tag-added="saveTag($tag)"
+			on-tag-removed="removeTag($tag)"
+		>
   		<auto-complete source="loadTags($query)" min-length="2"></auto-complete>
 		</tags-input>
  		<span class="rating">

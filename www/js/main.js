@@ -2,6 +2,7 @@
   'use strict';
 
   var gallery = angular.module('gallery', [
+    'ngAnimate',
     'http-auth-interceptor',
     'ui.router',
     'facebook',
