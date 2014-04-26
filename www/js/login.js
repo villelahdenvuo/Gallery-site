@@ -17,7 +17,7 @@
 	}]);
 
 	login.factory('loginModal',
-	function ($http, $log, $modal, authService, $facebook) {
+	function ($http, $log, $modal, authService, $facebook, $state, $stateParams) {
 		return function () {
 			$modal.open({
 				templateUrl: 'views/login.html',
@@ -37,6 +37,10 @@
 			}).result.catch(function () {
 				$log.debug('login modal dissmissed');
 				authService.loginCancelled();
+				// Force reload, to restore unchanged state. (i.e. tags added without authentication)
+				if ($state.current.name === 'photos.photo') {
+					$state.transitionTo($state.current, $stateParams, { reload: true });
+				}
 			});
 		};
 	});

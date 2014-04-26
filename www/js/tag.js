@@ -20,12 +20,12 @@
 				} catch(e) {
 					document.getElementById('tagsContainer').style.display = 'none';
 				}
-			});
+			}, 200);
 		});
 	});
 
 	tag.controller('TagController', function ($scope, $stateParams, Tag) {
-		$scope.tag = Tag.get({id: $stateParams.id});
+		$scope.tag = Tag.get({name: $stateParams.name});
 	});
 
 })();

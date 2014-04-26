@@ -35,7 +35,7 @@
 		});
 
 		// Tag, viewing a single tag.
-		$sp.state('tag', { url: '/tag/{id:[0-9]{1,10}}',
+		$sp.state('tag', { url: '/tag/{name}',
 			templateUrl: tpl('tag/show'),
 			controller: 'TagController'
 		});

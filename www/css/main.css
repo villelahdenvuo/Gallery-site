@@ -228,7 +228,7 @@ img.absoluteCenter {
 }
 
 [contenteditable=true]:empty {
-  width: 13px;
+  width: 35px;
   padding: 0 3px;
 }
 

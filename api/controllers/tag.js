@@ -9,8 +9,8 @@ module.exports = function (restify, Tag, Photo, TagReference) {
 		});
 	};
 
-	routes.show = function show(req, res) {
-		Tag.findOne({id: req.params.id}, function (err, tag) {
+	routes.show = function show(req, res, next) {
+		Tag.findOne({name: req.params.name}, function (err, tag) {
 			if (!tag) { return next(new restify.NotFoundError('Requested photo not found.')); }
 
 			tag.populatePhotos(function (err) {

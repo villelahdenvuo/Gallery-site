@@ -21,7 +21,7 @@
 	api.factory('Tag', ['$resource', 'apiUrl', function ($resource, apiUrl) {
 		return $resource(apiUrl + 'photo/:id/tag', { id: '@id' },
 			{
-				'get':    { method: 'GET', url: apiUrl + 'tag/:id' },
+				'get':    { method: 'GET', url: apiUrl + 'tag/:name' },
 				'save':   { method: 'POST' },
 				'all':    { method: 'GET', isArray: true, url: apiUrl + 'tags' },
 				'delete': { method: 'DELETE' },
