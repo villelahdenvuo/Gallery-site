@@ -394,3 +394,11 @@ input.error:focus {
   vertical-align: 14px;
   font-weight: bold;
 }
+
+.tag-container {
+  text-align: center;
+}
+
+.tag-container h1 {
+  display: inline-block;
+}

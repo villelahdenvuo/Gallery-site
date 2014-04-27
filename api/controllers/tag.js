@@ -42,7 +42,7 @@ module.exports = function (restify, Tag, Photo, TagReference) {
 		});
 	};
 
-	routes.destroy = function destroy(req, res, next) {
+	routes.unlink = function unlink(req, res, next) {
 		Tag.findOne({name: req.params.name}, function (err, tag) {
 			next.ifError(err);
 			if (!tag) { return next(new restify.NotFoundError('Requested tag does not exist.')); }
@@ -57,6 +57,25 @@ module.exports = function (restify, Tag, Photo, TagReference) {
 
 		});
 	};
+
+	routes.save = function save(req, res, next) {
+		Tag.findOne({id: req.params.id}, function (err, tag) {
+			next.ifError(err);
+			if (!tag) { return next(new restify.NotFoundError('Requested tag not found.')); }
+			tag.name = req.params.name;
+			tag.save(res.respondValid);
+		});
+	}
+
+	routes.destroy = function destroy(req, res, next) {
+		Tag.findOne({id: req.params.id}, function (err, tag) {
+			next.ifError(err);
+			if (!tag) { return next(new restify.NotFoundError('Requested tag not found.')); }
+			tag.destroy(function (err) {
+				res.send(err || 204);
+			});
+		});
+	}
 
 	return routes;
 };

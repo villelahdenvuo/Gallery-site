@@ -92,7 +92,7 @@
 		};
 
 		$scope.removeTag = function ($tag) {
-			Tag.delete({id: $scope.photo.id, name: $tag.name});
+			Tag.unlink({id: $scope.photo.id, name: $tag.name});
 		};
 	});
 

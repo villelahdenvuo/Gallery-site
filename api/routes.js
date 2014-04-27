@@ -27,8 +27,11 @@ module.exports = function (server, routes, verify) {
 
 	get('/tags',      'tags#index');
 	get('/tag/:name', 'tags#show');
+	pst('/tag/:id',   'tags#save');
+	del('/tag/:id',   'tags#destroy');
+
 	put('/photo/:id/tag', verify(), 'tags#create');
-	del('/photo/:id/tag', verify(), 'tags#destroy');
+	del('/photo/:id/tag', verify(), 'tags#unlink');
 
 	//get('/users', 'users#index');
 	//get('/user/:id', 'users#show');

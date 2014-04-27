@@ -22,9 +22,10 @@
 		return $resource(apiUrl + 'photo/:id/tag', { id: '@id' },
 			{
 				'get':    { method: 'GET', url: apiUrl + 'tag/:name' },
-				'save':   { method: 'POST' },
+				'save':   { method: 'POST', url: apiUrl + 'tag/:id' },
+				'delete': { method: 'DELETE', url: apiUrl + 'tag/:id' },
 				'all':    { method: 'GET', isArray: true, url: apiUrl + 'tags' },
-				'delete': { method: 'DELETE' },
+				'unlink': { method: 'DELETE' },
 				'create': { method: 'PUT' }
 			});
 	}]);

@@ -12,9 +12,9 @@ CREATE TABLE gal_folder(
 
 CREATE TABLE gal_photo(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(255),
+	name VARCHAR(100),
 	path VARCHAR(255),
-	description VARCHAR(1000),
+	description VARCHAR(200),
 	width INT NOT NULL,
 	height INT NOT NULL,
 	folder_id INT NOT NULL,
@@ -35,7 +35,8 @@ CREATE TABLE gal_taglist(
 	tag_id INT NOT NULL,
 	INDEX tag_index (tag_id),
 	FOREIGN KEY (tag_id)
-		REFERENCES gal_tag(id),
+		REFERENCES gal_tag(id)
+		ON DELETE CASCADE,
 	photo_id INT NOT NULL,
 	INDEX photo_index (photo_id),
 	FOREIGN KEY (photo_id)
