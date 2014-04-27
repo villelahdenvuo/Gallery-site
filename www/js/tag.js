@@ -2,13 +2,16 @@
 
 	var tag = angular.module('tag', ['ngResource']);
 
-	tag.controller('TagsController', function ($scope, $timeout, Tag) {
+	tag.controller('TagsController', function ($scope, $timeout, Tag, $templateCache) {
+		// If we already made one, reset the script.
+		TagCanvas.Delete('tagsCanvas');
+
 		Tag.all(function (tags) {
 			$scope.tags = tags;
 			// After tags are rendered, start TagCanvas.
 			$timeout(function () {
 				try {
-					TagCanvas.Start('tagsCanvas', undefined, {
+					TagCanvas.Start('tagsCanvas', 'tags', {
 						textColour: '#000',
 						outlineColour: '#A00',
 						outlineMethod: 'colour',
@@ -20,7 +23,7 @@
 				} catch(e) {
 					document.getElementById('tagsContainer').style.display = 'none';
 				}
-			}, 200);
+			});
 		});
 	});
 

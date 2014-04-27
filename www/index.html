@@ -25,6 +25,7 @@
 				<li ng-cloak class="fade-anim" ng-show="logged"><a ng-href="{{user.link}}">{{user.name}}</a></li>
 				<li ng-cloak class="fade-anim" ng-show="logged"><a ng-click="logout()">Log out</a></li>
 			</ul>
+			<span class="pure-form"><input class="pure-input-rounded" type="text" placeholder="search" ng-model="search" /></span>
 		</nav>
 
 		<main class="pure-g"><ui-view/></main>

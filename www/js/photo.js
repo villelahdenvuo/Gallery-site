@@ -4,12 +4,18 @@
 
 	var photo = angular.module('photo', ['ngResource', 'contenteditable']);
 
-	photo.controller('PhotosController', function ($scope, Photo) {
+	photo.controller('PhotosController', function ($scope, $timeout, Photo) {
+
+		// Update layout on search.
+		$scope.$watch('search', $timeout.bind(null, layout));
+
 		$scope.photos = Photo.all();
 	});
 
 	photo.controller('NewPhotoController', ['$scope', '$state', 'Photo',
 	function ($scope, $state, Photo) {
+		$scope.photo = {};
+
 		$scope.submit = function () {
 			Photo.create($scope.photo, function () {
 				$scope.$close();
@@ -69,22 +75,12 @@
 		};
 
 		$scope.saveTag = function ($tag) {
-			console.log($tag);
 			Tag.create({id: $scope.photo.id}, {name: $tag.name}, function (res) {
 				console.log('tag saved', res);
 			});
 		};
 
 		$scope.removeTag = function ($tag) {
-			console.log($tag);
-
-/*			Tag.get({id: $tag.id}, function (tag) {
-				console.log(tag);
-				tag.$delete({id: $scope.photo.id, name: tag.name}, function (res) {
-					console.log('tag removed', res);
-				});
-			});*/
-
 			Tag.delete({id: $scope.photo.id, name: $tag.name}, function (res) {
 				console.log('tag removed', res);
 			});

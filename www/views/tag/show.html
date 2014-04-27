@@ -3,4 +3,5 @@
 	<div class="animate-repeat thumb" ng-repeat="photo in tag.photos | orderBy:'rating':true" run-layout>
 		<a ng-href="/photo/{{photo.id}}"><img class="hidden" ng-src="{{photo.path}}" data-width="{{photo.width}}" data-height="{{photo.height}}"/></a>
 	</div>
+	<h2 ng-hide="tag.photos.length">No Photos found</h2>
 </div>

@@ -20,7 +20,7 @@
 		$sp.state('photos.new', {
 			url: 'photo/new',
 			onEnter: function ($state, $modal) {
-				$modal.open({ templateUrl: 'views/photo/new.html', controller: 'NewPhotoController' })
+				$modal.open({ templateUrl: tpl('photo/new'), controller: 'NewPhotoController' })
 					.result.catch($state.go.bind($state, 'photos'));
 			}
 		});

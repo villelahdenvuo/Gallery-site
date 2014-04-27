@@ -34,6 +34,8 @@ module.exports = function (restify, Photo) {
 	}
 
 	routes.create = function create(req, res, next) {
+		console.log(req.params);
+
 		var data = {
 			path: req.params.url,
 			name: req.params.name,

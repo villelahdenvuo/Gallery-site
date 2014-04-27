@@ -348,3 +348,7 @@ ui-view {
   width: 100%;
   text-align: center;
 }
+
+.pure-input-rounded {
+  font-size: 8px;
+}
