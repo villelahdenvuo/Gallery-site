@@ -41,6 +41,7 @@ CREATE TABLE gal_taglist(
 	INDEX photo_index (photo_id),
 	FOREIGN KEY (photo_id)
 		REFERENCES gal_photo(id)
+		ON DELETE CASCADE
 ) ENGINE=INNODB;
 
 CREATE TABLE gal_user(

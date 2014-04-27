@@ -27,8 +27,9 @@ module.exports = function (server, routes, verify) {
 
 	get('/tags',      'tags#index');
 	get('/tag/:name', 'tags#show');
-	pst('/tag/:id',   'tags#save');
-	del('/tag/:id',   'tags#destroy');
+
+	pst('/tag/:id',   verify(), 'tags#save');
+	del('/tag/:id',   verify(), 'tags#destroy');
 
 	put('/photo/:id/tag', verify(), 'tags#create');
 	del('/photo/:id/tag', verify(), 'tags#unlink');
