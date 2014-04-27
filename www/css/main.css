@@ -393,6 +393,7 @@ input.error:focus {
   color: red;
   vertical-align: 14px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .tag-container {

@@ -1,9 +1,14 @@
 module.exports = function (db) {
-	var ActiveRecord = require('../lib/activerecord');
+	var ActiveRecord = require('../lib/activerecord')
+		, Joi = require('joi');
 
 	var tag = {
 		table: 'tag',
-		has_many: [{what: 'photo', through: 'taglist'}]
+		has_many: [{what: 'photo', through: 'taglist'}],
+		schema: Joi.object().keys({
+			name: Joi.string().min(2).max(15).required(),
+			id:   Joi.number().integer().optional()
+		})
 	};
 
 	var helpers = tag.helpers = {};
