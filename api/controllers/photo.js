@@ -33,7 +33,6 @@ module.exports = function (restify, Photo) {
 	}
 
 	routes.create = function create(req, res, next) {
-		req.params.folder_id = 1;
 		photo = Photo.create(req.params);
 		photo.save(function (err, valid) {
 			if (!valid) {

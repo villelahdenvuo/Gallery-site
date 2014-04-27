@@ -130,6 +130,7 @@ function persist(data, isNew, cb) {
 				err.message = err.message.split('. ');
 				return cb(err, false);
 			}
+			data = value;
 			insertOrUpdate();
 		});
 	} else { insertOrUpdate(); }
