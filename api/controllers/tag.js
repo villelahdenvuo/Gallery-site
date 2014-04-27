@@ -49,8 +49,6 @@ module.exports = function (restify, Tag, Photo, TagReference) {
 	};
 
 	routes.destroy = function destroy(req, res, next) {
-		console.log(req.params);
-
 		Tag.findOne({name: req.params.name}, function (err, tag) {
 			if (err) { return next(err); }
 			if (!tag) { return next(new restify.NotFoundError('Requested tag does not exist.')); }

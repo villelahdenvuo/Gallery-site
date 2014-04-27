@@ -34,18 +34,10 @@ module.exports = function (restify, Photo) {
 	}
 
 	routes.create = function create(req, res, next) {
-		var data = {
-			path: req.params.url,
-			name: req.params.name,
-			description: req.params.description,
-			width: req.params.width,
-			height: req.params.height,
-			folder_id: 1
-		};
-
-		photo = Photo.create(data);
-		photo.save(function (err, success) {
-			if (!success) {
+		req.params.folder_id = 1;
+		photo = Photo.create(req.params);
+		photo.save(function (err, valid) {
+			if (!valid) {
 				res.send(400, err);
 			} else {
 				res.send(err || 204);

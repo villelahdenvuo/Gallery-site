@@ -126,7 +126,7 @@ function persist(data, isNew, cb) {
 	function insertOrUpdate() {
 		if (isNew) {
 			self.db.query('INSERT INTO ?? SET ?', [self.model.table, data], function (err, result) {
-				if (err) { return cb(err, false); }
+				if (err) { return cb(err, true); }
 				data.id = result.insertId;
 				cb(null, true);
 			});
@@ -135,7 +135,7 @@ function persist(data, isNew, cb) {
 			// Let's not update the id.
 			delete copy.id;
 			self.db.query('UPDATE ?? SET ? WHERE id = ?', [self.model.table, copy, id], function (err, rows, fields) {
-				cb(err, !err);
+				cb(err, true);
 			});
 		}
 	}

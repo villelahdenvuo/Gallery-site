@@ -81,15 +81,11 @@
 		};
 
 		$scope.saveTag = function ($tag) {
-			Tag.create({id: $scope.photo.id}, {name: $tag.name}, function (res) {
-				console.log('tag saved', res);
-			});
+			Tag.create({id: $scope.photo.id}, {name: $tag.name});
 		};
 
 		$scope.removeTag = function ($tag) {
-			Tag.delete({id: $scope.photo.id, name: $tag.name}, function (res) {
-				console.log('tag removed', res);
-			});
+			Tag.delete({id: $scope.photo.id, name: $tag.name});
 		};
 	});
 
