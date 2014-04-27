@@ -42,7 +42,7 @@ module.exports = function (restify, request, mysql) {
 	server.use(helper.respondToSave);
 
 	// Authentivation middleware.
-	var verify = require('./lib/accesstoken')(restify, request, User);
+	var verify = require('./lib/access-control')(restify, request, User);
 
 	// Activate routes.
 	require('./routes')(server, controllers, verify);

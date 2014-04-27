@@ -26,8 +26,7 @@ module.exports = function (restify, Tag, Photo, TagReference) {
 		Photo.findOne({id: req.params.id}, function (err, photo) {
 			next.ifError(err);
 
-			// Set the photo.
-			ref.setPhoto(photo);
+			ref.setPhoto(photo); // Set the photo.
 
 			Tag.findOrCreate({name: req.params.name}, function (err, tag) {
 				next.ifError(err);
@@ -36,13 +35,8 @@ module.exports = function (restify, Tag, Photo, TagReference) {
 				tag.save(function (err) {
 					next.ifError(err);
 
-					// Set the tag.
-					ref.setTag(tag);
-
-					// Persist the reference to the database.
-					ref.save(function (err) {
-						res.send(err || 204);
-					});
+					ref.setTag(tag); // Set the tag.
+					ref.save(res.respondValid); // Persist the reference to the database.
 				});
 			});
 		});
