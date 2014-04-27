@@ -12,6 +12,7 @@ module.exports = function (restify, request, User) {
 	routes.show = function show(req, res, next) {
 		// TODO: validate id as Number.
 		User.findOne({id: req.params.id}, function (err, user) {
+			next.ifError(err);
 			if (!user) { return next(new restify.NotFoundError('Requested user not found.')); }
 			res.send(user);
 		});

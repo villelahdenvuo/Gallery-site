@@ -8,21 +8,12 @@ module.exports = function (restify, Rating) {
 	};
 
 	routes.show = function show(req, res, next) {
-		// TODO: validate id as Number.
 		Rating.findOne({id: req.params.id}, function (err, rating) {
+			next.ifError(err);
 			if (!rating) { return next(new restify.NotFoundError('Requested rating not found.')); }
 			res.send(rating);
 		});
 	};
-
-/*	routes.destroy = function destroy(req, res, next) {
-		Rating.findOne({id: req.params.id}, function (err, rating) {
-			if (!rating) { return next(new restify.NotFoundError('Requested rating not found.')); }
-			rating.destroy(function (err) {
-				res.send(err || 204);
-			});
-		});
-	}*/
 
 	routes.create = function create(req, res, next) {
 		var data = {
@@ -31,7 +22,7 @@ module.exports = function (restify, Rating) {
 		};
 
 		rating = Rating.findOrCreate(data, function (err, rating) {
-			if (err) { return next(err); }
+			next.ifError(err);
 			// If score has changed, update it.
 			if (rating.score != req.params.score) {
 				console.log(req.user.name, 'updated score from', rating.score, 'to', req.params.score, 'for image', data.photo_id);
@@ -43,8 +34,7 @@ module.exports = function (restify, Rating) {
 				res.send(204);
 			}
 		});
-
-	}
+	};
 
 	return routes;
 };

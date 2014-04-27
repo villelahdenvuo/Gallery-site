@@ -2,6 +2,10 @@ var S = require('string')
 	, clone = require('clone')
 	, Joi = require('joi');
 
+/** Custom ActiveRecord implementation.
+ * db - a database connection (pool)
+ * model - a model object (see models folder for examples)
+ */
 function ActiveRecord(db, model) {
 	console.log('Creating AR for', model)
 	this.db = db;
@@ -10,6 +14,7 @@ function ActiveRecord(db, model) {
 	this.model = model;
 }
 
+/** Return all items from database. */
 ActiveRecord.prototype.all = function(cb) {
 	var self = this;
 	self.db.query('SELECT * FROM ??', [self.model.table], function (err, rows, fields) {
@@ -24,6 +29,7 @@ ActiveRecord.prototype.all = function(cb) {
 	});
 };
 
+/** Find one item from database. */
 ActiveRecord.prototype.findOne = function (attr, cb) {
 	var self = this;
 	attr = Object.keys(attr).map(function (a) {
@@ -37,6 +43,7 @@ ActiveRecord.prototype.findOne = function (attr, cb) {
 	});
 };
 
+/** Find one item, or create it if it doesn't exist yet. */
 ActiveRecord.prototype.findOrCreate = function(attr, cb) {
 	var self = this;
 	self.findOne(attr, function (err, obj) {
@@ -52,10 +59,14 @@ ActiveRecord.prototype.findOrCreate = function(attr, cb) {
 	})
 };
 
+/** Create a new instance (use instance.save() to persist it). */
 ActiveRecord.prototype.create = function (data) {
 	return create.call(this, true, data || {});
 };
 
+// PRIVATE
+
+// Build instances from data (add helpers and other methods).
 function create(isNew, data) {
 	var self = this, props = {};
 	// Belongs to.
@@ -101,12 +112,12 @@ function create(isNew, data) {
 
 function noop(cb) { cb(null); }
 
+/** Delete from database by id. */
 function destroy(data, cb) {
-	this.db.query('DELETE FROM ?? WHERE ? LIMIT 1', [this.model.table, { id: data.id }], function (err, rows, fields) {
-		cb(err);
-	});
+	this.db.query('DELETE FROM ?? WHERE ? LIMIT 1', [this.model.table, { id: data.id }], cb);
 }
 
+/** Save to database, first validate if schema is provided. */
 function persist(data, isNew, cb) {
 	var self = this, copy = clone(data);
 
@@ -141,6 +152,7 @@ function persist(data, isNew, cb) {
 	}
 }
 
+// Belongs to -helper
 function getOwnReference(data, table, cb) {
 	var self = this, id = data[table + '_id'];
 	if (!id) {
@@ -154,6 +166,7 @@ function getOwnReference(data, table, cb) {
 	});
 }
 
+// Belongs to -helper
 function setOwnReference(data, table, ref) {
 	if (!ref.id) {
 		throw new Error('Unable to set reference to ' + JSON.stringify(ref) + ' no ID found!');
@@ -161,6 +174,7 @@ function setOwnReference(data, table, ref) {
 	data[table + '_id'] = ref.id;
 }
 
+// Has many -helper
 function getForeignReference(data, table, cb) {
 	var self = this;
 	if (!data.id) {
@@ -179,6 +193,7 @@ function getForeignReference(data, table, cb) {
 	});
 }
 
+// Has many through -helper
 function getForeignReferenceThrough(data, ref, cb) {
 	var self = this, p = self.db.TABLE_PREFIX + '_';
 	if (!data.id) {

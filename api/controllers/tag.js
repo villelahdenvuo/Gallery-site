@@ -24,17 +24,17 @@ module.exports = function (restify, Tag, Photo, TagReference) {
 		var ref = TagReference.create();
 
 		Photo.findOne({id: req.params.id}, function (err, photo) {
-			if (err) { return next(err); }
+			next.ifError(err);
 
 			// Set the photo.
 			ref.setPhoto(photo);
 
 			Tag.findOrCreate({name: req.params.name}, function (err, tag) {
-				if (err) { return next(err); }
+				next.ifError(err);
 
 				// Save tag to get id for it.
 				tag.save(function (err) {
-					if (err) { return next(err); }
+					next.ifError(err);
 
 					// Set the tag.
 					ref.setTag(tag);
@@ -50,10 +50,11 @@ module.exports = function (restify, Tag, Photo, TagReference) {
 
 	routes.destroy = function destroy(req, res, next) {
 		Tag.findOne({name: req.params.name}, function (err, tag) {
-			if (err) { return next(err); }
+			next.ifError(err);
 			if (!tag) { return next(new restify.NotFoundError('Requested tag does not exist.')); }
 
 			TagReference.findOne({photo_id: req.params.id, tag_id: tag.id}, function (err, ref) {
+				next.ifError(err);
 				if (!ref) { return next(new restify.NotFoundError('Requested tag not found for this image.')); }
 				ref.destroy(function (err) {
 					res.send(err || 204);

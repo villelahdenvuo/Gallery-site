@@ -4,22 +4,29 @@ module.exports = function (db) {
 		, Joi = require('joi');
 
 	var photo = {
+		// Which database table has the data.
 		table: 'photo',
+		// photo.folder_is -> photo.getFolder()
 		belongs_to: ['folder'],
 		has_many: [
+			// rating.photo_id -> photo.getRatingList()
 			'rating',
+			// taglist.photo_id and taglist.tag_id -> photo.getTagList()
 			{what: 'tag', through: 'taglist'}
 		],
+		// Used for validation
 		schema: Joi.object().keys({
 			path: 				Joi.string().min(3).max(255).required(),
 			name: 				Joi.string().min(3).max(30).required(),
 			description: 	Joi.string().min(3).max(1000).optional(),
 			width: 				Joi.number().integer().min(500).max(10000).required(),
 			height: 			Joi.number().integer().min(500).max(10000).required(),
-			folder_id: 		Joi.number().integer().optional()
+			folder_id: 		Joi.number().integer().required(),
+			id: 					Joi.number().integer().optional()
 		})
 	};
 
+	// Helpers are added to instances, like photo.averageRating()
 	var helpers = photo.helpers = {};
 
 	helpers.averageRating = function (cb) {

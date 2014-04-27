@@ -2,10 +2,9 @@ module.exports = function (restify, Photo) {
 	var async = require('async');
 	var routes = {};
 
-	// List all photos.
-	routes.index = function index(req, res) {
+	routes.index = function index(req, res, next) {
 		Photo.all(function (err, photos) {
-			if (err) { return next(err); }
+			next.ifError(err);
 
 			async.map(photos, function (photo, cb) {
 				photo.populateFields(cb);
@@ -13,7 +12,6 @@ module.exports = function (restify, Photo) {
 		});
 	};
 
-	// Get a single image by id.
 	routes.show = function show(req, res, next) {
 		Photo.findOne({id: req.params.id}, function (err, photo) {
 			if (!photo) { return next(new restify.NotFoundError('Requested photo not found.')); }
@@ -26,6 +24,7 @@ module.exports = function (restify, Photo) {
 
 	routes.destroy = function destroy(req, res, next) {
 		Photo.findOne({id: req.params.id}, function (err, photo) {
+			next.ifError(err);
 			if (!photo) { return next(new restify.NotFoundError('Requested photo not found.')); }
 			photo.destroy(function (err) {
 				res.send(err || 204);
@@ -47,6 +46,7 @@ module.exports = function (restify, Photo) {
 
 	routes.save = function save(req, res, next) {
 		Photo.findOne({id: req.params.id}, function (err, photo) {
+			next.ifError(err);
 			if (!photo) { return next(new restify.NotFoundError('Requested photo not found.')); }
 			photo.name = req.params.name;
 			photo.description = req.params.description;
