@@ -84,7 +84,7 @@ body.modal-open {
 }
 
 /* Login modal */
-.modal.login {
+.modal {
   overflow-y: hidden;
 }
 
