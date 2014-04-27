@@ -34,9 +34,8 @@
 			max-length="15"
 			max-tags="10"
 			on-tag-added="saveTag($tag)"
-			on-tag-removed="removeTag($tag)"
-		>
-  		<auto-complete source="loadTags($query)" min-length="2"></auto-complete>
+			on-tag-removed="removeTag($tag)">
+  		<auto-complete source="loadTags($query)" min-length="2" />
 		</tags-input>
  		<span class="rating">
 			<ng-pluralize count="photo.ratingCount"

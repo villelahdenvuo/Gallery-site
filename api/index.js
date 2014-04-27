@@ -26,14 +26,20 @@ module.exports = function (restify, request, mysql) {
 	controllers.ratings = require('./controllers/rating')(restify, Rating);
 	controllers.tags    = require('./controllers/tag')(restify, Tag, Photo, TagReference);
 
-	// Start server.
+	// Load helpers.
+	var helper = require('./lib/helpers');
+
+	// Allow authorization header in CORS.
 	restify.CORS.ALLOW_HEADERS.push('authorization');
+
+	// Start server.
 	var server = restify.createServer();
 	server.use(restify.gzipResponse());
 	server.use(restify.bodyParser());
 	server.use(restify.queryParser());
 	server.use(restify.CORS());
 	server.use(restify.fullResponse());
+	server.use(helper.respondToSave);
 
 	// Authentivation middleware.
 	var verify = require('./lib/accesstoken')(restify, request, User);

@@ -16,13 +16,13 @@ module.exports = function (db) {
 		],
 		// Used for validation
 		schema: Joi.object().keys({
-			path: 				Joi.string().min(3).max(255).required(),
-			name: 				Joi.string().min(3).max(30).required(),
-			description: 	Joi.string().allow('').max(1000),
-			width: 				Joi.number().integer().min(500).max(10000).required(),
-			height: 			Joi.number().integer().min(500).max(10000).required(),
-			folder_id: 		Joi.number().integer().default(1),
-			id: 					Joi.number().integer().optional()
+			path:         Joi.string().min(3).max(255).required(),
+			name:         Joi.string().min(3).max(30).required(),
+			description:  Joi.string().allow('').max(1000),
+			width:        Joi.number().integer().min(500).max(10000).required(),
+			height:       Joi.number().integer().min(500).max(10000).required(),
+			folder_id:    Joi.number().integer().default(1),
+			id:           Joi.number().integer().optional()
 		})
 	};
 

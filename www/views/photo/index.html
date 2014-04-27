@@ -1,5 +1,7 @@
 <div class="photos-container pure-u-1">
-	<div class="animate-repeat thumb" ng-repeat="photo in photos | filter:search | orderBy:'rating':true" run-layout>
+	<div class="animate-repeat thumb"
+		ng-repeat="photo in photos | filter:search | orderBy:['-rating | number:0', '-ratingCount']"
+		run-layout>
 		<a ng-href="/photo/{{photo.id}}"><img class="hidden" ng-src="{{photo.path}}" data-width="{{photo.width}}" data-height="{{photo.height}}"/></a>
 	</div>
 </div>

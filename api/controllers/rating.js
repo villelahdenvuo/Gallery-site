@@ -16,23 +16,15 @@ module.exports = function (restify, Rating) {
 	};
 
 	routes.create = function create(req, res, next) {
-		var data = {
-			user_id: req.user.id,
-			photo_id: req.params.photo_id,
-		};
-
-		rating = Rating.findOrCreate(data, function (err, rating) {
+		Rating.findOrCreate({ user_id: req.user.id, photo_id: req.params.photo_id },
+		function (err, rating) {
 			next.ifError(err);
-			// If score has changed, update it.
-			if (rating.score != req.params.score) {
-				console.log(req.user.name, 'updated score from', rating.score, 'to', req.params.score, 'for image', data.photo_id);
-				rating.score = req.params.score;
-				rating.save(function (err) {
-					res.send(err || 204);
-				});
-			} else {
-				res.send(204);
-			}
+			// If score has not changed, skip.
+			if (rating.score === req.params.score) { return res.send(204); }
+
+			console.log(req.user.name, 'updated score', rating.score, '->', req.params.score, 'for', data.photo_id);
+			rating.score = req.params.score;
+			rating.save(res.respondValid);
 		});
 	};
 

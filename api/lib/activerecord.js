@@ -7,7 +7,6 @@ var S = require('string')
  * model - a model object (see models folder for examples)
  */
 function ActiveRecord(db, model) {
-	console.log('Creating AR for', model)
 	this.db = db;
 	model.name = model.table;
 	model.table = db.TABLE_PREFIX + '_' + model.table;

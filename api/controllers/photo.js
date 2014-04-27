@@ -34,13 +34,7 @@ module.exports = function (restify, Photo) {
 
 	routes.create = function create(req, res, next) {
 		photo = Photo.create(req.params);
-		photo.save(function (err, valid) {
-			if (!valid) {
-				res.send(400, err);
-			} else {
-				res.send(err || 204);
-			}
-		});
+		photo.save(res.respondValid);
 	}
 
 	routes.save = function save(req, res, next) {
@@ -49,9 +43,7 @@ module.exports = function (restify, Photo) {
 			if (!photo) { return next(new restify.NotFoundError('Requested photo not found.')); }
 			photo.name = req.params.name;
 			photo.description = req.params.description;
-			photo.save(function (err) {
-				res.send(err || 204);
-			});
+			photo.save(res.respondValid);
 		});
 	}
 
