@@ -30,6 +30,6 @@ module.exports = function (server, routes, verify) {
 	put('/photo/:id/tag', verify(), 'tags#create');
 	del('/photo/:id/tag', verify(), 'tags#destroy');
 
-	get('/users', 'users#index');
-	get('/user/:id', 'users#show');
+	//get('/users', 'users#index');
+	//get('/user/:id', 'users#show');
 };
