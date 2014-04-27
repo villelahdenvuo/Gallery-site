@@ -388,3 +388,9 @@ input.error:focus {
 .denied h1 {
   color: #F00;
 }
+
+.name-error {
+  color: red;
+  vertical-align: 14px;
+  font-weight: bold;
+}

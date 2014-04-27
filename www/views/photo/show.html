@@ -5,6 +5,9 @@
 			ng-model="photo.name"
 			strip-br="true"
 			ng-keydown="keydown($event)"></h1>
+		<span ng-show="nameError" class="name-error">
+			<i class="fa fa-exclamation-circle"></i> {{nameError}}
+		</span>
 		<span class="buttons" ng-hide="error">
 			<a class="pure-button button-secondary" ng-click="edit()">
 				<i class="fa" ng-class="editing"></i>

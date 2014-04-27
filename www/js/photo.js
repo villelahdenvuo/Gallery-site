@@ -49,6 +49,12 @@
 				$scope.photo.name = cleanString($scope.photo.name);
 				$scope.photo.$save(function () {
 					$scope.editing = 'fa-edit';
+					$scope.nameError = false;
+				}, function (res) {
+					$scope.editing = 'fa-save';
+					if (res.status === 400) {
+						$scope.nameError = res.data.message[0];
+					}
 				});
 			}
 		};
@@ -58,6 +64,7 @@
 			// On enter, save changes.
 			$scope.edit();
 			$scope.editing = 'fa-edit';
+			$event.preventDefault();
 		};
 
 		// $scope.destroy binds directly to $scope.photo.delete.
