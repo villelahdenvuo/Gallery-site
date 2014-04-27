@@ -34,8 +34,6 @@ module.exports = function (restify, Photo) {
 	}
 
 	routes.create = function create(req, res, next) {
-		console.log(req.params);
-
 		var data = {
 			path: req.params.url,
 			name: req.params.name,
@@ -46,8 +44,12 @@ module.exports = function (restify, Photo) {
 		};
 
 		photo = Photo.create(data);
-		photo.save(function (err) {
-			res.send(err || 204);
+		photo.save(function (err, success) {
+			if (!success) {
+				res.send(400, err);
+			} else {
+				res.send(err || 204);
+			}
 		});
 	}
 

@@ -1,6 +1,7 @@
 module.exports = function (db) {
 	var ActiveRecord = require('../lib/activerecord')
-		, async = require('async');
+		, async = require('async')
+		, Joi = require('joi');
 
 	var photo = {
 		table: 'photo',
@@ -8,7 +9,15 @@ module.exports = function (db) {
 		has_many: [
 			'rating',
 			{what: 'tag', through: 'taglist'}
-		]
+		],
+		schema: Joi.object().keys({
+			path: Joi.string().min(3).max(255).required(),
+			name: Joi.string().min(3).max(30).required(),
+			description: Joi.string().min(3).max(1000).optional(),
+			width: Joi.number().integer().min(500).max(10000).required(),
+			height: Joi.number().integer().min(500).max(10000).required(),
+			folder_id: Joi.number().integer()
+		})
 	};
 
 	var helpers = photo.helpers = {};

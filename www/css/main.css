@@ -352,3 +352,35 @@ ui-view {
 .pure-input-rounded {
   font-size: 8px;
 }
+
+div.error {
+  background-color: #FDD;
+  padding: 5px 15px;
+  border-radius: 10px;
+  border: 2px solid red;
+  margin-bottom: 20px;
+}
+
+.error h2 {
+  margin: 0;
+  color: red;
+  font-size: 20px;
+}
+
+.error ul {
+  margin: 5px 0;
+  list-style: none;
+}
+
+.error li {
+  position: relative;
+}
+
+input.error {
+  background-color: #FDD;
+  color: red;
+}
+
+input.error:focus {
+  border-color: #F00 !important;
+}

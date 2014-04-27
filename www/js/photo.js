@@ -20,6 +20,12 @@
 			Photo.create($scope.photo, function () {
 				$scope.$close();
 				$state.go('photos', {}, { reload: true });
+			}, function (res) {
+				if (res.status === 400) {
+					$scope.errors = res.data.message;
+					$scope.error = {};
+					$scope.errors.forEach(function (a) { $scope.error[a.split(' ')[0]] = 'error'; });
+				}
 			});
 		}
 	}]);

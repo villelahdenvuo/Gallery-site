@@ -1,5 +1,6 @@
 var S = require('string')
-	, clone = require('clone');
+	, clone = require('clone')
+	, Joi = require('joi');
 
 function ActiveRecord(db, model) {
 	console.log('Creating AR for', model)
@@ -108,19 +109,35 @@ function destroy(data, cb) {
 
 function persist(data, isNew, cb) {
 	var self = this, copy = clone(data);
-	if (isNew) {
-		self.db.query('INSERT INTO ?? SET ?', [self.model.table, data], function (err, result) {
-			if (err) { return cb(err); }
-			data.id = result.insertId;
-			cb(null);
+
+	// Validate data.
+	if (self.model.schema) {
+		Joi.validate(data, self.model.schema, {
+			abortEarly: false
+		}, function (err, value) {
+			if (err) {
+				err.message = err.message.split('. ');
+				return cb(err, false);
+			}
+			insertOrUpdate();
 		});
-	} else {
-		var id = copy.id;
-		// Let's not update the id.
-		delete copy.id;
-		self.db.query('UPDATE ?? SET ? WHERE id = ?', [self.model.table, copy, id], function (err, rows, fields) {
-			cb(err);
-		});
+	} else { insertOrUpdate(); }
+
+	function insertOrUpdate() {
+		if (isNew) {
+			self.db.query('INSERT INTO ?? SET ?', [self.model.table, data], function (err, result) {
+				if (err) { return cb(err, false); }
+				data.id = result.insertId;
+				cb(null, true);
+			});
+		} else {
+			var id = copy.id;
+			// Let's not update the id.
+			delete copy.id;
+			self.db.query('UPDATE ?? SET ? WHERE id = ?', [self.model.table, copy, id], function (err, rows, fields) {
+				cb(err, !err);
+			});
+		}
 	}
 }
 
