@@ -27,7 +27,7 @@ module.exports = function (restify, request, mysql) {
 	controllers.tags    = require('./controllers/tag')(restify, Tag, Photo, TagReference);
 
 	// Load helpers.
-	var helper = require('./lib/helpers');
+	var helper = require('./lib/helpers')(restify, request, User);
 
 	// Allow authorization header in CORS.
 	restify.CORS.ALLOW_HEADERS.push('authorization');
@@ -41,11 +41,8 @@ module.exports = function (restify, request, mysql) {
 	server.use(restify.fullResponse());
 	server.use(helper.respondToSave);
 
-	// Authentivation middleware.
-	var verify = require('./lib/access-control')(restify, request, User);
-
 	// Activate routes.
-	require('./routes')(server, controllers, verify);
+	require('./routes')(server, controllers, helper.verify);
 
 	server.listen(process.env.PORT, function() {
 		console.log('Server started.');

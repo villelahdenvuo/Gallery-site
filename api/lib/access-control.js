@@ -1,43 +1,33 @@
 module.exports = function (restify, request, User) {
-	// verify() -> check user
+	// verify() -> just resolve user
 	// verify({ admin: true }) -> verify admin
 	return function (c) {
-		if (!c)      { return checkUser; }
-		if (c.admin) { return checkAdmin; };
+		if (!c)      { return verify(); }
+		if (c.admin) { return verify(function (u) { return u.admin; }, 'You are not an admin!'); };
 	};
 
-	function checkHeaders(req, next) {
-		if (!req.headers['authorization']) {
-			return next(new restify.UnauthorizedError("Invalid Access Token"));
-		}
+	function verify(check, msg) {
+		// No check provided, always true.
+		if (!check) { check = function () { return true; }; }
+
+		return function (req, res, next) {
+			checkRquestToken(req, next, function (err, user) {
+				next.ifError(err);
+				if (!check(user)) { return next(new restify.UnauthorizedError(msg)); }
+				req.user = user;
+				return next();
+			});
+		};
 	}
 
-	function checkUser(req, res, next) {
-		checkHeaders(req, next);
-		checkToken(req.headers['authorization'], function (err, user) {
-			if (err) { return next(err); }
-			req.user = user;
-			next();
-		});
-	};
+	function checkRquestToken(req, next, cb) {
+		var token = req.headers['authorization'];
 
-	function checkAdmin(req, res, next) {
-		if (!req.headers['authorization']) {
-			return next(new restify.UnauthorizedError("Invalid Access Token"));
-		}
-		checkToken(req.headers['authorization'], function (err, user) {
-			if (err) { return next(err); }
-			if (!user.admin) { return next(new restify.UnauthorizedError("Access denied!")); }
-			req.user = user;
-			next();
-		});
-	};
+		if (!token) { return next(new restify.UnauthorizedError("Invalid Access Token")); }
 
-	function checkToken(token, cb) {
-		request('https://graph.facebook.com/me?access_token=' + token,
-		function (err, res, body) {
-		  if (err) { return cb(err); }
-		  var data = JSON.parse(body);
+		request({ url: 'https://graph.facebook.com/me?access_token=' + token, json: true },
+		function (err, res, data) {
+		  if (err) { return next(err); }
 		  User.findOrCreate({ id: data.id, name: data.name }, cb);
 		});
 	}

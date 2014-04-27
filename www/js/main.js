@@ -33,7 +33,10 @@
     $scope.logged = false;
     $scope.name = '';
 
-    $scope.$on('event:auth-loginRequired', function () {
+    $scope.$on('event:auth-loginRequired', function (e, res) {
+      if (res.data.message === 'You are not an admin!') {
+        return;
+      }
       $scope.logged = false;
       loginModal();
     });
