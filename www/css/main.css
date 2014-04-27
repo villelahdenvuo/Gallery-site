@@ -384,3 +384,7 @@ input.error {
 input.error:focus {
   border-color: #F00 !important;
 }
+
+.denied h1 {
+  color: #F00;
+}

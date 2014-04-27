@@ -23,7 +23,7 @@
   });
 
   gallery.controller('GalleryController',
-  function ($log, $scope, $state, $facebook, authService, loginModal) {
+  function ($log, $scope, $state, $facebook, authService, loginModal, errorModal) {
 
     // Esc to go home.
     angular.element(document.body).on('keyup', function (e) {
@@ -35,7 +35,7 @@
 
     $scope.$on('event:auth-loginRequired', function (e, res) {
       if (res.data.message === 'You are not an admin!') {
-        return;
+        return errorModal();
       }
       $scope.logged = false;
       loginModal();

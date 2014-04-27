@@ -16,20 +16,12 @@
 	function ($scope, $state, Photo) {
 		$scope.photo = {};
 
-		$scope.$on('event:auth-loginRequired', function (e, res) {
-      if (res.data.message === 'You are not an admin!') {
-      	$scope.errorTitle = 'Access denied!';
-      	$scope.errors = ['you are not authorized to do this'];
-      }
-    });
-
 		$scope.submit = function () {
 			Photo.create($scope.photo, function () {
 				$scope.$close();
 				$state.go('photos', {}, { reload: true });
 			}, function (res) {
 				if (res.status === 400) {
-					$scope.errorTitle = 'Please, check your input';
 					$scope.errors = res.data.message;
 					$scope.error = {};
 					$scope.errors.forEach(function (a) { $scope.error[a.split(' ')[0]] = 'error'; });
