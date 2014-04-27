@@ -13,6 +13,8 @@ The goal is to create a flexible usable photo gallery to support my photography 
  * Tsoha Testerman: tsoha_jjmbbkg_testerman@tfbnw.net - hassupassu
 
 ## Project updates
+ * Added input validation
+ * Added tags
  * CRUD added for photos
    * Started learning Angular UI router
    * FB SDK async load
