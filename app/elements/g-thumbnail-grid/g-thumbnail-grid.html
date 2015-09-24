@@ -1,0 +1,47 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="g-thumbnail-grid">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      #container {
+        padding: 8px;
+      }
+      .thumb {
+        margin: 8px;
+      }
+    </style>
+    <div id="container" class="layout horizontal justified wrap">
+      <template is="dom-repeat" items="{{thumbnails}}">
+        <g-thumbnail-img class="thumb" height="150" src="[[item.src]]" on-click="_handleClick"></g-thumbnail-img>
+      </template>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'g-thumbnail-grid',
+
+      properties: {
+        thumbnails: {
+          type: Array,
+          value: [],
+          notify: true
+        }
+      },
+
+      _handleClick: function (e) {
+        this.fire('thumbnail-click', {
+          element: Polymer.dom(e).localTarget,
+          id: this.thumbnails.indexOf(e.model.item)
+        });
+      }
+
+    });
+  })();
+  </script>
+</dom-module>
