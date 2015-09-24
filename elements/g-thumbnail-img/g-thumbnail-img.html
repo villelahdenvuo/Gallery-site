@@ -1,0 +1,51 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="g-thumbnail-img">
+  <template>
+    <style>
+      :host {
+        display: block;
+        float: left;
+      }
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+      }
+    </style>
+
+    <paper-material elevation="0">
+      <img on-load="_handleLoad" height="[[height]]" id="image">
+    </paper-material>
+
+  </template>
+
+  <script>
+  (function() {
+    'use strict';
+
+    var proxyUrl = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=[src]&container=focus&resize_h=300&refresh=31536000';
+
+    Polymer({
+      is: 'g-thumbnail-img',
+
+      properties: {
+        src: {
+          type: String,
+          notify: true,
+          observer: '_updateSrc'
+        },
+        height: Number
+      },
+
+      _handleLoad: function (e) {
+        this.fire('load', e);
+      },
+
+      _updateSrc: function (src) {
+        this.$.image.src = proxyUrl.replace('[src]', encodeURIComponent(src));
+      }
+    });
+  })();
+  </script>
+</dom-module>

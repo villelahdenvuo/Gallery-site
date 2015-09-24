@@ -1,0 +1,167 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animatable-behavior.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/transform-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/ripple-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/hero-animation.html">
+
+
+<dom-module id="g-picture-view">
+  <template>
+    <style>
+      :host {
+        display: block;
+        overflow: hidden;
+      }
+
+      #background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #333;
+      }
+
+      #container {
+        width: 100%;
+        height: 100%;
+      }
+
+      #pictureContainer {
+        width: 90%;
+        height: 90%;
+        z-index: 1;
+      }
+
+      #picture {
+        display: block;
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      #toolbar {
+        width: 100%;
+      }
+
+      #back {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: #ababab;
+        --paper-icon-button-ink-color: #ababab;
+      }
+
+    </style>
+
+    <div id="background"></div>
+
+    <div id="container" class="layout vertical center-center">
+      <paper-icon-button id="back" icon="close" on-click="_goBack"></paper-icon-button>
+
+      <div id="pictureContainer" class="layout vertical center-center flex">
+        <img id="picture" src="{{picture.src}}">
+      </div>
+
+      <paper-toolbar id="toolbar">
+        <div class="title">{{picture.title}}</div>
+      </paper-toolbar>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'g-picture-view',
+      behaviors: [Polymer.NeonSharedElementAnimatableBehavior],
+
+      properties: {
+
+        picture: {
+          type: Object,
+          computed: '_getCurrentPicture(pictures, selectedPicture)'
+        },
+
+        selectedPicture: {
+          type: Number,
+          notify: true
+        },
+
+        pictures: {
+          type: Array
+        },
+
+        animationConfig: {
+          value: function () {
+            return {
+              entry: [
+                {
+                  name: 'ripple-animation',
+                  id: 'ripple',
+                  toPage: this
+                }, {
+                  name: 'hero-animation',
+                  id: 'hero',
+                  toPage: this
+                },
+                {
+                  name: 'transform-animation',
+                  node: this.$.toolbar,
+                  transformFrom: 'translateY(100%)',
+                  transformTo: 'none'
+                }
+              ],
+              exit: [
+                {
+                  name: 'fade-out-animation',
+                  node: this.$.background
+                },
+                {
+                  name: 'transform-animation',
+                  node: this.$.toolbar,
+                  transformFrom: 'none',
+                  transformTo: 'translateY(100%)'
+                },
+                {
+                  name: 'hero-animation',
+                  id: 'hero',
+                  fromPage: this
+                },
+              ]
+            };
+          }
+        },
+
+        sharedElements: {
+          value: function () {
+            return {
+              'hero': this.$.pictureContainer,
+              'ripple': this.$.background
+            };
+          }
+        }
+      },
+
+      _getCurrentPicture: function (pictures, selectedPicture) {
+        return pictures[selectedPicture];
+      },
+
+      _goBack: function () {
+        page('/');
+      }
+
+    });
+  })();
+  </script>
+</dom-module>
