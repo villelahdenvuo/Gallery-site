@@ -8,15 +8,15 @@
         float: left;
       }
       img {
-        max-width: 100%;
-        max-height: 100%;
+        margin: 0 auto;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
         display: block;
       }
     </style>
 
-    <paper-material elevation="0">
-      <img on-load="_handleLoad" height="[[height]]" id="image">
-    </paper-material>
+    <img on-load="_handleLoad" id="picture">
 
   </template>
 
@@ -24,7 +24,7 @@
   (function() {
     'use strict';
 
-    var proxyUrl = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=[src]&container=focus&resize_h=300&refresh=31536000';
+    var proxyUrl = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=[src]&container=focus&resize_h=[height]&refresh=31536000';
 
     Polymer({
       is: 'g-thumbnail-img',
@@ -39,11 +39,31 @@
       },
 
       _handleLoad: function (e) {
+        //var img = this.$.picture;
+
+        /*if (img.naturalWidth < img.naturalHeight) {
+          img.style.width = 'auto';
+          this.style.width = img.clientWidth + 'px';
+        } else {
+          img.style.height = 'auto';
+          this.style.height = img.clientHeight + 'px';
+        }*/
+
         this.fire('load', e);
       },
 
       _updateSrc: function (src) {
-        this.$.image.src = proxyUrl.replace('[src]', encodeURIComponent(src));
+        //var img = this.$.picture;
+
+        // Reset calculations about image dimensions.
+        /*this.style.width = '';
+        this.style.height = '';
+        img.style.width = '100%';
+        img.style.height = '100%';*/
+
+        this.$.picture.src = proxyUrl
+          .replace('[src]', encodeURIComponent(src))
+          .replace('[height]', this.height || '');
       }
     });
   })();

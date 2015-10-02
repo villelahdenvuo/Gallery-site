@@ -22,8 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <g-thumbnail-grid thumbnails="{{pictures}}" on-thumbnail-click="_handleThumbnailClick">
-    </g-thumbnail-grid>
+    <g-thumbnail-grid thumbnails="{{pictures}}" on-thumbnail-click="_handleThumbnailClick"></g-thumbnail-grid>
   </template>
   <script>
   (function() {
@@ -31,7 +30,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'g-thumbnail-view',
-      behaviors: [Polymer.NeonSharedElementAnimatableBehavior],
+
+      behaviors: [
+        Polymer.NeonSharedElementAnimatableBehavior
+      ],
 
       properties: {
 
@@ -64,6 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   name: 'hero-animation',
                   id: 'hero',
                   fromPage: this
+                  //timing: { duration: 10000000 }
                 }
               ]
             };
@@ -73,11 +76,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _handleThumbnailClick: function (event) {
         var detail = event.detail;
+
         this.sharedElements = {
           'hero': detail.element,
           'ripple': detail.element
         };
-        this.selectedPicture = detail.id;
+
         page('/view/' + detail.id);
       }
 
