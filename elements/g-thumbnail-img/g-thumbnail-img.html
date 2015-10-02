@@ -32,10 +32,12 @@
       properties: {
         src: {
           type: String,
-          notify: true,
           observer: '_updateSrc'
         },
-        height: Number
+        height: {
+          type: Number,
+          observer: '_updateSrc'
+        }
       },
 
       _handleLoad: function (e) {
@@ -52,7 +54,7 @@
         this.fire('load', e);
       },
 
-      _updateSrc: function (src) {
+      _updateSrc: function () {
         //var img = this.$.picture;
 
         // Reset calculations about image dimensions.
@@ -62,7 +64,7 @@
         img.style.height = '100%';*/
 
         this.$.picture.src = proxyUrl
-          .replace('[src]', encodeURIComponent(src))
+          .replace('[src]', encodeURIComponent(this.src))
           .replace('[height]', this.height || '');
       }
     });

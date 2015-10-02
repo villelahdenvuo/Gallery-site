@@ -519,11 +519,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div id="container" class="layout vertical center-center">
 
       <div id="pictureContainer" class="layout vertical center-center flex">
-        <g-thumbnail-img id="picture" height="150" src="{{picture.src}}">
+        <g-thumbnail-img id="picture" height="[[pictureHeight]]" src="[[picture.src]]">
       </g-thumbnail-img></div>
 
       <paper-toolbar id="toolbar">
-        <div class="title">{{picture.title}}</div>
+        <div class="title">[[picture.title]]</div>
       </paper-toolbar>
 
       <paper-icon-button id="back" icon="close" on-click="_goBack"></paper-icon-button>
