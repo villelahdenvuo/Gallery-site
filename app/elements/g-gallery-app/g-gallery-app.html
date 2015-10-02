@@ -98,6 +98,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.$.overlay.style.display = 'block';
           if (hasHero) {
             this.playAnimation('showPictureOverlay');
+          } else {
+            this.$.overlay.pictureHeight = '';
           }
         } else {
           if (hasHero) {
@@ -110,7 +112,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _onNeonAnimationFinish: function() {
         if (this.selectedPicture === undefined) {
+          this.$.overlay.pictureHeight = 150;
           this.$.overlay.style.display = 'none';
+        } else {
+          this.$.overlay.pictureHeight = '';
         }
       }
 
