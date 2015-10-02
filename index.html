@@ -474,13 +474,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 </dom-module>
 
-<dom-module id="shared-styles" assetpath="styles/"><template><style>.page-title {@apply(--paper-font-display2);}@media (max-width: 600px) {.page-title {font-size: 24px!important;}}</style></template></dom-module><dom-module id="g-thumbnail-img" assetpath="elements/g-thumbnail-img/">
+<dom-module id="shared-styles" assetpath="styles/"><template><style>.page-title {@apply(--paper-font-display2);}@media (max-width: 600px) {.page-title {font-size: 24px!important;}}</style></template></dom-module><dom-module id="g-gallery-app" assetpath="elements/g-gallery-app/">
   <template>
-    <style>:host {display: block;float: left;}img {max-width: 100%;max-height: 100%;display: block;}</style>
+    <style>:host {display: block;}</style>
 
-    <paper-material elevation="0">
-      <img on-load="_handleLoad" height="[[height]]" id="image">
-    </paper-material>
+    <g-picture-store pictures="{{pictures}}"></g-picture-store>
+
+    <g-thumbnail-view id="grid" selected-picture="{{selectedPicture}}" pictures="{{pictures}}"></g-thumbnail-view>
+    <g-picture-view id="overlay" selected-picture="{{selectedPicture}}" pictures="{{pictures}}"></g-picture-view>
+
+  </template>
+  </dom-module>
+<dom-module id="g-thumbnail-img" assetpath="elements/g-thumbnail-img/">
+  <template>
+    <style>:host {display: block;float: left;}img {margin: 0 auto;width: 100%;height: 100%;object-fit: contain;display: block;}</style>
+
+    <img on-load="_handleLoad" id="picture">
 
   </template>
 
@@ -498,29 +507,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="g-thumbnail-view" assetpath="elements/g-thumbnail-view/">
   <template>
     <style>:host {display: block;}</style>
-    <g-thumbnail-grid thumbnails="{{pictures}}" on-thumbnail-click="_handleThumbnailClick">
-    </g-thumbnail-grid>
+    <g-thumbnail-grid thumbnails="{{pictures}}" on-thumbnail-click="_handleThumbnailClick"></g-thumbnail-grid>
   </template>
   </dom-module>
 <dom-module id="g-picture-view" assetpath="elements/g-picture-view/">
   <template>
-    <style>:host {display: block;overflow: hidden;}#background {position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: #333;}#container {width: 100%;height: 100%;}#pictureContainer {width: 90%;height: 90%;z-index: 1;}#picture {display: block;max-width: 100%;max-height: 100%;}#toolbar {width: 100%;}#back {position: absolute;top: 10px;left: 10px;color: #ababab;--paper-icon-button-ink-color: #ababab;}</style>
+    <style>:host {position: fixed;top: 0;left: 0;width: 100%;height: 100%;display: none;overflow: hidden;}#background {position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: #333;}#container {width: 100%;height: 100%;}#pictureContainer {width: 95%;height: 85%;z-index: 1;}#picture {display: block;width: 100%;height: 100%;}#toolbar {width: 100%;}#back {z-index: 2;position: absolute;top: 12px;left: 12px;color: #ababab;--paper-icon-button-ink-color: #ababab;}</style>
 
     <div id="background"></div>
 
     <div id="container" class="layout vertical center-center">
-      <paper-icon-button id="back" icon="close" on-click="_goBack"></paper-icon-button>
 
       <div id="pictureContainer" class="layout vertical center-center flex">
-        <img id="picture" src="{{picture.src}}">
-      </div>
+        <g-thumbnail-img id="picture" height="150" src="{{picture.src}}">
+      </g-thumbnail-img></div>
 
       <paper-toolbar id="toolbar">
         <div class="title">{{picture.title}}</div>
       </paper-toolbar>
+
+      <paper-icon-button id="back" icon="close" on-click="_goBack"></paper-icon-button>
     </div>
   </template>
   </dom-module>
 <dom-module id="g-picture-store" assetpath="elements/g-picture-store/">
   </dom-module>
-</div><span id="browser-sync-binding"></span><template is="dom-bind" id="app"><g-picture-store pictures="{{pictures}}"></g-picture-store><neon-animated-pages class="flex" attr-for-selected="route" selected="[[route]]"><g-thumbnail-view route="home" selected-picture="{{picture}}" pictures="{{pictures}}"></g-thumbnail-view><g-picture-view route="view" selected-picture="{{picture}}" pictures="{{pictures}}"></g-picture-view></neon-animated-pages></template><script src="index.build.js"></script></body></html>
+</div><span id="browser-sync-binding"></span><template is="dom-bind" id="app"><g-gallery-app></g-gallery-app></template><script src="index.build.js"></script></body></html>
